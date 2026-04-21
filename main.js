@@ -101,41 +101,111 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ─── GitHub API — Latest Release ───────────────────────────────────────
+    // ─── GitHub API — Downloads & Releases ─────────────────────────────────
     const REPO = 'a32116150-ctrl/tuninvoice';
-    const GITHUB_API = `https://api.github.com/repos/${REPO}/releases/latest`;
+    const GITHUB_RELEASES_API = `https://api.github.com/repos/${REPO}/releases`;
+    
+    let totalDownloads = 0;
 
-    async function fetchLatestRelease() {
+    async function fetchReleasesData() {
         try {
-            const response = await fetch(GITHUB_API);
-            const data = await response.json();
-            const version = data.tag_name;
+            const response = await fetch(GITHUB_RELEASES_API);
+            const releases = await response.json();
+            
+            if (!Array.isArray(releases)) return;
 
-            // Update badge
-            const badge = document.getElementById('version-badge');
-            if (badge) badge.innerText = `🚀 Version ${version} (BETA) Disponible`;
+            // 1. Calculate Total Downloads across all releases (filtering for installers only)
+            totalDownloads = releases.reduce((acc, release) => {
+                const releaseDownloads = release.assets.reduce((sum, asset) => {
+                    const name = asset.name.toLowerCase();
+                    // Only count actual installers, exclude metadata like .yml or .blockmap
+                    if (name.endsWith('.exe') || name.endsWith('.dmg') || name.endsWith('.zip') || name.endsWith('.deb')) {
+                        return sum + asset.download_count;
+                    }
+                    return sum;
+                }, 0);
+                return acc + releaseDownloads;
+            }, 0);
 
-            // Update version texts
-            const macVer = document.getElementById('mac-version');
-            const winVer = document.getElementById('win-version');
-            if (macVer) macVer.innerText = `Version ${version}`;
-            if (winVer) winVer.innerText = `Version ${version}`;
+            // 2. Update Download Counter UI
+            const downloadCountEl = document.getElementById('download-count');
+            if (downloadCountEl) {
+                // Animate counting up for a "wow" effect
+                animateValue(downloadCountEl, 0, totalDownloads, 1500);
+            }
 
-            // Find assets and update download buttons
-            const assets = data.assets;
-            const macSilicon = assets.find(a => a.name.includes('arm64.dmg'));
-            const macIntel = assets.find(a => a.name.includes('.dmg') && !a.name.includes('arm64'));
-            const winExe = assets.find(a => a.name.includes('.exe'));
+            // 3. Handle Latest Release specifically (for buttons and version badge)
+            const latest = releases[0]; // GitHub returns them sorted by date (latest first)
+            if (latest) {
+                const version = latest.tag_name;
+                
+                const badge = document.getElementById('version-badge');
+                if (badge) badge.innerText = `🚀 Version ${version} (BETA) Disponible`;
 
-            if (macSilicon) document.getElementById('btn-mac-silicon').href = macSilicon.browser_download_url;
-            if (macIntel) document.getElementById('btn-mac-intel').href = macIntel.browser_download_url;
-            if (winExe) document.getElementById('btn-win').href = winExe.browser_download_url;
+                const macVer = document.getElementById('mac-version');
+                const winVer = document.getElementById('win-version');
+                if (macVer) macVer.innerText = `Version ${version}`;
+                if (winVer) winVer.innerText = `Version ${version}`;
+
+                const assets = latest.assets;
+                const macSilicon = assets.find(a => a.name.includes('arm64.dmg'));
+                const macIntel = assets.find(a => a.name.includes('.dmg') && !a.name.includes('arm64'));
+                const winExe = assets.find(a => a.name.includes('.exe'));
+
+                if (macSilicon) document.getElementById('btn-mac-silicon').href = macSilicon.browser_download_url;
+                if (macIntel) document.getElementById('btn-mac-intel').href = macIntel.browser_download_url;
+                if (winExe) document.getElementById('btn-win').href = winExe.browser_download_url;
+            }
 
         } catch (error) {
-            console.error('Erreur lors de la récupération de la release GitHub:', error);
+            console.error('Erreur lors de la récupération des données GitHub:', error);
+            const downloadCountEl = document.getElementById('download-count');
+            if (downloadCountEl) downloadCountEl.innerText = '150+'; // Fallback
         }
     }
 
-    fetchLatestRelease();
+    // Number counter animation helper
+    function animateValue(obj, start, end, duration) {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            obj.innerHTML = Math.floor(progress * (end - start) + start);
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+        window.requestAnimationFrame(step);
+    }
+
+    // Local click tracking for immediate feedback
+    function setupDownloadTracking() {
+        const downloadButtons = [
+            document.getElementById('btn-mac-silicon'),
+            document.getElementById('btn-mac-intel'),
+            document.getElementById('btn-win'),
+            document.querySelector('.btn-download-nav')
+        ];
+
+        downloadButtons.forEach(btn => {
+            if (!btn) return;
+            btn.addEventListener('click', () => {
+                totalDownloads++;
+                const countEl = document.getElementById('download-count');
+                const badgeEl = document.getElementById('download-counter');
+                
+                if (countEl) countEl.innerText = totalDownloads;
+                
+                if (badgeEl) {
+                    badgeEl.classList.remove('increment');
+                    void badgeEl.offsetWidth; // Trigger reflow
+                    badgeEl.classList.add('increment');
+                }
+            });
+        });
+    }
+
+    fetchReleasesData();
+    setupDownloadTracking();
 
 }); // end DOMContentLoaded
