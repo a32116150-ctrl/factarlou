@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galerie & Showcase — Factarlou</title>
+    <meta name="description" content="Découvrez l'interface moderne et l'expérience utilisateur de Factarlou en images.">
+    <meta property="og:title" content="Galerie & Showcase — Factarlou">
+    <meta property="og:description" content="Aperçu de l'interface Factarlou.">
+    <meta property="og:image" content="/social-preview.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="/social-preview.png">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="/logo-icon.png">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .showcase-container {
+            max-width: 1200px;
+            margin: 140px auto 80px;
+            padding: 0 5%;
+        }
+        .showcase-item {
+            margin-bottom: 8rem;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+        .showcase-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        .showcase-image {
+            flex: 1.5;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.5);
+            transition: var(--transition);
+        }
+        .showcase-image:hover {
+            transform: scale(1.02);
+            border-color: var(--primary);
+        }
+        .showcase-image img {
+            width: 100%;
+            display: block;
+        }
+        .showcase-text {
+            flex: 1;
+        }
+        .showcase-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff, var(--text-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .showcase-text p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 992px) {
+            .showcase-item, .showcase-item:nth-child(even) {
+                flex-direction: column;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+
+    <nav>
+        <div class="logo">
+            <img src="/logo-icon.png" alt="Factarlou Logo">
+            Factarlou
+        </div>
+        <div class="nav-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html">Docs</a>
+            <a href="/about.html">À Propos</a>
+            <a href="/showcase.html" style="color: var(--primary)">Galerie</a>
+        </div>
+        <button class="menu-toggle" aria-label="Ouvrir le menu">
+            <i data-lucide="menu"></i>
+        </button>
+        <a href="/index.html#download" class="btn-download-nav">Essayer Gratuitement</a>
+    </nav>
+
+    <main class="showcase-container">
+        <div class="section-header" data-reveal>
+            <span class="badge">🎨 Interface</span>
+            <h1>Découvrez l'expérience Factarlou.</h1>
+            <p>Une interface épurée, rapide et pensée pour la productivité.</p>
+        </div>
+
+        <div class="showcase-item" data-reveal>
+            <div class="showcase-image">
+                <img src="/factarlou_dashboard_ui_1776742563277.png" alt="Dashboard Factarlou">
+            </div>
+            <div class="showcase-text">
+                <h2>Tableau de Bord Intelligent</h2>
+                <p>Gardez un œil sur votre santé financière en temps réel. Visualisez vos revenus, vos dépenses et vos factures impayées avec des graphiques clairs et interactifs.</p>
+                <div class="feature-icon"><i data-lucide="layout-dashboard"></i></div>
+            </div>
+        </div>
+
+        <div class="showcase-item" data-reveal>
+            <div class="showcase-image">
+                <img src="/factarlou_invoice_ui_1776742603216.png" alt="Éditeur de Factures">
+            </div>
+            <div class="showcase-text">
+                <h2>Éditeur de Documents Pro</h2>
+                <p>Créez des factures et des devis conformes aux normes tunisiennes en quelques secondes. L'aperçu en temps réel vous permet de voir exactement ce que votre client recevra.</p>
+                <div class="feature-icon"><i data-lucide="file-text"></i></div>
+            </div>
+        </div>
+
+        <div class="showcase-item" data-reveal style="text-align: center; display: block;">
+            <div class="highlight-box" style="background: var(--card-bg); padding: 4rem; border-radius: 32px; border: 1px solid var(--glass-border);">
+                <i data-lucide="scan" style="font-size: 4rem; color: var(--accent); margin-bottom: 2rem;"></i>
+                <h2>Plus qu'un simple logiciel.</h2>
+                <p style="max-width: 700px; margin: 0 auto;">Factarlou combine la puissance du scan OCR, la gestion des retenues à la source et la sécurité locale pour offrir la solution la plus complète du marché.</p>
+                <a href="/index.html#download" class="btn-primary" style="margin-top: 3rem;">Commencer Maintenant</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/changelog.html">Changelog</a>
+            <a href="/privacy.html">Confidentialité</a>
+        </div>
+        <p class="copyright">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

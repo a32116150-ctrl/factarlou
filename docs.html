@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation — Factarlou</title>
+    <meta name="description" content="Guide complet et documentation technique pour Factarlou. Apprenez à gérer vos factures et votre fiscalité tunisienne.">
+    <meta property="og:title" content="Documentation — Factarlou">
+    <meta property="og:description" content="Tout savoir sur l'utilisation de Factarlou.">
+    <meta property="og:image" content="/social-preview.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="/social-preview.png">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="/logo-icon.png">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .docs-container {
+            max-width: 900px;
+            margin: 140px auto 80px;
+            padding: 4rem;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            backdrop-filter: blur(20px);
+        }
+        .docs-content {
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        .docs-content h1, .docs-content h2, .docs-content h3 {
+            color: var(--text-primary);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .docs-content h1 { font-size: 3rem; margin-top: 0; }
+        .docs-content h2 { border-bottom: 1px solid var(--glass-border); padding-bottom: 0.5rem; font-size: 2rem; color: var(--primary); }
+        .docs-content h3 { color: var(--accent); font-size: 1.5rem; }
+        .docs-content ul { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+        .docs-content li { margin-bottom: 0.75rem; }
+        .docs-content strong { color: var(--text-primary); }
+        .docs-content hr { border: none; border-top: 1px solid var(--glass-border); margin: 3rem 0; }
+        .docs-content code {
+            background: rgba(255,255,255,0.05);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: monospace;
+            color: var(--accent);
+        }
+        @media (max-width: 768px) {
+            .docs-container { padding: 2rem; margin-top: 100px; }
+            .docs-content h1 { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+
+    <nav>
+        <div class="logo">
+            <img src="/logo-icon.png" alt="Factarlou Logo">
+            Factarlou
+        </div>
+        <div class="nav-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html" style="color: var(--primary)">Docs</a>
+            <a href="/about.html">À Propos</a>
+            <a href="/showcase.html">Galerie</a>
+        </div>
+        <button class="menu-toggle" aria-label="Ouvrir le menu">
+            <i data-lucide="menu"></i>
+        </button>
+        <a href="/index.html#download" class="btn-download-nav">Essayer Gratuitement</a>
+    </nav>
+
+    <main class="docs-container" data-reveal>
+        <div class="docs-content">
+            <h1>📚 Factarlou — Documentation Complète</h1>
+            <p>Bienvenue dans la documentation officielle de <strong>Factarlou</strong>, la première application de bureau intelligente pour la facturation et la gestion d'entreprise conçue pour le marché tunisien.</p>
+
+            <hr>
+
+            <h2>1. Aperçu</h2>
+            <p><strong>Factarlou</strong> est une application de bureau haute performance, "offline-first", construite avec <strong>Electron.js</strong>. Elle est conçue pour gérer l'intégralité du cycle financier des freelances, PME et startups tunisiennes — de la génération de devis au suivi des dépenses et à la conformité fiscale — tout en garantissant une confidentialité des données à 100%.</p>
+
+            <hr>
+
+            <h2>2. Fonctionnalités Clés</h2>
+
+            <h3>🏢 Facturation de Base (Invoicing)</h3>
+            <ul>
+                <li><strong>Types de Documents</strong> : Créez des Factures professionnelles, des Devis et des Bons de Commande.</li>
+                <li><strong>Devis en Facture</strong> : Conversion en un clic d'un Devis en Facture avec mise à jour automatique du statut.</li>
+                <li><strong>Logique Fiscale Tunisienne</strong> :
+                    <ul>
+                        <li>Calcul automatique du <strong>Timbre Fiscal</strong> (1.000 TND).</li>
+                        <li>Support pour plusieurs taux de <strong>TVA</strong> (0%, 7%, 13%, 19%).</li>
+                        <li>Gestion du <strong>FODEC</strong> et autres taxes spécifiques.</li>
+                    </ul>
+                </li>
+                <li><strong>Formatage des Nombres</strong> : Support des normes comptables tunisiennes (jusqu'à 3 décimales) avec ajustements automatiques des arrondis.</li>
+            </ul>
+
+            <h3>🧠 Scanner de Dépenses Intelligent (OCR)</h3>
+            <ul>
+                <li><strong>Saisie Automatisée</strong> : Utilise <strong>Tesseract.js</strong> pour scanner les reçus papier et les PDF.</li>
+                <li><strong>Extraction de Données</strong> : Détecte automatiquement le nom du fournisseur, la date et le montant total (TTC).</li>
+                <li><strong>Texte en Nombre</strong> : Conversion intelligente des montants écrits en mots (ex: "deux cent dinars" → 200.000).</li>
+                <li><strong>Gestion des Pièces Jointes</strong> : Chaque dépense est liée à son scan numérique pour un audit facile.</li>
+            </ul>
+
+            <h3>🇹🇳 Conformité Fiscale (Retenue à la Source)</h3>
+            <ul>
+                <li><strong>Certificats Automatiques</strong> : Générez des certificats officiels de "Retenue à la Source" basés sur la loi tunisienne actuelle.</li>
+                <li><strong>Préréglages de Taux</strong> : Support intégré pour les taux de 0,5%, 1%, 1,5%, 5%, 10% et 15%.</li>
+                <li><strong>Exportation par Lot</strong> : Visualisez et exportez les résumés de toutes les retenues fiscales pour une période spécifique.</li>
+            </ul>
+
+            <h3>🤝 Gestion Clients & Contrats</h3>
+            <ul>
+                <li><strong>CRM Lite</strong> : Gère une base de données complète de clients avec historique et coordonnées.</li>
+                <li><strong>Aperçu Intelligent</strong> : Vue détaillée instantanée des profils clients.</li>
+                <li><strong>Générateur de Contrats</strong> : Générez divers contrats de travail et de service tunisiens (CDI, CDD, Freelance, etc.) à l'aide de modèles professionnels.</li>
+            </ul>
+
+            <h3>📊 Analyses en Temps Réel</h3>
+            <ul>
+                <li><strong>Tableau de Bord</strong> : Graphiques interactifs montrant les revenus vs les dépenses.</li>
+                <li><strong>Suivi de Statut</strong> : Indicateurs visuels pour les documents non payés, partiellement payés et payés.</li>
+                <li><strong>Métriques Clés</strong> : Identifiez vos clients les plus précieux et vos catégories de dépenses les plus élevées.</li>
+            </ul>
+
+            <hr>
+
+            <h2>3. Architecture Technique</h2>
+
+            <h3>🛠️ Stack Technique</h3>
+            <ul>
+                <li><strong>Runtime</strong> : Electron.js (Support multiplateforme Windows, macOS, Linux).</li>
+                <li><strong>Frontend</strong> : Vanilla JS, HTML5, CSS3 (Pas de frameworks lourds pour une performance maximale).</li>
+                <li><strong>Base de données</strong> : SQLite (via <code>better-sqlite3</code>) pour un stockage de données local et robuste.</li>
+                <li><strong>Moteur OCR</strong> : Tesseract.js (Reconnaissance Optique de Caractères).</li>
+                <li><strong>Moteur PDF</strong> : Processus d'arrière-plan Electron isolé pour un rendu A4 parfait au pixel près.</li>
+            </ul>
+
+            <h3>🔒 Confidentialité & Sécurité</h3>
+            <ul>
+                <li><strong>Local-First</strong> : Toutes les données financières, listes de clients et mots de passe restent sur votre machine physique.</li>
+                <li><strong>Chiffrement</strong> : Les mots de passe sont hachés avec <strong>bcrypt</strong> avant stockage.</li>
+                <li><strong>Pas de Télémétrie</strong> : Pas de suivi, pas d'analyses, pas de téléchargements cloud.</li>
+            </ul>
+
+            <hr>
+
+            <h2>4. Fonctionnement Interne</h2>
+
+            <h3>Le Moteur de Génération PDF</h3>
+            <p>Contrairement aux applications web traditionnelles, Factarlou utilise un processus d'arrière-plan spécialisé pour générer les PDF. Cela garantit que l'interface utilisateur (barres latérales, boutons) n'apparaît jamais sur le document final, ce qui donne un fichier A4 parfaitement professionnel.</p>
+
+            <h3>Persistance des Données</h3>
+            <p>Les données sont stockées dans le dossier d'application système de l'utilisateur (<code>userData</code>).</p>
+            <ul>
+                <li><strong>macOS</strong> : <code>~/Library/Application Support/factarlou/</code></li>
+                <li><strong>Windows</strong> : <code>%AppData%\factarlou\</code></li>
+            </ul>
+            <p>Cela garantit que même lorsque l'application est mise à jour, vos données restent intactes et en sécurité.</p>
+
+            <h3>Système de Mise à Jour Automatique</h3>
+            <p>L'application est intégrée aux <strong>GitHub Releases</strong>. Chaque fois qu'une nouvelle version est publiée, l'application la détecte, la télécharge en arrière-plan et invite l'utilisateur à redémarrer pour appliquer les dernières mises à jour fiscales ou nouvelles fonctionnalités.</p>
+
+            <hr>
+
+            <h2>5. Prise en Main</h2>
+
+            <h3>Installation</h3>
+            <ol>
+                <li>Téléchargez le dernier installateur pour votre OS (<code>.dmg</code> pour Mac, <code>.exe</code> for Windows).</li>
+                <li>Installez comme n'importe quelle autre application de bureau.</li>
+                <li><strong>Inscription</strong> : Créez votre premier utilisateur local (ces données ne quittent jamais votre ordinateur).</li>
+                <li><strong>Configuration</strong> : Allez dans "Mon Entreprise" pour télécharger votre logo, votre cachet et votre signature.</li>
+            </ol>
+
+            <h3>Flux de Travail Quotidien</h3>
+            <ol>
+                <li><strong>Créer Client</strong> → <strong>Générer Devis</strong> → <strong>Convertir en Facture</strong> lors de l'acceptation.</li>
+                <li><strong>Scanner Reçu</strong> → <strong>Confirmer les Données</strong> → <strong>Enregistrer comme Achat</strong>.</li>
+                <li><strong>Vérifier le Tableau de Bord</strong> périodiquement pour surveiller les factures impayées et la croissance mensuelle.</li>
+            </ol>
+
+            <hr>
+
+            <div style="text-align: center; margin-top: 4rem;">
+                <p><strong>Factarlou</strong> — L'avenir de la gestion d'entreprise en Tunisie.<br>
+                <em>Conçu pour la vitesse. Conçu pour la confidentialité. Conçu pour vous.</em></p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/changelog.html">Changelog</a>
+            <a href="/privacy.html">Confidentialité</a>
+        </div>
+        <p class="copyright">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

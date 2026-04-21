@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confidentialité — Factarlou</title>
+    <meta name="description" content="En savoir plus sur notre engagement pour la confidentialité locale-first. Vos données ne quittent jamais votre ordinateur.">
+    <meta property="og:title" content="Confidentialité — Factarlou">
+    <meta property="og:description" content="100% Privé. 100% Local.">
+    <meta property="og:image" content="/social-preview.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="/social-preview.png">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="/logo-icon.png">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .privacy-page-container {
+            max-width: 900px;
+            margin: 140px auto 80px;
+            padding: 4rem;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            backdrop-filter: blur(20px);
+        }
+        .privacy-page-content {
+            line-height: 1.8;
+            color: var(--text-secondary);
+            display: block; /* Ensure it's not flex */
+        }
+        .privacy-page-content h1 { font-size: 3rem; margin-bottom: 2rem; color: var(--text-primary); }
+        .privacy-page-content h2 { color: var(--primary); margin-top: 3rem; margin-bottom: 1rem; font-size: 1.8rem; }
+        .privacy-page-content p { margin-bottom: 1.5rem; }
+        .privacy-page-content ul { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+        .privacy-page-content li { margin-bottom: 0.75rem; }
+        .highlight-box {
+            background: rgba(0, 151, 167, 0.1);
+            border: 1px solid var(--primary);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+
+    <nav>
+        <div class="logo">
+            <img src="/logo-icon.png" alt="Factarlou Logo">
+            Factarlou
+        </div>
+        <div class="nav-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html">Docs</a>
+            <a href="/about.html">À Propos</a>
+            <a href="/showcase.html">Galerie</a>
+        </div>
+        <button class="menu-toggle" aria-label="Ouvrir le menu">
+            <i data-lucide="menu"></i>
+        </button>
+        <a href="/index.html#download" class="btn-download-nav">Essayer Gratuitement</a>
+    </nav>
+
+    <main class="privacy-page-container" data-reveal>
+        <div class="privacy-page-content">
+            <h1>🛡️ Politique de Confidentialité</h1>
+            
+            <div class="highlight-box">
+                <strong>Principe Fondamental :</strong> Vos données vous appartiennent. Factarlou est une application "offline-first". Cela signifie qu'aucune de vos données financières, clients ou documents ne quitte jamais votre ordinateur.
+            </div>
+
+            <h2>1. Collecte des Données</h2>
+            <p>Factarlou ne collecte aucune donnée personnelle ou commerciale. Toutes les informations que vous saisissez dans l'application (noms de clients, montants de factures, scans de reçus) sont stockées localement sur votre disque dur dans une base de données SQLite sécurisée.</p>
+
+            <h2>2. Stockage Local</h2>
+            <p>L'application utilise le dossier système suivant pour stocker vos informations :</p>
+            <ul>
+                <li><strong>macOS</strong> : ~/Library/Application Support/factarlou/</li>
+                <li><strong>Windows</strong> : %AppData%\factarlou\</li>
+            </ul>
+            <p>Nous n'avons aucun accès à ces fichiers. Seul vous (ou toute personne ayant accès à votre session d'ordinateur) pouvez consulter ces données.</p>
+
+            <h2>3. Télémétrie et Tracking</h2>
+            <p>Contrairement à la plupart des logiciels modernes, Factarlou n'inclut aucun outil de télémétrie (Google Analytics, Mixpanel, etc.). Nous ne savons pas combien de factures vous créez, ni à quelle fréquence vous utilisez l'application.</p>
+
+            <h2>4. Services Tiers</h2>
+            <p>L'application n'utilise qu'une seule connexion internet : le module de mise à jour automatique via <strong>GitHub</strong>. Cette connexion ne sert qu'à vérifier si une nouvelle version est disponible et à la télécharger. Aucune information privée n'est transmise lors de cette vérification.</p>
+
+            <h2>5. Sécurité</h2>
+            <p>Vos mots de passe pour les comptes multi-utilisateurs sont hachés à l'aide de l'algorithme <strong>bcrypt</strong>. Cela signifie que même si quelqu'un accède physiquement à votre base de données SQLite, il ne pourra pas lire vos mots de passe en clair.</p>
+
+            <hr style="border: none; border-top: 1px solid var(--glass-border); margin: 3rem 0;">
+
+            <p style="text-align: center; font-style: italic;">
+                Dernière mise à jour : 21 Avril 2026.<br>
+                Factarlou — La souveraineté numérique pour les entrepreneurs tunisiens.
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/changelog.html">Changelog</a>
+            <a href="/privacy.html">Confidentialité</a>
+        </div>
+        <p class="copyright">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

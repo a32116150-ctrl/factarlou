@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>À Propos — Factarlou</title>
+    <meta name="description" content="Découvrez l'histoire derrière Factarlou et la mission d'Anoir Cherif : simplifier la facturation pour les tunisiens.">
+    <meta property="og:title" content="À Propos — Factarlou">
+    <meta property="og:description" content="L'histoire et la mission de Factarlou.">
+    <meta property="og:image" content="/social-preview.png">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="/social-preview.png">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="/logo-icon.png">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .about-hero {
+            padding: 160px 5% 80px;
+            text-align: center;
+        }
+        .profile-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 4rem;
+            align-items: center;
+            text-align: left;
+            padding: 4rem;
+            background: var(--card-bg);
+            border-radius: 32px;
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(20px);
+        }
+        .profile-img {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: white;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .profile-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .profile-text .title {
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+        .profile-text p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        .social-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+        .social-link:hover {
+            color: var(--primary);
+        }
+        @media (max-width: 768px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+                text-align: center;
+            }
+            .profile-text { text-align: center; }
+            .social-links { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+
+    <nav>
+        <div class="logo">
+            <img src="/logo-icon.png" alt="Factarlou Logo">
+            Factarlou
+        </div>
+        <div class="nav-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html">Docs</a>
+            <a href="/about.html" style="color: var(--primary)">À Propos</a>
+            <a href="/showcase.html">Galerie</a>
+        </div>
+        <button class="menu-toggle" aria-label="Ouvrir le menu">
+            <i data-lucide="menu"></i>
+        </button>
+        <a href="/index.html#download" class="btn-download-nav">Essayer Gratuitement</a>
+    </nav>
+
+    <main>
+        <section class="about-hero">
+            <div data-reveal>
+                <span class="badge">Le Visage Derrière l'App</span>
+                <h1>L'innovation au service de la <span>confidentialité</span>.</h1>
+            </div>
+
+            <div class="profile-container" data-reveal style="margin-top: 4rem;">
+                <div class="profile-img">
+                    <i data-lucide="user"></i>
+                </div>
+                <div class="profile-text">
+                    <h2>Anoir Cherif</h2>
+                    <span class="title">Graphic Designer & Video Editor</span>
+                    <p>Passionné par le storytelling visuel et l'innovation technologique, Anoir Cherif est un créateur tunisien qui allie design graphique, motion design et montage vidéo pour donner vie à des projets impactants.</p>
+                    <p>Avec Factarlou, sa mission est de fournir aux entrepreneurs tunisiens une solution de gestion robuste, moderne et surtout 100% locale, garantissant une souveraineté totale sur leurs données financières.</p>
+                    
+                    <div class="social-links">
+                        <a href="https://anoircherif.com" class="social-link" target="_blank">
+                            <i data-lucide="globe"></i> Portfolio
+                        </a>
+                        <a href="https://www.instagram.com/anoir.cherif/" class="social-link" target="_blank">
+                            <i data-lucide="instagram"></i> Instagram
+                        </a>
+                        <a href="https://www.behance.net/cherifanoir" class="social-link" target="_blank">
+                            <i data-lucide="palette"></i> Behance
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="story" style="padding: 80px 5%;">
+            <div class="profile-container" data-reveal style="background: transparent; border: none; backdrop-filter: none; display: block; max-width: 800px;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 2rem;">Pourquoi j'ai créé Factarlou ?</h2>
+                <div style="display: flex; flex-direction: column; gap: 2rem; color: var(--text-secondary); line-height: 1.8; font-size: 1.1rem;">
+                    <p>
+                        L'idée de Factarlou est née d'un constat simple : le marché est saturé de solutions SaaS et d'ERPs aux abonnements mensuels exorbitants. Pour beaucoup de freelances et de petites entreprises en Tunisie, l'utilisation est sporadique.
+                    </p>
+                    <p>
+                        Payer un abonnement complet pour ne générer qu'une ou deux factures par mois n'a aucun sens économique. C'est une perte d'argent constante plutôt qu'un investissement. 
+                    </p>
+                    <p>
+                        J'ai également ressenti le besoin urgent de quitter le chaos des feuilles Excel et des templates Canva. Je voulais un système automatisé qui m'offre une visibilité claire sur mes finances, sans la complexité (et le coût) des solutions cloud traditionnelles.
+                    </p>
+                    <p>
+                        Enfin, la confidentialité était non-négociable. Avec Factarlou, vos données ne transitent par aucun serveur. Tout est stocké localement sur l'appareil où l'application est installée, vous offrant une tranquillité d'esprit totale et une souveraineté absolue sur vos informations.
+                    </p>
+                    <p>
+                        Factarlou est ma réponse : un outil puissant, local, et sans abonnement caché, conçu par un créateur pour les créateurs.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="features" style="padding-top: 0;">
+            <div class="section-header" data-reveal>
+                <h2>Pourquoi Factarlou ?</h2>
+                <p>Né d'un besoin de simplicité et de sécurité pour le marché local.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card" data-reveal>
+                    <div class="feature-icon"><i data-lucide="heart"></i></div>
+                    <h3>Passion Locale</h3>
+                    <p>Conçu spécifiquement pour répondre aux défis fiscaux et administratifs des PME en Tunisie.</p>
+                </div>
+                <div class="feature-card" data-reveal>
+                    <div class="feature-icon"><i data-lucide="shield-check"></i></div>
+                    <h3>Éthique & Privé</h3>
+                    <p>Nous croyons que vos chiffres sont votre secret. Aucune donnée n'est collectée ou stockée en ligne.</p>
+                </div>
+                <div class="feature-card" data-reveal>
+                    <div class="feature-icon"><i data-lucide="sparkles"></i></div>
+                    <h3>Qualité Premium</h3>
+                    <p>Chaque détail de l'interface est soigné pour offrir une expérience utilisateur fluide et élégante.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/changelog.html">Changelog</a>
+            <a href="/privacy.html">Confidentialité</a>
+        </div>
+        <p class="copyright">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+</body>
+</html>
