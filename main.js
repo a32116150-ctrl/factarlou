@@ -194,7 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const countEl = document.getElementById('download-count');
                 const badgeEl = document.getElementById('download-counter');
                 
-                if (countEl) countEl.innerText = totalDownloads;
+                if (countEl) countEl.innerText = totalDownloads + ' ';
                 
                 if (badgeEl) {
                     badgeEl.classList.remove('increment');

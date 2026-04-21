@@ -152,6 +152,10 @@ nav {
   border-color: rgba(140, 198, 63, 0.2);
 }
 
+#download-count {
+  margin-right: 4px;
+}
+
 .badge-downloads.increment {
   animation: pulse-green 0.5s ease-out;
 }
