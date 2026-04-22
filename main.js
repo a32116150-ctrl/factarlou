@@ -148,13 +148,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (winVer) winVer.innerText = `Version ${version}`;
 
                 const assets = latest.assets;
-                const macSilicon = assets.find(a => a.name.includes('arm64.dmg'));
-                const macIntel = assets.find(a => a.name.includes('.dmg') && !a.name.includes('arm64'));
-                const winExe = assets.find(a => a.name.includes('.exe'));
+                const macDmg = assets.find(a => a.name.endsWith('.dmg') && !a.name.includes('arm64'));
+                // Prioritize 'Setup' version for Windows to avoid portable versions
+                const winExe = assets.find(a => a.name.toLowerCase().includes('setup') && a.name.endsWith('.exe')) || 
+                               assets.find(a => a.name.endsWith('.exe'));
 
-                if (macSilicon) document.getElementById('btn-mac-silicon').href = macSilicon.browser_download_url;
-                if (macIntel) document.getElementById('btn-mac-intel').href = macIntel.browser_download_url;
-                if (winExe) document.getElementById('btn-win').href = winExe.browser_download_url;
+                if (macDmg) {
+                    const btn = document.getElementById('btn-mac-intel');
+                    btn.href = macDmg.browser_download_url;
+                    btn.setAttribute('download', macDmg.name);
+                }
+                if (winExe) {
+                    const btn = document.getElementById('btn-win');
+                    btn.href = winExe.browser_download_url;
+                    btn.setAttribute('download', winExe.name);
+                }
             }
 
         } catch (error) {
@@ -181,7 +189,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Local click tracking for immediate feedback
     function setupDownloadTracking() {
         const downloadButtons = [
-            document.getElementById('btn-mac-silicon'),
             document.getElementById('btn-mac-intel'),
             document.getElementById('btn-win'),
             document.querySelector('.btn-download-nav')
