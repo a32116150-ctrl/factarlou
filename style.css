@@ -430,6 +430,7 @@ footer {
 
   .hero-ctas { flex-direction: column; }
   .download-options { flex-direction: column; }
+  .security-guide { flex-direction: column !important; gap: 2rem !important; padding: 2rem !important; }
 }
 
 .menu-toggle {
