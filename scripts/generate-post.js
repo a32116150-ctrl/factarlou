@@ -95,9 +95,9 @@ async function generatePost(retryCount = 0, useFallback = false) {
     await updateSearchIndex(data, postFileName);
 
   } catch (error) {
-    if (error.status === 429 && retryCount < 5 && !useFallback) {
-      console.log(`Gemini rate limited. Retrying in 30 seconds... (Attempt ${retryCount + 1})`);
-      await new Promise(resolve => setTimeout(resolve, 30000));
+    if (error.status === 429 && retryCount < 2 && !useFallback) {
+      console.log(`Gemini rate limited. Retrying in 15 seconds... (Attempt ${retryCount + 1})`);
+      await new Promise(resolve => setTimeout(resolve, 15000));
       return generatePost(retryCount + 1, false);
     } else if (!useFallback && groq) {
       console.log("Gemini failed or rate limited. Switching to Groq Fallback...");
