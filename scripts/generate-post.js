@@ -44,7 +44,7 @@ async function generatePost() {
 
     const slug = `${slugDate}-${data.title_fr.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
     const postFileName = `${slug}.html`;
-    const postFilePath = path.join(__dirname, "../posts", postFileName);
+    const postFilePath = path.join(__dirname, "../public/posts", postFileName);
 
     // Load template
     let template = await fs.readFile(path.join(__dirname, "../blog-template.html"), "utf-8");

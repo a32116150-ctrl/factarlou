@@ -11,6 +11,7 @@ export default defineConfig({
         showcase:  resolve(__dirname, 'showcase.html'),
         changelog: resolve(__dirname, 'changelog.html'),
         privacy:   resolve(__dirname, 'privacy.html'),
+        blog:      resolve(__dirname, 'blog.html'),
       }
     }
   }
