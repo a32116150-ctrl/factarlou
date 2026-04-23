@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factarlou — Facturation Intelligente & Gestion Locale</title>
-    <meta name="description" content="Factarlou — L'intelligence fiscale au service des entrepreneurs tunisiens. Solution de facturation 100% privée, locale-first et sans abonnement.">
+    <meta name="description"
+        content="Factarlou — L'intelligence fiscale au service des entrepreneurs tunisiens. Solution de facturation 100% privée, locale-first et sans abonnement.">
     <meta property="og:title" content="Factarlou — Facturation Intelligente & Gestion Locale">
     <meta property="og:description" content="Gérez vos factures, devis et fiscalité en toute confidentialité.">
     <meta property="og:image" content="/social-preview.png">
@@ -19,6 +21,7 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
+
 <body>
     <div class="mesh-bg"></div>
 
@@ -41,21 +44,60 @@
 
     <header class="hero">
         <div class="hero-content" data-reveal>
-            <div class="hero-badges">
-                <span class="badge" id="version-badge">🚀 Version v2.5.2 (BETA) Disponible</span>
-                <span class="badge badge-downloads" id="download-counter"><i data-lucide="download" style="width: 14px; height: 14px; vertical-align: middle; margin-right: 5px;"></i> <span id="download-count">...</span>&nbsp;Téléchargements</span>
+            <div class="hero-header">
+                <div class="version-banner" id="version-badge" data-reveal>
+                    🚀 Version v2.5.2 (BETA) Disponible
+                </div>
+                <div class="stats-pills" data-reveal id="download-counter">
+                    <div class="stat-pill">
+                        <span class="stat-value" id="download-count">...</span>
+                        <span class="stat-label">Downloads</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-pill">
+                        <span class="stat-value"><i data-lucide="apple"></i> <span id="mac-downloads">...</span></span>
+                        <span class="stat-label">macOS</span>
+                    </div>
+                    <div class="stat-divider"></div>
+                    <div class="stat-pill">
+                        <span class="stat-value"><i data-lucide="monitor"></i> <span
+                                id="win-downloads">...</span></span>
+                        <span class="stat-label">Windows</span>
+                    </div>
+                </div>
+                <div class="stats-trust" data-reveal
+                    style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; opacity: 0.6; justify-content: center;">
+                    <i data-lucide="shield-check" style="width: 14px; height: 14px; color: var(--accent);"></i>
+                    Données certifiées par l'API GitHub®
+                </div>
             </div>
             <h1>L'intelligence fiscale au service de votre <span>entreprise</span>.</h1>
-            <p>Factarlou est la solution de facturation locale-first conçue spécifiquement pour les entrepreneurs tunisiens. 100% privé, 100% puissant.</p>
-            
+            <p>Factarlou est la solution de facturation locale-first conçue spécifiquement pour les entrepreneurs
+                tunisiens. 100% privé, 100% puissant.</p>
+
             <div class="hero-ctas">
                 <a href="#download" class="btn-primary">Télécharger l'App</a>
                 <a href="#features" class="btn-secondary">Découvrir les features</a>
             </div>
         </div>
 
-        <div class="hero-mockup" data-reveal>
-            <img src="/dashboard.png" alt="Factarlou Dashboard Overview">
+        <div class="hero-mockup-container" data-reveal>
+            <div class="hero-mockup" id="parallax-mockup">
+                <img src="/dashboard.png" alt="Factarlou Dashboard Overview">
+            </div>
+            <!-- Floating UI Elements -->
+            <div class="floating-ui floating-1" data-depth="0.2">
+                <i data-lucide="check-circle" style="color: var(--accent);"></i>
+                <span>Facture Payée</span>
+            </div>
+            <div class="floating-ui floating-2" data-depth="0.4">
+                <i data-lucide="trending-up" style="color: var(--primary);"></i>
+                <span>Revenu +15%</span>
+            </div>
+            <div class="floating-ui floating-3" data-depth="0.3">
+                <i data-lucide="shield-check" style="color: var(--accent);"></i>
+                <span>Données Locales</span>
+            </div>
         </div>
     </header>
 
@@ -65,21 +107,25 @@
             <span class="badge">🚀 Guide Rapide</span>
             <h2>Commencez en 3 étapes.</h2>
         </div>
-        <div class="steps-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-top: 4rem;">
+        <div class="steps-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-top: 4rem;">
             <div class="step-card" data-reveal style="text-align: center;">
-                <div class="step-num" style="font-size: 4rem; font-weight: 800; opacity: 0.1; margin-bottom: -2rem;">01</div>
+                <div class="step-num" style="font-size: 4rem; font-weight: 800; opacity: 0.1; margin-bottom: -2rem;">01
+                </div>
                 <div class="feature-icon" style="margin: 0 auto 1.5rem;"><i data-lucide="download-cloud"></i></div>
                 <h3>Télécharger</h3>
                 <p>Choisissez la version adaptée à votre système (Windows ou macOS).</p>
             </div>
             <div class="step-card" data-reveal style="text-align: center;">
-                <div class="step-num" style="font-size: 4rem; font-weight: 800; opacity: 0.1; margin-bottom: -2rem;">02</div>
+                <div class="step-num" style="font-size: 4rem; font-weight: 800; opacity: 0.1; margin-bottom: -2rem;">02
+                </div>
                 <div class="feature-icon" style="margin: 0 auto 1.5rem;"><i data-lucide="shield-check"></i></div>
                 <h3>Installer</h3>
                 <p>Lancez l'installateur. Vos données resteront toujours sur votre appareil.</p>
             </div>
             <div class="step-card" data-reveal style="text-align: center;">
-                <div class="step-num" style="font-size: 4rem; font-weight: 800; opacity: 0.1; margin-bottom: -2rem;">03</div>
+                <div class="step-num" style="font-size: 4rem; font-weight: 800; opacity: 0.1; margin-bottom: -2rem;">03
+                </div>
                 <div class="feature-icon" style="margin: 0 auto 1.5rem;"><i data-lucide="zap"></i></div>
                 <h3>Facturer</h3>
                 <p>Créez votre compte local et commencez à gérer votre business.</p>
@@ -87,7 +133,7 @@
         </div>
     </section>
 
-    <!-- Features Section (Existing) -->
+    <!-- Features Section -->
     <section id="features" class="features">
         <div class="section-header" data-reveal>
             <h2>Tout ce dont vous avez besoin.</h2>
@@ -98,17 +144,25 @@
             <div class="feature-card" data-reveal>
                 <div class="feature-icon"><i data-lucide="calculator"></i></div>
                 <h3>Conformité Fiscale TN</h3>
-                <p>Calcul automatique du timbre fiscal (1.000 TND), gestion des taux de TVA (7%, 13%, 19%) et du FODEC.</p>
+                <p>Calcul automatique du timbre fiscal (1.000 TND), gestion des taux de TVA (7%, 13%, 19%) et du FODEC.
+                </p>
             </div>
             <div class="feature-card" data-reveal>
                 <div class="feature-icon"><i data-lucide="scan"></i></div>
                 <h3>Scanner OCR Intelligent</h3>
-                <p>Numérisez vos reçus et factures d'achat. L'IA extrait automatiquement les montants, dates et fournisseurs.</p>
+                <p>Numérisez vos reçus et factures d'achat. L'IA extrait automatiquement les montants, dates et
+                    fournisseurs.</p>
             </div>
             <div class="feature-card" data-reveal>
                 <div class="feature-icon"><i data-lucide="file-signature"></i></div>
                 <h3>Certificats de Retenue</h3>
                 <p>Générez vos certificats de retenue à la source en un clic, conformes à la législation en vigueur.</p>
+            </div>
+            <div class="feature-card" data-reveal>
+                <div class="feature-icon"><i data-lucide="file-code"></i></div>
+                <h3>Export XML (Portail TEJ)</h3>
+                <p>Générez des fichiers XML compatibles avec le portail de l'administration fiscale tunisienne (Retenues
+                    & Factures).</p>
             </div>
             <div class="feature-card" data-reveal>
                 <div class="feature-icon"><i data-lucide="layout"></i></div>
@@ -118,27 +172,32 @@
             <div class="feature-card" data-reveal>
                 <div class="feature-icon"><i data-lucide="users"></i></div>
                 <h3>Gestion Clients (CRM)</h3>
-                <p>Suivez l'historique de vos clients, leurs paiements et gérez vos contrats (CDI, Freelance) facilement.</p>
+                <p>Suivez l'historique de vos clients, leurs paiements et gérez vos contrats (CDI, Freelance)
+                    facilement.</p>
             </div>
             <div class="feature-card" data-reveal>
                 <div class="feature-icon"><i data-lucide="bar-chart-3"></i></div>
                 <h3>Analytiques en Temps Réel</h3>
-                <p>Visualisez votre croissance, vos dépenses et vos factures impayées via un tableau de bord intuitif.</p>
+                <p>Visualisez votre croissance, vos dépenses et vos factures impayées via un tableau de bord intuitif.
+                </p>
             </div>
             <div class="feature-card" data-reveal>
                 <div class="feature-icon"><i data-lucide="users-2"></i></div>
                 <h3>Multi-utilisateurs</h3>
-                <p>Partagez l'appareil mais pas vos données. Sur un même ordinateur, plusieurs utilisateurs peuvent créer des comptes séparés et sécurisés.</p>
+                <p>Partagez l'appareil mais pas vos données. Sur un même ordinateur, plusieurs utilisateurs peuvent
+                    créer des comptes séparés et sécurisés.</p>
             </div>
             <div class="feature-card" data-reveal>
                 <div class="feature-icon"><i data-lucide="database"></i></div>
                 <h3>Sauvegarde & Restauration</h3>
-                <p>Exportez votre base de données SQLite en un clic. Gardez le contrôle total sur vos sauvegardes physiques et externes.</p>
+                <p>Exportez votre base de données SQLite en un clic. Gardez le contrôle total sur vos sauvegardes
+                    physiques et externes.</p>
             </div>
             <div class="feature-card" data-reveal>
                 <div class="feature-icon"><i data-lucide="pen-tool"></i></div>
                 <h3>Personnalisation Totale</h3>
-                <p>Intégrez votre propre logo, signature et cachet numérique. Factarlou génère des documents qui reflètent parfaitement votre image de marque.</p>
+                <p>Intégrez votre propre logo, signature et cachet numérique. Factarlou génère des documents qui
+                    reflètent parfaitement votre image de marque.</p>
             </div>
         </div>
     </section>
@@ -148,17 +207,38 @@
             <div class="privacy-text" data-reveal>
                 <span class="badge" style="color: var(--accent);">🔒 Sécurité Maximale</span>
                 <h2>Vos données ne quittent jamais votre ordinateur.</h2>
-                <p>Contrairement aux solutions cloud, Factarlou stocke tout localement dans une base de données SQLite sécurisée. Pas de télémétrie, pas de tracking, pas d'upload.</p>
+                <p>Contrairement aux solutions cloud, Factarlou stocke tout localement dans une base de données SQLite
+                    sécurisée. Pas de télémétrie, pas de tracking, pas d'upload.</p>
                 <ul style="list-style: none; margin-top: 2rem;">
-                    <li style="margin-bottom: 1rem;"><i data-lucide="check" style="color: var(--accent); vertical-align: middle; margin-right: 10px;"></i> Base de données SQLite locale</li>
-                    <li style="margin-bottom: 1rem;"><i data-lucide="check" style="color: var(--accent); vertical-align: middle; margin-right: 10px;"></i> Mots de passe hashés avec bcrypt</li>
-                    <li style="margin-bottom: 1rem;"><i data-lucide="check" style="color: var(--accent); vertical-align: middle; margin-right: 10px;"></i> Système de backup automatique</li>
+                    <li style="margin-bottom: 1rem;"><i data-lucide="check"
+                            style="color: var(--accent); vertical-align: middle; margin-right: 10px;"></i> Base de
+                        données SQLite locale</li>
+                    <li style="margin-bottom: 1rem;"><i data-lucide="check"
+                            style="color: var(--accent); vertical-align: middle; margin-right: 10px;"></i> Mots de passe
+                        hashés with bcrypt</li>
+                    <li style="margin-bottom: 1rem;"><i data-lucide="check"
+                            style="color: var(--accent); vertical-align: middle; margin-right: 10px;"></i> Système de
+                        backup automatique</li>
                 </ul>
             </div>
             <div class="privacy-visual" data-reveal>
-                <div class="lock-icon"><i data-lucide="shield-check"></i></div>
+                <div class="lock-container">
+                    <div class="lock-icon" id="privacy-shield-icon"><i data-lucide="shield-check"></i></div>
+                    <div class="lock-glow"></div>
+                </div>
                 <h3>Confidentialité par Design</h3>
                 <p>Pensé pour les professionnels qui exigent une souveraineté totale sur leurs chiffres.</p>
+
+                <div class="privacy-toggle-zone"
+                    style="margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                    <span
+                        style="font-size: 0.8rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px;">Activer
+                        Mode Sécurité</span>
+                    <label class="switch">
+                        <input type="checkbox" id="privacy-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
             </div>
         </div>
     </section>
@@ -173,26 +253,33 @@
             <div class="download-card" data-reveal>
                 <i data-lucide="apple"></i>
                 <h3>macOS</h3>
-                <p id="mac-version">Version v2.5.2</p>
+                <p id="mac-version">Version v2.6.0</p>
                 <div style="display: flex; flex-direction: column; gap: 0.75rem; margin-top: 2rem;">
-                    <a href="https://github.com/a32116150-ctrl/tuninvoice/releases/download/v2.5.2/Factarlou-2.5.2.dmg" id="btn-mac-intel" class="btn-primary" rel="noopener noreferrer" download="Factarlou-2.5.2.dmg">Télécharger .dmg</a>
+                    <a href="https://github.com/a32116150-ctrl/tuninvoice/releases/download/v2.6.0/Factarlou-2.6.0.dmg"
+                        id="btn-mac-intel" class="btn-primary" rel="noopener noreferrer"
+                        download="Factarlou-2.6.0.dmg">Télécharger .dmg</a>
                 </div>
             </div>
             <div class="download-card" data-reveal>
                 <i data-lucide="monitor"></i>
                 <h3>Windows</h3>
-                <p id="win-version">Version v2.5.2</p>
-                <a href="https://github.com/a32116150-ctrl/tuninvoice/releases/download/v2.5.2/Factarlou-Setup-2.5.2.exe" id="btn-win" class="btn-primary" style="margin-top: 2rem; display: block;" rel="noopener noreferrer" download="Factarlou-Setup-2.5.2.exe">Télécharger .exe</a>
+                <p id="win-version">Version v2.6.0</p>
+                <a href="https://github.com/a32116150-ctrl/tuninvoice/releases/download/v2.6.0/Factarlou-Setup-2.6.0.exe"
+                    id="btn-win" class="btn-primary" style="margin-top: 2rem; display: block;" rel="noopener noreferrer"
+                    download="Factarlou-Setup-2.6.0.exe">Télécharger .exe</a>
             </div>
         </div>
 
         <!-- macOS Security Guide -->
-        <div class="security-guide" data-reveal style="margin-top: 6rem; background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 32px; padding: 4rem; display: flex; align-items: center; gap: 4rem; text-align: left; max-width: 1000px; margin-left: auto; margin-right: auto;">
+        <div class="security-guide" data-reveal
+            style="margin-top: 6rem; background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 32px; padding: 4rem; display: flex; align-items: center; gap: 4rem; text-align: left; max-width: 1000px; margin-left: auto; margin-right: auto;">
             <div style="flex: 1;">
-                <span class="badge" style="color: var(--accent); margin-bottom: 1.5rem;">🔒 Note de Sécurité macOS</span>
+                <span class="badge" style="color: var(--accent); margin-bottom: 1.5rem;">🔒 Note de Sécurité
+                    macOS</span>
                 <h3 style="font-size: 2rem; margin-bottom: 1.5rem;">Comment installer sur Mac ?</h3>
                 <p style="color: var(--text-secondary); line-height: 1.8; margin-bottom: 1.5rem;">
-                    Comme Factarlou est une application indépendante, macOS peut afficher un message de sécurité au premier lancement. 
+                    Comme Factarlou est une application indépendante, macOS peut afficher un message de sécurité au
+                    premier lancement.
                 </p>
                 <ol style="color: var(--text-secondary); line-height: 1.8; padding-left: 1.5rem;">
                     <li>Ouvrez les <strong>Réglages Système</strong>.</li>
@@ -202,7 +289,8 @@
                 </ol>
             </div>
             <div style="flex: 1.2;">
-                <img src="/macos-security-guide.png" alt="Guide de sécurité macOS - Bouton Ouvrir quand même" style="width: 100%; border-radius: 16px; border: 1px solid var(--glass-border); box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
+                <img src="/macos-security-guide.png" alt="Guide de sécurité macOS - Bouton Ouvrir quand même"
+                    style="width: 100%; border-radius: 16px; border: 1px solid var(--glass-border); box-shadow: 0 20px 40px rgba(0,0,0,0.3);">
             </div>
         </div>
     </section>
@@ -213,65 +301,92 @@
             <span class="badge">❓ FAQ</span>
             <h2>Questions Fréquentes</h2>
         </div>
-        <div class="faq-grid" style="max-width: 800px; margin: 4rem auto 0; display: flex; flex-direction: column; gap: 1.5rem;">
-            <div class="faq-item" data-reveal style="background: var(--card-bg); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
-                <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Est-ce que mes données sont vraiment privées ?</h3>
-                <p>Oui. Factarlou utilise une base de données SQLite locale. Aucune donnée n'est envoyée sur le cloud. Tout reste sur votre disque dur.</p>
+        <div class="faq-grid"
+            style="max-width: 800px; margin: 4rem auto 0; display: flex; flex-direction: column; gap: 1.5rem;">
+            <div class="faq-item" data-reveal
+                style="background: var(--card-bg); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
+                <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Est-ce que mes données sont
+                    vraiment privées ?</h3>
+                <p>Oui. Factarlou utilise une base de données SQLite locale. Aucune donnée n'est envoyée sur le cloud.
+                    Tout reste sur votre disque dur.</p>
             </div>
-            <div class="faq-item" data-reveal style="background: var(--card-bg); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
-                <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">L'application est-elle gratuite ?</h3>
-                <p>Actuellement, la version BETA est 100% gratuite. Dans le futur, un petit abonnement annuel pourrait être introduit pour soutenir le développement continu.</p>
+            <div class="faq-item" data-reveal
+                style="background: var(--card-bg); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
+                <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">L'application est-elle
+                    gratuite ?</h3>
+                <p>Actuellement, la version BETA est 100% gratuite. Dans le futur, un petit abonnement annuel pourrait
+                    être introduit pour soutenir le développement continu.</p>
             </div>
-            <div class="faq-item" data-reveal style="background: var(--card-bg); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
-                <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Fonctionne-t-elle sans internet ?</h3>
-                <p>Absolument. Factarlou est conçue pour fonctionner totalement hors-ligne. Internet n'est nécessaire que pour télécharger les mises à jour.</p>
+            <div class="faq-item" data-reveal
+                style="background: var(--card-bg); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
+                <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Fonctionne-t-elle sans
+                    internet ?</h3>
+                <p>Absolument. Factarlou est conçue pour fonctionner totalement hors-ligne. Internet n'est nécessaire
+                    que pour télécharger les mises à jour.</p>
             </div>
         </div>
     </section>
 
     <!-- Community & Feedback -->
-    <section id="community" class="community" style="padding: 100px 5%; background: linear-gradient(180deg, rgba(0, 151, 167, 0.05), transparent);">
+    <section id="community" class="community"
+        style="padding: 100px 5%; background: linear-gradient(180deg, rgba(0, 151, 167, 0.05), transparent);">
         <div class="section-header" data-reveal>
             <span class="badge">📣 Communauté</span>
             <h2>Aidez-nous à forger l'avenir.</h2>
         </div>
-        <div class="community-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem;">
-            <div class="community-card" data-reveal style="padding: 3rem; background: var(--card-bg); border-radius: 24px; border: 1px solid var(--glass-border); text-align: center;">
-                <i data-lucide="video" style="color: var(--primary); margin-bottom: 1.5rem; width: 48px; height: 48px;"></i>
+        <div class="community-grid"
+            style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem;">
+            <div class="community-card" data-reveal
+                style="padding: 3rem; background: var(--card-bg); border-radius: 24px; border: 1px solid var(--glass-border); text-align: center;">
+                <i data-lucide="video"
+                    style="color: var(--primary); margin-bottom: 1.5rem; width: 48px; height: 48px;"></i>
                 <h3>Démo Vidéo</h3>
                 <p>Bientôt disponible. Une présentation complète de toutes les fonctionnalités en action.</p>
             </div>
-            <div class="community-card" data-reveal style="padding: 3rem; background: var(--card-bg); border-radius: 24px; border: 1px solid var(--glass-border); text-align: center;">
-                <i data-lucide="mail" style="color: var(--accent); margin-bottom: 1.5rem; width: 48px; height: 48px;"></i>
+            <div class="community-card" data-reveal
+                style="padding: 3rem; background: var(--card-bg); border-radius: 24px; border: 1px solid var(--glass-border); text-align: center;">
+                <i data-lucide="mail"
+                    style="color: var(--accent); margin-bottom: 1.5rem; width: 48px; height: 48px;"></i>
                 <h3>Restez Informé</h3>
                 <p>Inscrivez-vous pour recevoir les notes de mise à jour et les annonces importantes.</p>
                 <div style="margin-top: 2rem; display: flex; gap: 0.5rem;">
-                    <input id="input-subscribe" type="email" placeholder="Votre email" style="flex: 1; padding: 0.8rem 1.2rem; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; transition: border-color 0.3s;">
-                    <button id="btn-subscribe" class="btn-primary" style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">S'abonner</button>
+                    <input id="input-subscribe" type="email" placeholder="Votre email"
+                        style="flex: 1; padding: 0.8rem 1.2rem; border-radius: 8px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; transition: border-color 0.3s;">
+                    <button id="btn-subscribe" class="btn-primary"
+                        style="padding: 0.8rem 1.5rem; font-size: 0.9rem;">S'abonner</button>
                 </div>
             </div>
-            <div class="community-card" data-reveal style="padding: 3rem; background: var(--card-bg); border-radius: 24px; border: 1px solid var(--glass-border); text-align: center;">
-                <i data-lucide="message-square" style="color: var(--primary); margin-bottom: 1.5rem; width: 48px; height: 48px;"></i>
+            <div class="community-card" data-reveal
+                style="padding: 3rem; background: var(--card-bg); border-radius: 24px; border: 1px solid var(--glass-border); text-align: center;">
+                <i data-lucide="message-square"
+                    style="color: var(--primary); margin-bottom: 1.5rem; width: 48px; height: 48px;"></i>
                 <h3>Feedback</h3>
                 <p>Un bug ? Une idée ? Partagez vos retours directement avec moi.</p>
-                <a href="mailto:a32116150@gmail.com" class="btn-secondary" style="margin-top: 2rem; width: 100%; display: block;">Envoyer un Message</a>
+                <a href="mailto:a32116150@gmail.com" class="btn-secondary"
+                    style="margin-top: 2rem; width: 100%; display: block;">Envoyer un Message</a>
             </div>
         </div>
     </section>
 
-    <section id="vision" class="vision" style="padding: 100px 5%; text-align: center; background: linear-gradient(180deg, transparent, rgba(0, 151, 167, 0.05));">
+    <section id="vision" class="vision"
+        style="padding: 100px 5%; text-align: center; background: linear-gradient(180deg, transparent, rgba(0, 151, 167, 0.05));">
         <div class="section-header" data-reveal>
             <span class="badge" style="color: var(--accent);">🌱 Vision & Futur</span>
             <h2>Une application qui grandit avec vous.</h2>
-            <p style="max-width: 800px; margin: 0 auto;">Factarlou est actuellement en <strong>version BETA</strong>. Elle est entièrement fonctionnelle et gratuite pour tous les utilisateurs pionniers.</p>
+            <p style="max-width: 800px; margin: 0 auto;">Factarlou est actuellement en <strong>version BETA</strong>.
+                Elle est entièrement fonctionnelle et gratuite pour tous les utilisateurs pionniers.</p>
         </div>
         <div data-reveal style="max-width: 700px; margin: 0 auto; color: var(--text-secondary); line-height: 1.8;">
             <p style="margin-bottom: 2rem;">
-                Mon objectif est de maintenir cette application en vie, de l'améliorer constamment et d'y ajouter des fonctionnalités encore plus puissantes. Si la communauté adopte Factarlou, un petit abonnement annuel symbolique pourra être introduit dans le futur pour couvrir les frais de développement et assurer des mises à jour régulières.
+                Mon objectif est de maintenir cette application en vie, de l'améliorer constamment et d'y ajouter des
+                fonctionnalités encore plus puissantes. Si la communauté adopte Factarlou, un petit abonnement annuel
+                symbolique pourra être introduit dans le futur pour couvrir les frais de développement et assurer des
+                mises à jour régulières.
             </p>
 
             <p>
-                Pour l'instant, profitez-en pleinement et n'hésitez pas à partager vos retours pour façonner l'avenir de la facturation en Tunisie !
+                Pour l'instant, profitez-en pleinement et n'hésitez pas à partager vos retours pour façonner l'avenir de
+                la facturation en Tunisie !
             </p>
         </div>
     </section>
@@ -288,4 +403,5 @@
 
     <script type="module" src="./main.js"></script>
 </body>
+
 </html>

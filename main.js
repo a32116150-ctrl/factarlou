@@ -105,70 +105,112 @@ document.addEventListener('DOMContentLoaded', () => {
     const REPO = 'a32116150-ctrl/tuninvoice';
     const GITHUB_RELEASES_API = `https://api.github.com/repos/${REPO}/releases`;
     
-    let totalDownloads = 0;
-
     async function fetchReleasesData() {
+        // 0. Check Cache First
+        const cachedData = localStorage.getItem('factarlou_stats');
+        if (cachedData) {
+            const data = JSON.parse(cachedData);
+            const now = new Date().getTime();
+            // Use cache if less than 30 minutes old
+            if (now - data.timestamp < 30 * 60 * 1000) {
+                updateUI(data.total, data.mac, data.win, data.version, false);
+            }
+        }
+
         try {
             const response = await fetch(GITHUB_RELEASES_API);
             const releases = await response.json();
             
             if (!Array.isArray(releases)) return;
 
-            // 1. Calculate Total Downloads across all releases (filtering for installers only)
-            totalDownloads = releases.reduce((acc, release) => {
-                const releaseDownloads = release.assets.reduce((sum, asset) => {
+            // 1. Calculate OS Breakdown
+            let macDownloads = 0;
+            let winDownloads = 0;
+
+            releases.forEach(release => {
+                release.assets.forEach(asset => {
                     const name = asset.name.toLowerCase();
-                    // Only count actual installers, exclude metadata like .yml or .blockmap
-                    if (name.endsWith('.exe') || name.endsWith('.dmg') || name.endsWith('.zip') || name.endsWith('.deb')) {
-                        return sum + asset.download_count;
+                    const count = asset.download_count;
+
+                    if (name.endsWith('.dmg')) {
+                        macDownloads += count;
+                    } else if (name.endsWith('.exe')) {
+                        winDownloads += count;
                     }
-                    return sum;
-                }, 0);
-                return acc + releaseDownloads;
-            }, 0);
+                });
+            });
 
-            // 2. Update Download Counter UI
-            const downloadCountEl = document.getElementById('download-count');
-            if (downloadCountEl) {
-                // Animate counting up for a "wow" effect
-                animateValue(downloadCountEl, 0, totalDownloads, 1500);
-            }
+            const latestVersion = releases[0]?.tag_name || 'v2.6.0';
 
-            // 3. Handle Latest Release specifically (for buttons and version badge)
-            const latest = releases[0]; // GitHub returns them sorted by date (latest first)
+            // 1.5 Apply Test Offset (Exclude developer testing)
+            const TEST_OFFSET = 24;
+            macDownloads = Math.max(0, macDownloads - TEST_OFFSET);
+            
+            // Total is now strictly the sum of visible OS downloads
+            let totalDownloads = macDownloads + winDownloads;
+
+            // 2. Save to Cache
+            localStorage.setItem('factarlou_stats', JSON.stringify({
+                total: totalDownloads,
+                mac: macDownloads,
+                win: winDownloads,
+                version: latestVersion,
+                timestamp: new Date().getTime()
+            }));
+
+            // 3. Update UI
+            updateUI(totalDownloads, macDownloads, winDownloads, latestVersion, true);
+
+            // 4. Handle Latest Release Download Links
+            const latest = releases[0];
             if (latest) {
-                const version = latest.tag_name;
-                
-                const badge = document.getElementById('version-badge');
-                if (badge) badge.innerText = `🚀 Version ${version} (BETA) Disponible`;
-
-                const macVer = document.getElementById('mac-version');
-                const winVer = document.getElementById('win-version');
-                if (macVer) macVer.innerText = `Version ${version}`;
-                if (winVer) winVer.innerText = `Version ${version}`;
-
                 const assets = latest.assets;
                 const macDmg = assets.find(a => a.name.endsWith('.dmg') && !a.name.includes('arm64'));
-                // Prioritize 'Setup' version for Windows to avoid portable versions
                 const winExe = assets.find(a => a.name.toLowerCase().includes('setup') && a.name.endsWith('.exe')) || 
                                assets.find(a => a.name.endsWith('.exe'));
 
                 if (macDmg) {
                     const btn = document.getElementById('btn-mac-intel');
-                    btn.href = macDmg.browser_download_url;
-                    btn.setAttribute('download', macDmg.name);
+                    if (btn) {
+                        btn.href = macDmg.browser_download_url;
+                        btn.setAttribute('download', macDmg.name);
+                    }
                 }
                 if (winExe) {
                     const btn = document.getElementById('btn-win');
-                    btn.href = winExe.browser_download_url;
-                    btn.setAttribute('download', winExe.name);
+                    if (btn) {
+                        btn.href = winExe.browser_download_url;
+                        btn.setAttribute('download', winExe.name);
+                    }
                 }
             }
 
         } catch (error) {
             console.error('Erreur lors de la récupération des données GitHub:', error);
-            const downloadCountEl = document.getElementById('download-count');
-            if (downloadCountEl) downloadCountEl.innerText = '150+'; // Fallback
+        }
+    }
+
+    // Helper to update all UI elements
+    function updateUI(total, mac, win, version, animate = true) {
+        const totalEl = document.getElementById('download-count');
+        const macEl = document.getElementById('mac-downloads');
+        const winEl = document.getElementById('win-downloads');
+        const badge = document.getElementById('version-badge');
+        const macVersionEl = document.getElementById('mac-version');
+        const winVersionEl = document.getElementById('win-version');
+
+        if (badge) badge.innerText = `🚀 Version ${version} (BETA) Disponible`;
+        if (macVersionEl) macVersionEl.innerText = `Version ${version}`;
+        if (winVersionEl) winVersionEl.innerText = `Version ${version}`;
+
+        if (animate) {
+            if (totalEl) animateValue(totalEl, 0, total, 1500);
+            if (macEl) animateValue(macEl, 0, mac, 1800);
+            if (winEl) animateValue(winEl, 0, win, 2000);
+        } else {
+            if (totalEl) totalEl.innerText = total;
+            if (macEl) macEl.innerText = mac;
+            if (winEl) winEl.innerText = win;
         }
     }
 
@@ -197,12 +239,7 @@ document.addEventListener('DOMContentLoaded', () => {
         downloadButtons.forEach(btn => {
             if (!btn) return;
             btn.addEventListener('click', () => {
-                totalDownloads++;
-                const countEl = document.getElementById('download-count');
                 const badgeEl = document.getElementById('download-counter');
-                
-                if (countEl) countEl.innerText = totalDownloads + ' ';
-                
                 if (badgeEl) {
                     badgeEl.classList.remove('increment');
                     void badgeEl.offsetWidth; // Trigger reflow
@@ -212,7 +249,64 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ─── 3D Parallax Mockup Effect ──────────────────────────────────────────
+    function setupParallax() {
+        const mockup = document.getElementById('parallax-mockup');
+        const container = document.querySelector('.hero-mockup-container');
+        const floaters = document.querySelectorAll('.floating-ui');
+        
+        if (!mockup || !container) return;
+
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // Calculate tilt for main mockup
+            const rotateX = ((y - centerY) / centerY) * -10;
+            const rotateY = ((x - centerX) / centerX) * 10;
+            
+            mockup.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+
+            // Animate floaters at different depths
+            floaters.forEach(el => {
+                const depth = parseFloat(el.getAttribute('data-depth')) || 0.2;
+                const moveX = (x - centerX) * depth;
+                const moveY = (y - centerY) * depth;
+                el.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+        });
+
+        container.addEventListener('mouseleave', () => {
+            mockup.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
+            floaters.forEach(el => {
+                el.style.transform = `translate(0, 0)`;
+            });
+        });
+    }
+
+    // ─── Privacy Shield Toggle ──────────────────────────────────────────────
+    function setupPrivacyToggle() {
+        const toggle = document.getElementById('privacy-toggle');
+        const body = document.body;
+        
+        if (!toggle) return;
+
+        toggle.addEventListener('change', () => {
+            if (toggle.checked) {
+                body.classList.add('security-mode');
+            } else {
+                body.classList.remove('security-mode');
+            }
+        });
+    }
+
     fetchReleasesData();
     setupDownloadTracking();
+    setupParallax();
+    setupPrivacyToggle();
 
 }); // end DOMContentLoaded
