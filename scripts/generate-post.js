@@ -1,4 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import Groq from "groq-sdk";
 import fs from "fs-extra";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -8,16 +9,19 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Configuration
-const API_KEY = process.env.GEMINI_API_KEY;
-if (!API_KEY) {
-  console.error("Please set GEMINI_API_KEY environment variable");
+const GEMINI_KEY = process.env.GEMINI_API_KEY;
+const GROQ_KEY = process.env.GROQ_API_KEY;
+
+if (!GEMINI_KEY && !GROQ_KEY) {
+  console.error("Please set at least one API key (GEMINI_API_KEY or GROQ_API_KEY)");
   process.exit(1);
 }
 
-const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const genAI = new GoogleGenerativeAI(GEMINI_KEY);
+const geminiModel = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+const groq = GROQ_KEY ? new Groq({ apiKey: GROQ_KEY }) : null;
 
-async function generatePost(retryCount = 0) {
+async function generatePost(retryCount = 0, useFallback = false) {
   const date = DateTime.now().setLocale('fr').toFormat('dd MMMM yyyy');
   const slugDate = DateTime.now().toFormat('yyyy-MM-dd');
   
@@ -43,12 +47,25 @@ async function generatePost(retryCount = 0) {
   `;
 
   try {
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
-    
-    const jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();
-    const data = JSON.parse(jsonStr);
+    let data;
+    if (!useFallback && GEMINI_KEY) {
+      console.log("Attempting generation with Gemini...");
+      const result = await geminiModel.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+      const jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();
+      data = JSON.parse(jsonStr);
+    } else if (groq) {
+      console.log("Using Groq Fallback (Llama 3)...");
+      const chatCompletion = await groq.chat.completions.create({
+        messages: [{ role: "user", content: prompt + "\nRespond ONLY with JSON." }],
+        model: "llama-3.3-70b-versatile",
+        response_format: { type: "json_object" }
+      });
+      data = JSON.parse(chatCompletion.choices[0].message.content);
+    } else {
+      throw new Error("No available AI service to handle fallback.");
+    }
 
     const coverImage = `https://images.unsplash.com/photo-1454165833762-02c4a4c1786c?auto=format&fit=crop&q=80&w=1200&q=${data.unsplash_keyword}`;
     const slug = `${slugDate}-${data.title_fr.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
@@ -78,12 +95,15 @@ async function generatePost(retryCount = 0) {
     await updateSearchIndex(data, postFileName);
 
   } catch (error) {
-    if (error.status === 429 && retryCount < 10) {
-      console.log(`Rate limited. Retrying in 60 seconds... (Attempt ${retryCount + 1})`);
-      await new Promise(resolve => setTimeout(resolve, 60000));
-      return generatePost(retryCount + 1);
+    if (error.status === 429 && retryCount < 5 && !useFallback) {
+      console.log(`Gemini rate limited. Retrying in 30 seconds... (Attempt ${retryCount + 1})`);
+      await new Promise(resolve => setTimeout(resolve, 30000));
+      return generatePost(retryCount + 1, false);
+    } else if (!useFallback && groq) {
+      console.log("Gemini failed or rate limited. Switching to Groq Fallback...");
+      return generatePost(0, true);
     }
-    console.error("Error generating post:", error);
+    console.error("Critical Error generating post:", error);
     process.exit(1);
   }
 }
@@ -91,15 +111,9 @@ async function generatePost(retryCount = 0) {
 async function updateSearchIndex(data, fileName) {
   const indexPath = path.join(__dirname, "../public/search-index.json");
   let index = [];
-  
   try {
-    if (await fs.exists(indexPath)) {
-      index = await fs.readJson(indexPath);
-    }
-  } catch (e) {
-    index = [];
-  }
-
+    if (await fs.exists(indexPath)) index = await fs.readJson(indexPath);
+  } catch (e) { index = []; }
   index.unshift({
     title: data.title_fr,
     title_ar: data.title_ar,
@@ -107,14 +121,12 @@ async function updateSearchIndex(data, fileName) {
     url: `/posts/${fileName}`,
     type: 'blog'
   });
-
   await fs.writeJson(indexPath, index.slice(0, 100), { spaces: 2 });
 }
 
 async function updateBlogListing(data, fileName, date, coverImage) {
   const blogPath = path.join(__dirname, "../blog.html");
   let blogHtml = await fs.readFile(blogPath, "utf-8");
-
   const newCard = `
             <a href="/posts/${fileName}" class="post-card" data-reveal>
                 <img src="${coverImage}" alt="${data.title_fr}" class="post-image">
@@ -132,26 +144,22 @@ async function updateBlogListing(data, fileName, date, coverImage) {
                 </div>
             </a>
   `;
-
   if (blogHtml.includes('id="no-posts"')) {
     blogHtml = blogHtml.replace(/<div class="empty-blog" id="no-posts">[\s\S]*?<\/div>/, newCard);
   } else {
     blogHtml = blogHtml.replace('<div class="blog-grid" id="posts-grid">', `<div class="blog-grid" id="posts-grid">\n${newCard}`);
   }
-
   await fs.writeFile(blogPath, blogHtml);
 }
 
 async function updateSitemap(fileName) {
   const sitemapPath = path.join(__dirname, "../public/sitemap.xml");
   let sitemap = await fs.readFile(sitemapPath, "utf-8");
-
   const newEntry = `  <url>
     <loc>https://factarlou.online/posts/${fileName}</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>\n</urlset>`;
-
   sitemap = sitemap.replace('</urlset>', newEntry);
   await fs.writeFile(sitemapPath, sitemap);
 }
