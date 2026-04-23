@@ -20,27 +20,28 @@ async function fixPosts() {
 
       // Extract data from the old file
       const titleMatch = content.match(/<h1>(.*?)<\/h1>/);
-      const title = titleMatch ? titleMatch[1] : "";
+      const title = titleMatch ? titleMatch[1] : "Blog Factarlou";
       
-      const dateMatch = content.match(/<div style="opacity: 0.6;">(.*?)<\/div>/);
-      const date = dateMatch ? dateMatch[1] : "";
+      const dateMatch = content.match(/<div style=".*?">(\d+ .*? \d+)<\/div>/) || content.match(/(\d+ .*? \d+)/);
+      const date = dateMatch ? dateMatch[1] : "23 Avril 2026";
       
-      const categoryMatch = content.match(/<span class="badge">(.*?)<\/span>/);
-      const category = categoryMatch ? categoryMatch[1] : "";
+      const categoryMatch = content.match(/<span style=".*?">(.*?)<\/span>/);
+      const category = categoryMatch ? categoryMatch[1] : "Fintech";
 
-      const coverMatch = content.match(/<img src="(.*?)" alt=".*?" class="post-cover">/);
-      const cover = coverMatch ? coverMatch[1] : "";
+      const coverMatch = content.match(/<img src="(.*?)"/) || content.match(/url\((.*?)\)/);
+      const cover = coverMatch ? coverMatch[1] : "https://loremflickr.com/1200/800/business";
 
-      // Extract FR/AR content blocks
+      // Extract FR content blocks
       const frContentMatch = content.match(/<div class="post-content">([\s\S]*?)<\/div>/);
-      const frContent = frContentMatch ? frContentMatch[1] : "";
+      const frContent = frContentMatch ? frContentMatch[1] : "Contenu en cours de chargement...";
 
       // Simple replacement into the new template
       let newHtml = template
         .replace(/{{TITLE_FR}}/g, title)
-        .replace(/{{TITLE_AR}}/g, "تحسين تمويلك مع Factarlou") // Fallback for old posts
-        .replace(/{{DATE}}/g, date)
+        .replace(/{{TITLE_AR}}/g, "تحسين تمويلك مع Factarlou")
         .replace(/{{CATEGORY}}/g, category)
+        .replace(/{{CATEGORY_AR}}/g, "فنتك")
+        .replace(/{{DATE}}/g, date)
         .replace(/{{COVER_IMAGE}}/g, cover)
         .replace(/{{CONTENT_FR}}/g, frContent)
         .replace(/{{CONTENT_AR}}/g, "قريباً باللغة العربية");
