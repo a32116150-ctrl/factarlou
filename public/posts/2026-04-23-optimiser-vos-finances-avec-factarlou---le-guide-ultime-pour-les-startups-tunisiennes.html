@@ -3,103 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Optimiser vos finances avec Factarlou : Le guide ultime pour les startups tunisiennes — Blog Factarlou</title>
+    <title>{{TITLE}} — Blog Factarlou</title>
     <base href="/">
-    <meta name="description" content="Découvrez comment optimiser vos finances avec Factarlou, le système de gestion de facturation offline-first conçu spécifiquement pour les startups tunisiennes. Améliorez votre productivité et votre rentabilité avec nos conseils d'experts.">
+    <meta name="description" content="{{EXCERPT}}">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="/logo-icon.png">
+    <link rel="icon" type="image/png" href="logo-icon.png">
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="main.js" defer></script>
     <style>
+        /* CRITICAL THEME INJECTION (Prevents white background if CSS fails) */
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --primary: #0097a7;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .mesh-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 0% 0%, rgba(0, 151, 167, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(0, 188, 212, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+        nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--primary); }
+        
         .post-container {
-            max-width: 800px;
+            max-width: 850px;
             margin: 140px auto 80px;
-            padding: 4rem;
+            padding: 3rem;
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
             border-radius: 32px;
             backdrop-filter: blur(20px);
         }
-        .post-header {
-            margin-bottom: 4rem;
-            text-align: center;
-        }
-        .post-content {
-            line-height: 1.8;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-        .post-content h2, .post-content h3 {
-            color: var(--text-primary);
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        .lang-toggle {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
-        }
-        .btn-lang {
-            padding: 0.5rem 1.5rem;
-            border-radius: 100px;
-            border: 1px solid var(--glass-border);
-            background: rgba(255,255,255,0.05);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .btn-lang.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        [lang="ar"] {
-            direction: rtl;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: none;
-        }
-        .cta-box {
-            margin-top: 5rem;
-            padding: 3rem;
-            background: linear-gradient(135deg, rgba(0, 151, 167, 0.1), rgba(0, 188, 212, 0.1));
-            border-radius: 24px;
-            border: 1px solid var(--primary);
-            text-align: center;
-        }
-        .post-cover {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: 24px;
-            margin-bottom: 3rem;
-            border: 1px solid var(--glass-border);
-        }
+        .post-header h1 { font-size: 2.5rem; margin: 1rem 0; }
+        .post-content { line-height: 1.8; color: var(--text-secondary); font-size: 1.15rem; }
+        .post-content h2 { color: white; margin-top: 3rem; }
+        .post-cover { width: 100%; height: 450px; object-fit: cover; border-radius: 24px; margin-bottom: 3rem; }
+        .lang-toggle { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+        .btn-lang { padding: 0.6rem 1.5rem; border-radius: 100px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; cursor: pointer; }
+        .btn-lang.active { background: var(--primary); border-color: var(--primary); }
+        .badge { background: rgba(0, 151, 167, 0.2); color: var(--primary); padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.9rem; font-weight: 600; }
+        [lang="ar"] { direction: rtl; display: none; }
+        
+        footer { padding: 4rem 5%; background: #070b14; text-align: center; border-top: 1px solid var(--glass-border); }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; }
     </style>
 </head>
 <body>
     <div class="mesh-bg"></div>
 
     <nav>
-        <div class="logo" onclick="window.location.href='/index.html'" style="cursor: pointer;">
-            <img src="logo-icon.png" alt="Factarlou Logo" style="width: 40px; height: 40px; border-radius: 10px;">
+        <a href="index.html" class="logo">
+            <img src="logo-icon.png" alt="Factarlou" style="width: 40px; height: 40px; border-radius: 10px;">
             Factarlou
-        </div>
+        </a>
         <div class="nav-links">
             <a href="index.html">Accueil</a>
             <a href="docs.html">Docs</a>
             <a href="about.html">À Propos</a>
-            <a href="/showcase.html">Galerie</a>
+            <a href="showcase.html">Galerie</a>
             <a href="blog.html">Blog</a>
         </div>
-        <button class="search-trigger" id="search-btn" aria-label="Rechercher" style="background: none; border: none; color: white; cursor: pointer; padding: 10px;">
+        <button class="search-trigger" id="search-btn" style="background: none; border: none; color: white; cursor: pointer;">
             <i data-lucide="search"></i>
         </button>
-        <a href="/index.html#download" class="btn-download-nav">Essayer Gratuitement</a>
     </nav>
 
-    <article class="post-container" data-reveal>
-        <img src="https://loremflickr.com/1200/800/accounting" alt="Optimiser vos finances avec Factarlou : Le guide ultime pour les startups tunisiennes" class="post-cover">
+    <article class="post-container">
+        <img src="https://loremflickr.com/1200/800/accounting" alt="{{TITLE}}" class="post-cover">
         
         <div class="lang-toggle">
             <button class="btn-lang active" onclick="setLang('fr')">Français</button>
@@ -110,9 +123,10 @@
             <header class="post-header">
                 <span class="badge">Entrepreneuriat</span>
                 <h1>Optimiser vos finances avec Factarlou : Le guide ultime pour les startups tunisiennes</h1>
-                <div style="margin-top: 1rem; color: var(--text-secondary); opacity: 0.6;">23 avril 2026</div>
+                <div style="opacity: 0.6;"></div>
             </header>
             <div class="post-content">
+                
                 
    <h2>Introduction</h2>
    <p>Les startups tunisiennes font face à des défis uniques en matière de gestion financière. Avec la concurrence accrue et les réglementations complexes, il est essentiel de disposer d'un système de gestion de facturation efficace pour garantir la réussite de votre entreprise. C'est là que Factarlou intervient, en offrant une solution offline-first conçue spécifiquement pour les startups tunisiennes.</p>
@@ -135,61 +149,21 @@
       <li>Naviguez dans les réglementations fiscales en Tunisie avec confiance</li>
    </ul>
    
+            
             </div>
         </div>
 
         <div id="content-ar" lang="ar">
             <header class="post-header">
-                <span class="badge">ريادة الأعمال</span>
-                <h1>تحسين تمويلك مع Factarlou: الدليل الشامل للشركات الناشئة التونسية</h1>
-                <div style="margin-top: 1rem; color: var(--text-secondary); opacity: 0.6;">23 avril 2026</div>
+                <span class="badge">{{CATEGORY_AR}}</span>
+                <h1>تحسين تمويلك مع Factarlou</h1>
+                <div style="opacity: 0.6;"></div>
             </header>
             <div class="post-content">
-                
-   <h2>مستقبل تمويلك مع Factarlou: الدليل الشامل</h2>
-   <p>تواجه الشركات الناشئة التونسية تحديات فريدة فيما يتعلق بإدارة المالية. مع زيادة المنافسة والتشريعات المعقدة، من الضروري الحصول على نظام إدارة فواتير فعال لضمان نجاح مشروعك. وهنا يأتي دور Factarlou، الذي يقدم حلًا يعمل بدون الاتصال بالإنترنت مصممًا خصيصًا للشركات الناشئة التونسية.</p>
-   <h2>مميزات Factarlou</h2>
-   <p>يقدم Factarlou مجموعة من الميزات المصممة لتسهيل إدارة أموالك. باستخدام نظامنا، يمكنك إنشاء وإدارة الفواتير بفعالية، وتعقب النفقات والإيرادات، ويمكنك حتى توليد تقارير مفصلة لاتخاذ القرارات المستنيرة.</p>
-   <h3>إدارة الفواتير</h3>
-   <p>تعتبر إدارة الفواتير جانبًا حاسمًا من إدارة المالية. يسمح لك Factarlou بإنشاء فواتير مخصصة بالبيانات والشعار وشرایط الدفع الخاصة بك. يمكنك أيضًا تعقب حالة الفواتير واستلام الإشعارات عند دفعها أو التأخير في الدفع.</p>
-   <h3>إدارة النفقات</h3>
-   <p>تعتبر إدارة النفقات essentielle للسيطرة على التكاليف وتحسين الربحية. يسمح لك Factarlou بتعقب النفقات بالتفصيل، بما في ذلك التواريخ والمبالغ والفئات. يمكنك أيضاً توليد تقارير لتحليل النفقات وتحديد مجالات التحسين.</p>
-   <h2>تشريعات الضرائب في تونس</h2>
-   <p>يمكن أن تكون تشريعات الضرائب في تونس معقدة وصعبة الفهم. يساعدك Factarlou على التنقل في هذه التشريعات من خلال توفير الأدوات والموارد لتأكيد مطابقتك. نحن دائمًا على اطلاع.by الأخير مع أحدث التحديثات التنظيمية حتى تتمكن من التركيز على مشروعك.</p>
-   <h3>إجراء الضرائب</h3>
-   <p>يمكن أن يكون إجراء الضرائب عملية معقدة ومرهقة. يساعدك Factarlou على تسهيل هذه العملية من خلال توفير أدوات لتوليد تقارير مفصلة وإقرارات ضرائبية دقيقة. نحن هنا لمساعدتك في كل خطوة من العملية، من التحضير إلى التسليم.</p>
-   <h2>خاتمة</h2>
-   <p>خلصت إلى أن Factarlou هو الحل الأمثل للشركات الناشئة التونسية التي تبحث عن تحسين المالية. مع نظام إدارة الفواتير الذي يعمل بدون الاتصال بالإنترنت، يمكنك تحسين الإنتاجية والربحية ومطابقتك التشريعية. لا تتردد في الاتصال بنا لمعرفة المزيد حول كيف يمكن لـ Factarlou مساعدتك على النجاح.</p>
-   <ul>
-      <li>انشئ وادير الفواتير بفعالية</li>
-      <li>تتبع النفقات والإيرادات</li>
-      <li>توليد تقارير مفصلة لاتخاذ القرارات المستنيرة</li>
-      <li>تنقل في تشريعات الضرائب بثقة</li>
-   </ul>
-   
+                قريباً باللغة العربية
             </div>
-        </div>
-
-        <div class="cta-box">
-            <h3>Gérez votre fiscalité en toute simplicité.</h3>
-            <p>Factarlou est l'outil indispensable pour les entrepreneurs tunisiens.</p>
-            <a href="/index.html#download" class="btn-primary" style="margin-top: 1.5rem; display: inline-block;">Télécharger l'App</a>
         </div>
     </article>
-
-    <!-- Search Overlay -->
-    <div class="search-overlay" id="search-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 9999;">
-        <div class="search-modal" style="max-width: 600px; margin: 100px auto; background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 2rem;">
-            <div class="search-header" style="display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem;">
-                <i data-lucide="search"></i>
-                <input type="text" id="search-input" placeholder="Rechercher..." style="background: none; border: none; color: white; width: 100%; font-size: 1.2rem; outline: none;">
-                <button id="close-search" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;"><i data-lucide="x"></i></button>
-            </div>
-            <div id="search-results" style="margin-top: 1rem; max-height: 400px; overflow-y: auto;">
-                <p style="color: var(--text-secondary); text-align: center;">Commencez à taper pour rechercher...</p>
-            </div>
-        </div>
-    </div>
 
     <footer>
         <div class="footer-links">
@@ -198,18 +172,14 @@
             <a href="about.html">À Propos</a>
             <a href="blog.html">Blog</a>
         </div>
-        <p>&copy; 2026 Factarlou. Fait avec ❤️ pour la Tunisie.</p>
+        <p style="color: var(--text-secondary)">&copy; 2026 Factarlou. Fait avec ❤️ pour la Tunisie.</p>
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            lucide.createIcons();
-        });
-
+        document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
         function setLang(lang) {
             document.querySelectorAll('.btn-lang').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            
             if (lang === 'ar') {
                 document.getElementById('content-fr').style.display = 'none';
                 document.getElementById('content-ar').style.display = 'block';

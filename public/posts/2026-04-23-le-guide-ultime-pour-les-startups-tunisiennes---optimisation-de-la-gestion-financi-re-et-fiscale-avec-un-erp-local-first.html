@@ -3,98 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le guide ultime pour les startups tunisiennes : Optimisation de la gestion financière et fiscale avec un ERP local-first — Blog Factarlou</title>
+    <title>{{TITLE}} — Blog Factarlou</title>
     <base href="/">
-    <meta name="description" content="Découvrez comment les startups tunisiennes peuvent optimiser leur gestion financière et fiscale grâce à un système de gestion d'entreprise local-first. Apprenez-en davantage sur les avantages de l'utilisation d'un ERP conçu spécifiquement pour les besoins des entreprises tunisiennes.">
+    <meta name="description" content="{{EXCERPT}}">
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="/logo-icon.png">
-    <script src="https://unpkg.com/lucide@latest"></script><script src="main.js" defer></script>
+    <link rel="icon" type="image/png" href="logo-icon.png">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="main.js" defer></script>
     <style>
+        /* CRITICAL THEME INJECTION (Prevents white background if CSS fails) */
+        :root {
+            --bg-dark: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --primary: #0097a7;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .mesh-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                radial-gradient(circle at 0% 0%, rgba(0, 151, 167, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 100% 100%, rgba(0, 188, 212, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+        nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: white;
+            text-decoration: none;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--primary); }
+        
         .post-container {
-            max-width: 800px;
+            max-width: 850px;
             margin: 140px auto 80px;
-            padding: 4rem;
+            padding: 3rem;
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
             border-radius: 32px;
             backdrop-filter: blur(20px);
         }
-        .post-header {
-            margin-bottom: 4rem;
-            text-align: center;
-        }
-        .post-content {
-            line-height: 1.8;
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-        .post-content h2, .post-content h3 {
-            color: var(--text-primary);
-            margin-top: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        .lang-toggle {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 3rem;
-        }
-        .btn-lang {
-            padding: 0.5rem 1.5rem;
-            border-radius: 100px;
-            border: 1px solid var(--glass-border);
-            background: rgba(255,255,255,0.05);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        .btn-lang.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-        [lang="ar"] {
-            direction: rtl;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: none;
-        }
-        .cta-box {
-            margin-top: 5rem;
-            padding: 3rem;
-            background: linear-gradient(135deg, rgba(0, 151, 167, 0.1), rgba(0, 188, 212, 0.1));
-            border-radius: 24px;
-            border: 1px solid var(--primary);
-            text-align: center;
-        }
-        .post-cover {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            border-radius: 24px;
-            margin-bottom: 3rem;
-            border: 1px solid var(--glass-border);
-        }
+        .post-header h1 { font-size: 2.5rem; margin: 1rem 0; }
+        .post-content { line-height: 1.8; color: var(--text-secondary); font-size: 1.15rem; }
+        .post-content h2 { color: white; margin-top: 3rem; }
+        .post-cover { width: 100%; height: 450px; object-fit: cover; border-radius: 24px; margin-bottom: 3rem; }
+        .lang-toggle { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
+        .btn-lang { padding: 0.6rem 1.5rem; border-radius: 100px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; cursor: pointer; }
+        .btn-lang.active { background: var(--primary); border-color: var(--primary); }
+        .badge { background: rgba(0, 151, 167, 0.2); color: var(--primary); padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.9rem; font-weight: 600; }
+        [lang="ar"] { direction: rtl; display: none; }
+        
+        footer { padding: 4rem 5%; background: #070b14; text-align: center; border-top: 1px solid var(--glass-border); }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; }
     </style>
 </head>
 <body>
     <div class="mesh-bg"></div>
 
     <nav>
-        <div class="logo">
-            <img src="logo-icon.png" alt="Factarlou Logo" style="width: 40px; height: 40px; border-radius: 10px;">
+        <a href="index.html" class="logo">
+            <img src="logo-icon.png" alt="Factarlou" style="width: 40px; height: 40px; border-radius: 10px;">
             Factarlou
-        </div>
+        </a>
         <div class="nav-links">
             <a href="index.html">Accueil</a>
             <a href="docs.html">Docs</a>
             <a href="about.html">À Propos</a>
+            <a href="showcase.html">Galerie</a>
             <a href="blog.html">Blog</a>
         </div>
-        <a href="/index.html#download" class="btn-download-nav">Essayer Gratuitement</a>
+        <button class="search-trigger" id="search-btn" style="background: none; border: none; color: white; cursor: pointer;">
+            <i data-lucide="search"></i>
+        </button>
     </nav>
 
-    <article class="post-container" data-reveal>
-        <img src="https://loremflickr.com/1200/800/finance" alt="Le guide ultime pour les startups tunisiennes : Optimisation de la gestion financière et fiscale avec un ERP local-first" class="post-cover">
+    <article class="post-container">
+        <img src="https://loremflickr.com/1200/800/finance" alt="{{TITLE}}" class="post-cover">
         
         <div class="lang-toggle">
             <button class="btn-lang active" onclick="setLang('fr')">Français</button>
@@ -105,9 +123,10 @@
             <header class="post-header">
                 <span class="badge">Entrepreneuriat et Finance</span>
                 <h1>Le guide ultime pour les startups tunisiennes : Optimisation de la gestion financière et fiscale avec un ERP local-first</h1>
-                <div style="margin-top: 1rem; color: var(--text-secondary); opacity: 0.6;">23 avril 2026</div>
+                <div style="opacity: 0.6;"></div>
             </header>
             <div class="post-content">
+                
                 
    <h2>Introduction</h2>
    <p>Les startups tunisiennes font face à des défis uniques en matière de gestion financière et fiscale. Avec des réglementations complexes et des exigences spécifiques, il peut être difficile de naviguer dans le paysage financier tunisien. Cependant, avec les bons outils et les bonnes stratégies, les startups tunisiennes peuvent prospérer et atteindre leurs objectifs.</p>
@@ -137,60 +156,37 @@
    </ul>
    <h3>Conclusion</h3>
    <p>En conclusion, les startups tunisiennes peuvent optimiser leur gestion financière et fiscale grâce à un ERP local-first. Factarlou est un exemple de système de gestion d'entreprise conçu spécifiquement pour les besoins des entreprises tunisiennes. En suivant les conseils et en utilisant les bons outils, les startups tunisiennes peuvent prospérer et atteindre leurs objectifs.
+            
             </div>
         </div>
 
         <div id="content-ar" lang="ar">
             <header class="post-header">
-                <span class="badge">ريادة الأعمال والتمويل</span>
-                <h1>الدليل الشامل للاستарт آップ التونسية: تحسين الإدارة المالية والضريبية مع نظام إدارة أعمال محلية أولاً</h1>
-                <div style="margin-top: 1rem; color: var(--text-secondary); opacity: 0.6;">23 avril 2026</div>
+                <span class="badge">{{CATEGORY_AR}}</span>
+                <h1>تحسين تمويلك مع Factarlou</h1>
+                <div style="opacity: 0.6;"></div>
             </header>
             <div class="post-content">
-                
-   <h2>المدخل</h2>
-   <p>تواجه الشركات الناشئة التونسية تحديات فريدة فيما يتعلق بالتدبير المالي والضريبي. ومع وجود قوانين复잡ة ومتطلبات محددة، قد يكون من الصعب المناورة في السوق المالي التونسي. ومع ذلك، مع الأدوات الصحيحة والاستراتيجيات الصحيحة، يمكن للشركات الناشئة التونسية أن تنجح وت 达 هدفها.</p>
-   <h2>مميزات نظام إدارة الأعمال المحلي أولاً</h2>
-   <p> نظام إدارة الأعمال (ERP) المحلي أولاً مصمم خصيصاً لتلبية احتياجات الشركات التونسية. وهو يوفر فهمًا عميقًا للقوانين والمتطلبات المحلية، مما يسمح للشركات الناشئة بالتركيز على نموها وتطويرها. ومن بين ميزات نظام إدارة الأعمال المحلي أولاً:</p>
-   <ul>
-       <li>تدبير أفضل للمالية والضريبة</li>
-       <li>تحسين الشفافية والتسلسل الزمني</li>
-       <li>خفض التكاليف والتعقيدات</li>
-       <li>الامتثال للقوانين المحلية</li>
-   </ul>
-   <h3>كيف يمكن لفاكتارلو المساعدة</h3>
-   <p>فاكتارلو هو نظام إدارة أعمال محلية أولاً مصمم خصيصاً للشركات الناشئة التونسية. وهو يوفر مجموعة شاملة من الوظائف لإدارة المالية والقcounts والضريبة. مع فاكتارلو، يمكن للشركات الناشئة التونسية:</p>
-   <ul>
-       <li>تدبير مالي وضريبي فعال</li>
-       <li>تحسين الشفافية والتسلسل الزمني</li>
-       <li>خفض التكاليف والتعقيدات</li>
-       <li>الامتثال للقوانين المحلية</li>
-   </ul>
-   <h2>نصائح للشركات الناشئة التونسية</h2>
-   <p>对于 الشركات الناشئة التونسية التي تبحث عن تحسين إدارة المالية والضريبة، यह هي بعض النصائح:</p>
-   <ul>
-       <li>فهم القوانين والمتطلبات المحلية</li>
-       <li>اختيار نظام إدارة أعمال محلية أولاً يتوافق مع احتياجاتك</li>
-       <li>وضع عمليات واضحة وفعالة</li>
-       <li>تدريب فرقك لاستخدام الأدوات والأنظمة بشكل فعال</li>
-   </ul>
-   <h3>الختام</h3>
-   <p>في الختام، يمكن للشركات الناشئة التونسية تحسين إدارة المالية والضريبة باستخدام نظام إدارة أعمال محلية أولاً. فاكتارلو هو مثال على نظام إدارة أعمال مصمم خصيصاً لمتطلبات الشركات التونسية. من خلال اتباع النصائح واستخدام الأدوات الصحيحة، يمكن للشركات الناشئة التونسية أن تنجح وت 达 هدفها.
+                قريباً باللغة العربية
             </div>
-        </div>
-
-        <div class="cta-box">
-            <h3>Gérez votre fiscalité en toute simplicité.</h3>
-            <p>Factarlou est l'outil indispensable pour les entrepreneurs tunisiens.</p>
-            <a href="/index.html#download" class="btn-primary" style="margin-top: 1.5rem; display: inline-block;">Télécharger l'App</a>
         </div>
     </article>
 
+    <footer>
+        <div class="footer-links">
+            <a href="index.html">Accueil</a>
+            <a href="docs.html">Docs</a>
+            <a href="about.html">À Propos</a>
+            <a href="blog.html">Blog</a>
+        </div>
+        <p style="color: var(--text-secondary)">&copy; 2026 Factarlou. Fait avec ❤️ pour la Tunisie.</p>
+    </footer>
+
     <script>
+        document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
         function setLang(lang) {
             document.querySelectorAll('.btn-lang').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            
             if (lang === 'ar') {
                 document.getElementById('content-fr').style.display = 'none';
                 document.getElementById('content-ar').style.display = 'block';
