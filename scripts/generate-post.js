@@ -67,7 +67,7 @@ async function generatePost(retryCount = 0, useFallback = false) {
       throw new Error("No available AI service to handle fallback.");
     }
 
-    const coverImage = `https://images.unsplash.com/photo-1454165833762-02c4a4c1786c?auto=format&fit=crop&q=80&w=1200&q=${data.unsplash_keyword}`;
+    const coverImage = `https://loremflickr.com/1200/800/${data.unsplash_keyword || 'business'}`;
     const slug = `${slugDate}-${data.title_fr.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
     const postFileName = `${slug}.html`;
     const postFilePath = path.join(__dirname, "../public/posts", postFileName);
