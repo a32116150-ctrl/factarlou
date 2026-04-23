@@ -17,7 +17,7 @@ if (!API_KEY) {
 const genAI = new GoogleGenerativeAI(API_KEY);
 const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-async function generatePost() {
+async function generatePost(retryCount = 0) {
   const date = DateTime.now().setLocale('fr').toFormat('dd MMMM yyyy');
   const slugDate = DateTime.now().toFormat('yyyy-MM-dd');
   
@@ -78,6 +78,11 @@ async function generatePost() {
     await updateSearchIndex(data, postFileName);
 
   } catch (error) {
+    if (error.status === 429 && retryCount < 3) {
+      console.log(`Rate limited. Retrying in 20 seconds... (Attempt ${retryCount + 1})`);
+      await new Promise(resolve => setTimeout(resolve, 20000));
+      return generatePost(retryCount + 1);
+    }
     console.error("Error generating post:", error);
     process.exit(1);
   }
