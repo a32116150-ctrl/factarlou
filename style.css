@@ -120,6 +120,8 @@ nav {
   transition: var(--transition);
   box-shadow: 0 4px 20px var(--primary-glow);
   border: 1px solid rgba(255,255,255,0.1);
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .btn-download-nav:hover {
