@@ -38,6 +38,12 @@
             border-color: var(--primary);
             box-shadow: 0 20px 40px rgba(0,0,0,0.3);
         }
+        .post-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 1px solid var(--glass-border);
+        }
         .post-content {
             padding: 2rem;
             flex: 1;
@@ -92,6 +98,7 @@
             <a href="/index.html">Accueil</a>
             <a href="/docs.html">Docs</a>
             <a href="/about.html">À Propos</a>
+            <a href="/showcase.html">Galerie</a>
             <a href="/blog.html" style="color: var(--primary)">Blog</a>
         </div>
         <button class="menu-toggle" aria-label="Ouvrir le menu">
@@ -102,7 +109,6 @@
 
     <header class="blog-hero">
         <div data-reveal>
-            <span class="badge">📰 Journal Factarlou</span>
             <h1>L'actualité financière décryptée pour <span>vous</span>.</h1>
             <p>Entrepreneuriat, Fiscalité, et Innovation en Tunisie.</p>
         </div>

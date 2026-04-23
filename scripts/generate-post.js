@@ -1,7 +1,11 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-const fs = require("fs-extra");
-const path = require("path");
-const { DateTime } = require("luxon");
+import { GoogleGenerativeAI } from "@google/generative-ai";
+import fs from "fs-extra";
+import path from "path";
+import { fileURLToPath } from "url";
+import { DateTime } from "luxon";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Configuration
 const API_KEY = process.env.GEMINI_API_KEY;
@@ -11,26 +15,31 @@ if (!API_KEY) {
 }
 
 const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+const model = genAI.getGenerativeModel({ model: "gemini-pro" });
 
 async function generatePost() {
   const date = DateTime.now().setLocale('fr').toFormat('dd MMMM yyyy');
   const slugDate = DateTime.now().toFormat('yyyy-MM-dd');
   
   const prompt = `
-    Write a professional blog post for a Tunisian startup called "Factarlou" (an offline-first billing ERP).
-    Topic: Entrepreneurship, finance, or taxation in Tunisia (e.g., new 2026 finance laws, how to start a PME, managing TVA, TEJ portal benefits).
+    Write a professional, deep-dive blog post for a Tunisian startup called "Factarlou" (an offline-first billing ERP).
+    Topic: Entrepreneurship, finance, or taxation in Tunisia. 
+    Examples: 
+    - "Comment optimiser sa déclaration fiscale en Tunisie en 2026"
+    - "Le guide complet du portail TEJ pour les PME"
+    - "Pourquoi choisir un ERP local-first pour votre startup tunisienne"
     
     The response MUST be in JSON format with the following keys:
-    - title_fr: String
-    - title_ar: String
-    - category_fr: String
+    - title_fr: String (High-impact headline)
+    - title_ar: String (Arabic translation)
+    - category_fr: String (e.g. "Conseils Fiscaux", "Entrepreneuriat")
     - category_ar: String
-    - excerpt_fr: String
-    - content_fr: HTML string (use h2, h3, p, ul, li - NO main h1)
-    - content_ar: HTML string (Arabic version - use h2, h3, p, ul, li - NO main h1)
+    - excerpt_fr: String (2 sentences max)
+    - content_fr: HTML string (Include multiple h2, h3, p, ul, li. Make it at least 600 words. DO NOT use H1.)
+    - content_ar: HTML string (Arabic version - fully localized. DO NOT use H1.)
+    - unsplash_keyword: String (A single keyword in English to fetch a related image, e.g. "finance", "office", "accounting")
     
-    Make the content high quality, helpful, and include a natural mention of Factarlou as a solution.
+    Make the content authoritative, expert, and naturally recommend Factarlou.
   `;
 
   try {
@@ -38,18 +47,16 @@ async function generatePost() {
     const response = await result.response;
     const text = response.text();
     
-    // Clean JSON from potential markdown blocks
     const jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();
     const data = JSON.parse(jsonStr);
 
+    const coverImage = `https://images.unsplash.com/photo-1454165833762-02c4a4c1786c?auto=format&fit=crop&q=80&w=1200&q=${data.unsplash_keyword}`;
     const slug = `${slugDate}-${data.title_fr.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
     const postFileName = `${slug}.html`;
     const postFilePath = path.join(__dirname, "../public/posts", postFileName);
 
-    // Load template
     let template = await fs.readFile(path.join(__dirname, "../blog-template.html"), "utf-8");
 
-    // Replace placeholders
     let postHtml = template
       .replace(/{{TITLE}}/g, data.title_fr)
       .replace(/{{TITLE_FR}}/g, data.title_fr)
@@ -58,16 +65,15 @@ async function generatePost() {
       .replace(/{{CATEGORY_AR}}/g, data.category_ar)
       .replace(/{{EXCERPT}}/g, data.excerpt_fr)
       .replace(/{{DATE}}/g, date)
+      .replace(/{{COVER_IMAGE}}/g, coverImage)
       .replace(/{{CONTENT_FR}}/g, data.content_fr)
       .replace(/{{CONTENT_AR}}/g, data.content_ar);
 
+    await fs.ensureDir(path.dirname(postFilePath));
     await fs.writeFile(postFilePath, postHtml);
     console.log(`Post generated: ${postFileName}`);
 
-    // Update blog.html
-    await updateBlogListing(data, postFileName, date);
-    
-    // Update sitemap
+    await updateBlogListing(data, postFileName, date, coverImage);
     await updateSitemap(postFileName);
 
   } catch (error) {
@@ -75,12 +81,13 @@ async function generatePost() {
   }
 }
 
-async function updateBlogListing(data, fileName, date) {
+async function updateBlogListing(data, fileName, date, coverImage) {
   const blogPath = path.join(__dirname, "../blog.html");
   let blogHtml = await fs.readFile(blogPath, "utf-8");
 
   const newCard = `
             <a href="/posts/${fileName}" class="post-card" data-reveal>
+                <img src="${coverImage}" alt="${data.title_fr}" class="post-image">
                 <div class="post-content">
                     <div class="post-meta">
                         <span><i data-lucide="calendar" style="width: 14px; height: 14px; vertical-align: middle;"></i> ${date}</span>
@@ -96,9 +103,7 @@ async function updateBlogListing(data, fileName, date) {
             </a>
   `;
 
-  // Insert at the top of the grid
   if (blogHtml.includes('id="no-posts"')) {
-    // Replace empty state
     blogHtml = blogHtml.replace(/<div class="empty-blog" id="no-posts">[\s\S]*?<\/div>/, newCard);
   } else {
     blogHtml = blogHtml.replace('<div class="blog-grid" id="posts-grid">', `<div class="blog-grid" id="posts-grid">\n${newCard}`);
