@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{TITLE}} — Blog Factarlou</title>
+    <title>{{TITLE_FR}} — Factarlou</title>
     <base href="/">
     <meta name="description" content="{{EXCERPT}}">
     <link rel="stylesheet" href="style.css">
@@ -25,6 +25,9 @@
             margin: 0;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
         .mesh-bg {
             position: fixed;
@@ -66,6 +69,7 @@
             grid-template-columns: 1fr 350px;
             gap: 3rem;
             padding: 0 5%;
+            flex: 1;
         }
 
         .post-container {
@@ -80,7 +84,6 @@
         .post-content h2 { color: white; margin-top: 3rem; }
         .post-cover { width: 100%; height: 450px; object-fit: cover; border-radius: 24px; margin-bottom: 3rem; }
         
-        /* Sidebar Widgets */
         .sidebar { display: flex; flex-direction: column; gap: 2rem; }
         .widget {
             background: var(--card-bg);
@@ -90,12 +93,7 @@
             backdrop-filter: blur(10px);
         }
         .widget h3 { font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--primary); }
-        .widget-list { list-style: none; padding: 0; margin: 0; }
-        .widget-list li { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--glass-border); }
-        .widget-list a { color: var(--text-primary); text-decoration: none; font-size: 0.95rem; transition: 0.3s; }
-        .widget-list a:hover { color: var(--primary); }
 
-        /* CTA Section */
         .premium-cta {
             margin-top: 5rem;
             padding: 4rem;
@@ -103,10 +101,7 @@
             border: 1px solid var(--primary);
             border-radius: 32px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
         }
-        .premium-cta h2 { font-size: 2rem; margin-bottom: 1rem; color: white; }
         .btn-primary {
             background: var(--primary);
             color: white;
@@ -116,7 +111,6 @@
             font-weight: 600;
             display: inline-block;
             margin-top: 2rem;
-            box-shadow: 0 10px 20px rgba(0, 151, 167, 0.3);
         }
 
         .lang-toggle { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
@@ -124,6 +118,25 @@
         .btn-lang.active { background: var(--primary); border-color: var(--primary); }
         
         [lang="ar"] { direction: rtl; display: none; text-align: right; }
+        
+        footer { 
+            padding: 4rem 5%; 
+            background: #070b14; 
+            text-align: center; 
+            border-top: 1px solid var(--glass-border);
+            margin-top: auto;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .footer-links { display: flex; gap: 2rem; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: white; }
         
         @media (max-width: 992px) {
             .main-layout { grid-template-columns: 1fr; }
@@ -154,7 +167,7 @@
     <div class="main-layout">
         <main>
             <article class="post-container">
-                <img src="{{COVER_IMAGE}}" alt="{{TITLE}}" class="post-cover">
+                <img src="{{COVER_IMAGE}}" alt="{{TITLE_FR}}" class="post-cover">
                 
                 <div class="lang-toggle">
                     <button class="btn-lang active" onclick="setLang('fr')">Français</button>
@@ -198,10 +211,10 @@
             </div>
             <div class="widget">
                 <h3>Catégories populaires</h3>
-                <ul class="widget-list">
-                    <li><a href="blog.html">Fiscalité</a></li>
-                    <li><a href="blog.html">Entrepreneuriat</a></li>
-                    <li><a href="blog.html">Digitalisation</a></li>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="margin-bottom: 10px;"><a href="blog.html" style="color: white; text-decoration: none;">Fiscalité</a></li>
+                    <li style="margin-bottom: 10px;"><a href="blog.html" style="color: white; text-decoration: none;">Entrepreneuriat</a></li>
+                    <li style="margin-bottom: 10px;"><a href="blog.html" style="color: white; text-decoration: none;">Digitalisation</a></li>
                 </ul>
             </div>
         </aside>
@@ -220,19 +233,20 @@
     </div>
 
     <footer>
-        <div class="footer-links">
-            <a href="index.html">Accueil</a>
-            <a href="docs.html">Docs</a>
-            <a href="about.html">À Propos</a>
-            <a href="blog.html">Blog</a>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Accueil</a>
+                <a href="docs.html">Docs</a>
+                <a href="about.html">À Propos</a>
+                <a href="blog.html">Blog</a>
+            </div>
+            <p style="color: var(--text-secondary); margin: 0;">&copy; 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
         </div>
-        <p style="color: var(--text-secondary)">&copy; 2026 Factarlou. Fait avec ❤️ pour la Tunisie.</p>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => { 
             lucide.createIcons();
-            // Initialize search trigger manually just in case
             const sBtn = document.getElementById('search-btn');
             const sOverlay = document.getElementById('search-overlay');
             if(sBtn && sOverlay) {
