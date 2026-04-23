@@ -11,7 +11,6 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="main.js" defer></script>
     <style>
-        /* CRITICAL THEME INJECTION (Prevents white background if CSS fails) */
         :root {
             --bg-dark: #0f172a;
             --card-bg: rgba(30, 41, 59, 0.7);
@@ -56,39 +55,80 @@
             color: white;
             text-decoration: none;
         }
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-        }
-        .nav-links a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            transition: 0.3s;
-        }
+        .nav-links { display: flex; gap: 2rem; }
+        .nav-links a { color: var(--text-secondary); text-decoration: none; transition: 0.3s; }
         .nav-links a:hover { color: var(--primary); }
-        
-        .post-container {
-            max-width: 850px;
+
+        .main-layout {
+            max-width: 1200px;
             margin: 140px auto 80px;
-            padding: 3rem;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 3rem;
+            padding: 0 5%;
+        }
+
+        .post-container {
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
             border-radius: 32px;
+            padding: 3rem;
             backdrop-filter: blur(20px);
         }
-        .post-header h1 { font-size: 2.5rem; margin: 1rem 0; }
+        .post-header h1 { font-size: 2.5rem; margin: 1rem 0; line-height: 1.2; }
         .post-content { line-height: 1.8; color: var(--text-secondary); font-size: 1.15rem; }
         .post-content h2 { color: white; margin-top: 3rem; }
         .post-cover { width: 100%; height: 450px; object-fit: cover; border-radius: 24px; margin-bottom: 3rem; }
+        
+        /* Sidebar Widgets */
+        .sidebar { display: flex; flex-direction: column; gap: 2rem; }
+        .widget {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        .widget h3 { font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--primary); }
+        .widget-list { list-style: none; padding: 0; margin: 0; }
+        .widget-list li { margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--glass-border); }
+        .widget-list a { color: var(--text-primary); text-decoration: none; font-size: 0.95rem; transition: 0.3s; }
+        .widget-list a:hover { color: var(--primary); }
+
+        /* CTA Section */
+        .premium-cta {
+            margin-top: 5rem;
+            padding: 4rem;
+            background: linear-gradient(135deg, rgba(0, 151, 167, 0.2), rgba(0, 188, 212, 0.1));
+            border: 1px solid var(--primary);
+            border-radius: 32px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .premium-cta h2 { font-size: 2rem; margin-bottom: 1rem; color: white; }
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 2rem;
+            box-shadow: 0 10px 20px rgba(0, 151, 167, 0.3);
+        }
+
         .lang-toggle { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
         .btn-lang { padding: 0.6rem 1.5rem; border-radius: 100px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; cursor: pointer; }
         .btn-lang.active { background: var(--primary); border-color: var(--primary); }
-        .badge { background: rgba(0, 151, 167, 0.2); color: var(--primary); padding: 0.5rem 1rem; border-radius: 100px; font-size: 0.9rem; font-weight: 600; }
-        [lang="ar"] { direction: rtl; display: none; }
         
-        footer { padding: 4rem 5%; background: #070b14; text-align: center; border-top: 1px solid var(--glass-border); }
-        .footer-links { display: flex; justify-content: center; gap: 2rem; margin-bottom: 2rem; }
-        .footer-links a { color: var(--text-secondary); text-decoration: none; }
+        [lang="ar"] { direction: rtl; display: none; text-align: right; }
+        
+        @media (max-width: 992px) {
+            .main-layout { grid-template-columns: 1fr; }
+            .sidebar { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -111,21 +151,24 @@
         </button>
     </nav>
 
-    <article class="post-container">
-        <img src="https://loremflickr.com/1200/800/accounting" alt="{{TITLE}}" class="post-cover">
-        
-        <div class="lang-toggle">
-            <button class="btn-lang active" onclick="setLang('fr')">Français</button>
-            <button class="btn-lang" onclick="setLang('ar')">العربية</button>
-        </div>
+    <div class="main-layout">
+        <main>
+            <article class="post-container">
+                <img src="https://loremflickr.com/1200/800/accounting" alt="{{TITLE}}" class="post-cover">
+                
+                <div class="lang-toggle">
+                    <button class="btn-lang active" onclick="setLang('fr')">Français</button>
+                    <button class="btn-lang" onclick="setLang('ar')">العربية</button>
+                </div>
 
-        <div id="content-fr" lang="fr">
-            <header class="post-header">
-                <span class="badge">Entrepreneuriat</span>
-                <h1>Optimiser vos finances avec Factarlou : Le guide ultime pour les startups tunisiennes</h1>
-                <div style="opacity: 0.6;"></div>
-            </header>
-            <div class="post-content">
+                <div id="content-fr" lang="fr">
+                    <header class="post-header">
+                        <span style="color: var(--primary); font-weight: 600;">Entrepreneuriat</span>
+                        <h1>Optimiser vos finances avec Factarlou : Le guide ultime pour les startups tunisiennes</h1>
+                        <div style="opacity: 0.6; margin-bottom: 3rem;"></div>
+                    </header>
+                    <div class="post-content">
+                        
                 
                 
    <h2>Introduction</h2>
@@ -150,20 +193,56 @@
    </ul>
    
             
-            </div>
-        </div>
+            
+                    </div>
+                </div>
 
-        <div id="content-ar" lang="ar">
-            <header class="post-header">
-                <span class="badge">{{CATEGORY_AR}}</span>
-                <h1>تحسين تمويلك مع Factarlou</h1>
-                <div style="opacity: 0.6;"></div>
-            </header>
-            <div class="post-content">
-                قريباً باللغة العربية
+                <div id="content-ar" lang="ar">
+                    <header class="post-header">
+                        <span style="color: var(--primary); font-weight: 600;">{{CATEGORY_AR}}</span>
+                        <h1>تحسين تمويلك مع Factarlou</h1>
+                        <div style="opacity: 0.6; margin-bottom: 3rem;"></div>
+                    </header>
+                    <div class="post-content">
+                        قريباً باللغة العربية
+                    </div>
+                </div>
+
+                <div class="premium-cta">
+                    <h2>Prêt à automatiser votre facturation ?</h2>
+                    <p>Rejoignez les entrepreneurs tunisiens qui gagnent du temps avec Factarlou.</p>
+                    <a href="index.html#download" class="btn-primary">Télécharger Factarlou Gratuitement</a>
+                </div>
+            </article>
+        </main>
+
+        <aside class="sidebar">
+            <div class="widget">
+                <h3>À propos de Factarlou</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Le premier ERP local-first en Tunisie. Facturation, stock et fiscalité, sans internet.</p>
             </div>
+            <div class="widget">
+                <h3>Catégories populaires</h3>
+                <ul class="widget-list">
+                    <li><a href="blog.html">Fiscalité</a></li>
+                    <li><a href="blog.html">Entrepreneuriat</a></li>
+                    <li><a href="blog.html">Digitalisation</a></li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="search-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 9999;">
+        <div class="search-modal" style="max-width: 600px; margin: 100px auto; background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 2rem;">
+            <div class="search-header" style="display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem;">
+                <i data-lucide="search"></i>
+                <input type="text" id="search-input" placeholder="Rechercher..." style="background: none; border: none; color: white; width: 100%; font-size: 1.2rem; outline: none;">
+                <button id="close-search" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;"><i data-lucide="x"></i></button>
+            </div>
+            <div id="search-results" style="margin-top: 1rem; max-height: 400px; overflow-y: auto;"></div>
         </div>
-    </article>
+    </div>
 
     <footer>
         <div class="footer-links">
@@ -176,10 +255,18 @@
     </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => { lucide.createIcons(); });
+        document.addEventListener('DOMContentLoaded', () => { 
+            lucide.createIcons();
+            // Initialize search trigger manually just in case
+            const sBtn = document.getElementById('search-btn');
+            const sOverlay = document.getElementById('search-overlay');
+            if(sBtn && sOverlay) {
+                sBtn.onclick = () => sOverlay.style.display = 'block';
+            }
+        });
         function setLang(lang) {
             document.querySelectorAll('.btn-lang').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if(event) event.target.classList.add('active');
             if (lang === 'ar') {
                 document.getElementById('content-fr').style.display = 'none';
                 document.getElementById('content-ar').style.display = 'block';
