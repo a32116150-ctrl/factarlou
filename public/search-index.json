@@ -1,0 +1,26 @@
+[
+  {
+    "title": "Accueil — Facturation Intelligente Tunisie",
+    "excerpt": "Factarlou est la solution de facturation locale-first conçue spécifiquement pour les entrepreneurs tunisiens.",
+    "url": "/index.html",
+    "type": "page"
+  },
+  {
+    "title": "Documentation — Guide de démarrage",
+    "excerpt": "Apprenez à configurer Factarlou, gérer votre fiscalité et exporter vos fichiers TEJ XML.",
+    "url": "/docs.html",
+    "type": "page"
+  },
+  {
+    "title": "À Propos — La mission de Factarlou",
+    "excerpt": "Découvrez pourquoi nous avons créé Factarlou et notre engagement pour la souveraineté numérique en Tunisie.",
+    "url": "/about.html",
+    "type": "page"
+  },
+  {
+    "title": "Galerie — Interface Factarlou",
+    "excerpt": "Découvrez l'expérience Factarlou à travers des captures d'écran de notre interface épurée.",
+    "url": "/showcase.html",
+    "type": "page"
+  }
+]

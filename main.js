@@ -304,6 +304,74 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ─── Search Functionality ────────────────────────────────────────────────
+    const searchBtn = document.getElementById('search-btn');
+    const searchOverlay = document.getElementById('search-overlay');
+    const closeSearch = document.getElementById('close-search');
+    const searchInput = document.getElementById('search-input');
+    const searchResults = document.getElementById('search-results');
+    let searchIndex = null;
+
+    if (searchBtn && searchOverlay) {
+        searchBtn.addEventListener('click', async () => {
+            searchOverlay.style.display = 'block';
+            searchInput.focus();
+            
+            // Load index if not already loaded
+            if (!searchIndex) {
+                try {
+                    const response = await fetch('/search-index.json');
+                    searchIndex = await response.json();
+                } catch (e) {
+                    console.error('Failed to load search index');
+                }
+            }
+        });
+
+        const closeFunc = () => {
+            searchOverlay.style.display = 'none';
+        };
+
+        closeSearch.addEventListener('click', closeFunc);
+        searchOverlay.addEventListener('click', (e) => {
+            if (e.target === searchOverlay) closeFunc();
+        });
+
+        searchInput.addEventListener('input', () => {
+            const query = searchInput.value.toLowerCase().trim();
+            if (!query) {
+                searchResults.innerHTML = '<p style="color: var(--text-secondary); text-align: center;">Commencez à taper pour rechercher...</p>';
+                return;
+            }
+
+            if (!searchIndex) return;
+
+            const filtered = searchIndex.filter(item => 
+                item.title.toLowerCase().includes(query) || 
+                item.excerpt.toLowerCase().includes(query) ||
+                (item.title_ar && item.title_ar.includes(query))
+            );
+
+            if (filtered.length === 0) {
+                searchResults.innerHTML = '<p style="color: var(--text-secondary); text-align: center;">Aucun résultat trouvé.</p>';
+                return;
+            }
+
+            searchResults.innerHTML = filtered.map(item => `
+                <a href="${item.url}" class="search-result-item" style="display: block; padding: 1rem; text-decoration: none; border-bottom: 1px solid var(--glass-border); transition: 0.3s; border-radius: 8px;">
+                    <div style="color: var(--primary); font-weight: 600;">${item.title}</div>
+                    <div style="font-size: 0.9rem; color: var(--text-secondary);">${item.excerpt}</div>
+                </a>
+            `).join('');
+
+            // Add hover effects dynamically
+            document.querySelectorAll('.search-result-item').forEach(el => {
+                el.addEventListener('mouseenter', () => el.style.background = 'rgba(255,255,255,0.05)');
+                el.addEventListener('mouseleave', () => el.style.background = 'none');
+            });
+        });
+    }
+
     fetchReleasesData();
     setupDownloadTracking();
     setupParallax();

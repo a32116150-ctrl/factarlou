@@ -75,11 +75,35 @@ async function generatePost() {
 
     await updateBlogListing(data, postFileName, date, coverImage);
     await updateSitemap(postFileName);
+    await updateSearchIndex(data, postFileName);
 
   } catch (error) {
     console.error("Error generating post:", error);
     process.exit(1);
   }
+}
+
+async function updateSearchIndex(data, fileName) {
+  const indexPath = path.join(__dirname, "../public/search-index.json");
+  let index = [];
+  
+  try {
+    if (await fs.exists(indexPath)) {
+      index = await fs.readJson(indexPath);
+    }
+  } catch (e) {
+    index = [];
+  }
+
+  index.unshift({
+    title: data.title_fr,
+    title_ar: data.title_ar,
+    excerpt: data.excerpt_fr,
+    url: `/posts/${fileName}`,
+    type: 'blog'
+  });
+
+  await fs.writeJson(indexPath, index.slice(0, 100), { spaces: 2 });
 }
 
 async function updateBlogListing(data, fileName, date, coverImage) {
