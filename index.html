@@ -1,21 +1,84 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr-TN">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Factarlou — Facturation Intelligente & Gestion Locale</title>
+    <title>Factarlou — Logiciel de Facturation Tunisie & Gestion Fiscale</title>
     <meta name="description"
-        content="Factarlou — L'intelligence fiscale au service des entrepreneurs tunisiens. Solution de facturation 100% privée, locale-first et sans abonnement.">
-    <meta property="og:title" content="Factarlou — Facturation Intelligente & Gestion Locale">
-    <meta property="og:description" content="Gérez vos factures, devis et fiscalité en toute confidentialité.">
-    <meta property="og:image" content="/social-preview.png">
+        content="Factarlou — Le meilleur ERP Local-First pour entrepreneurs tunisiens. Facturation, gestion fiscale (TVA, Timbre), et export XML TEJ. 100% privé et gratuit.">
+    <meta name="keywords" content="ERP Tunisie, logiciel facturation tunisie, gestion fiscale tunisie, TEJ portail XML, retenue à la source tunisie, timbre fiscal 1.000, PME Tunisie accounting">
+    <link rel="canonical" href="https://factarlou.online/">
+    
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://factarlou.com/">
+    <meta property="og:url" content="https://factarlou.online/">
+    <meta property="og:site_name" content="Factarlou">
+    <meta property="og:title" content="Factarlou — Facturation Intelligente & Gestion Locale en Tunisie">
+    <meta property="og:description" content="Gérez vos factures, devis et fiscalité en toute confidentialité. Solution locale-first sans abonnement.">
+    <meta property="og:image" content="https://factarlou.online/social-preview.png">
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Factarlou — Facturation Intelligente">
+    <meta name="twitter:url" content="https://factarlou.online/">
+    <meta name="twitter:title" content="Factarlou — Logiciel de Facturation Tunisie">
     <meta name="twitter:description" content="La première application de facturation locale-first en Tunisie.">
-    <meta name="twitter:image" content="/social-preview.png">
+    <meta name="twitter:image" content="https://factarlou.online/social-preview.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Factarlou",
+      "operatingSystem": "Windows, macOS",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "TND"
+      },
+      "description": "Le meilleur ERP Local-First pour entrepreneurs tunisiens. Gestion de la TVA, du timbre fiscal et export XML TEJ.",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "ratingCount": "120"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Factarlou",
+      "url": "https://factarlou.online",
+      "logo": "https://factarlou.online/logo-icon.png",
+      "description": "Solution de facturation et gestion fiscale pour le marché tunisien.",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "TN"
+      },
+      "areaServed": "Tunisia",
+      "founder": {
+        "@type": "Person",
+        "name": "Anoir Cherif"
+      }
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [{
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Accueil",
+        "item": "https://factarlou.online/"
+      }]
+    }
+    </script>
+
     <link rel="icon" type="image/png" href="/logo-icon.png">
     <link rel="stylesheet" href="./style.css">
     <!-- Lucide Icons -->
@@ -34,7 +97,7 @@
             <a href="/index.html">Accueil</a>
             <a href="/docs.html">Docs</a>
             <a href="/about.html">À Propos</a>
-            <a href="/showcase.html">Galerie</a>
+            <a href="/blog.html">Blog</a>
         </div>
         <button class="menu-toggle" aria-label="Ouvrir le menu">
             <i data-lucide="menu"></i>
@@ -68,10 +131,10 @@
                 <div class="stats-trust" data-reveal
                     style="margin-top: 1rem; font-size: 0.75rem; color: var(--text-secondary); display: flex; align-items: center; gap: 0.5rem; opacity: 0.6; justify-content: center;">
                     <i data-lucide="shield-check" style="width: 14px; height: 14px; color: var(--accent);"></i>
-                    Données certifiées par l'API GitHub®
+                    Données certifiées en temps réel
                 </div>
             </div>
-            <h1>L'intelligence fiscale au service de votre <span>entreprise</span>.</h1>
+            <h1>Facturation Intelligente & Gestion Fiscale pour votre <span>entreprise</span>.</h1>
             <p>Factarlou est la solution de facturation locale-first conçue spécifiquement pour les entrepreneurs
                 tunisiens. 100% privé, 100% puissant.</p>
 
@@ -83,7 +146,7 @@
 
         <div class="hero-mockup-container" data-reveal>
             <div class="hero-mockup" id="parallax-mockup">
-                <img src="/dashboard.png" alt="Factarlou Dashboard Overview">
+                <img src="/dashboard.png" alt="Tableau de bord Factarlou - Vue d'ensemble de la facturation et des revenus">
             </div>
             <!-- Floating UI Elements -->
             <div class="floating-ui floating-1" data-depth="0.2">

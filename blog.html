@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr-TN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Factarlou — Actualités Fiscales & Entrepreneuriat Tunisie</title>
+    <meta name="description" content="Découvrez les dernières actualités sur la fiscalité, l'entrepreneuriat et la gestion d'entreprise en Tunisie. Articles générés pour vous aider à réussir.">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="/logo-icon.png">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .blog-hero {
+            padding: 160px 5% 80px;
+            text-align: center;
+            background: linear-gradient(180deg, rgba(0, 151, 167, 0.05), transparent);
+        }
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2.5rem;
+            padding: 4rem 5%;
+            max-width: 1300px;
+            margin: 0 auto;
+        }
+        .post-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+        .post-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+        .post-content {
+            padding: 2rem;
+            flex: 1;
+        }
+        .post-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        .post-card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+            color: var(--text-primary);
+        }
+        .post-excerpt {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.6;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .post-footer {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .empty-blog {
+            text-align: center;
+            padding: 100px 5%;
+            color: var(--text-secondary);
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+
+    <nav>
+        <div class="logo">
+            <img src="/logo-icon.png" alt="Factarlou Logo">
+            Factarlou
+        </div>
+        <div class="nav-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html">Docs</a>
+            <a href="/about.html">À Propos</a>
+            <a href="/blog.html" style="color: var(--primary)">Blog</a>
+        </div>
+        <button class="menu-toggle" aria-label="Ouvrir le menu">
+            <i data-lucide="menu"></i>
+        </button>
+        <a href="/index.html#download" class="btn-download-nav">Essayer Gratuitement</a>
+    </nav>
+
+    <header class="blog-hero">
+        <div data-reveal>
+            <span class="badge">📰 Journal Factarlou</span>
+            <h1>L'actualité financière décryptée pour <span>vous</span>.</h1>
+            <p>Entrepreneuriat, Fiscalité, et Innovation en Tunisie.</p>
+        </div>
+    </header>
+
+    <main id="blog-container">
+        <!-- Posts will be injected here or hardcoded by the automation script -->
+        <div class="blog-grid" id="posts-grid">
+            <!-- Example of an empty state -->
+            <div class="empty-blog" id="no-posts">
+                <i data-lucide="newspaper" style="width: 64px; height: 64px; opacity: 0.2; margin-bottom: 1rem;"></i>
+                <p>Nos premiers articles arrivent bientôt. Restez connectés !</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html">Documentation</a>
+            <a href="/blog.html">Blog</a>
+            <a href="/privacy.html">Confidentialité</a>
+        </div>
+        <p class="copyright">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+    <script>
+        // Simple script to handle dynamic loading if we use a JSON database, 
+        // but for pure SEO we will probably hardcode them in the grid.
+        lucide.createIcons();
+    </script>
+</body>
+</html>

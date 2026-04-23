@@ -10,5 +10,11 @@
   },
   "devDependencies": {
     "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "fs-extra": "^11.3.4",
+    "js-yaml": "^4.1.1",
+    "luxon": "^3.7.2"
   }
 }

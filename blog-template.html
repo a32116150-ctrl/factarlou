@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr-TN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{TITLE}} — Blog Factarlou</title>
+    <meta name="description" content="{{EXCERPT}}">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" type="image/png" href="/logo-icon.png">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        .post-container {
+            max-width: 800px;
+            margin: 140px auto 80px;
+            padding: 4rem;
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 32px;
+            backdrop-filter: blur(20px);
+        }
+        .post-header {
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+        .post-content {
+            line-height: 1.8;
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        .post-content h2, .post-content h3 {
+            color: var(--text-primary);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .lang-toggle {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        .btn-lang {
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.05);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .btn-lang.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        [lang="ar"] {
+            direction: rtl;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: none;
+        }
+        .cta-box {
+            margin-top: 5rem;
+            padding: 3rem;
+            background: linear-gradient(135deg, rgba(0, 151, 167, 0.1), rgba(0, 188, 212, 0.1));
+            border-radius: 24px;
+            border: 1px solid var(--primary);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+
+    <nav>
+        <div class="logo">
+            <img src="/logo-icon.png" alt="Factarlou Logo">
+            Factarlou
+        </div>
+        <div class="nav-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html">Docs</a>
+            <a href="/about.html">À Propos</a>
+            <a href="/blog.html">Blog</a>
+        </div>
+        <a href="/index.html#download" class="btn-download-nav">Essayer Gratuitement</a>
+    </nav>
+
+    <article class="post-container" data-reveal>
+        <div class="lang-toggle">
+            <button class="btn-lang active" onclick="setLang('fr')">Français</button>
+            <button class="btn-lang" onclick="setLang('ar')">العربية</button>
+        </div>
+
+        <div id="content-fr" lang="fr">
+            <header class="post-header">
+                <span class="badge">{{CATEGORY}}</span>
+                <h1>{{TITLE_FR}}</h1>
+                <div style="margin-top: 1rem; color: var(--text-secondary); opacity: 0.6;">{{DATE}}</div>
+            </header>
+            <div class="post-content">
+                {{CONTENT_FR}}
+            </div>
+        </div>
+
+        <div id="content-ar" lang="ar">
+            <header class="post-header">
+                <span class="badge">{{CATEGORY_AR}}</span>
+                <h1>{{TITLE_AR}}</h1>
+                <div style="margin-top: 1rem; color: var(--text-secondary); opacity: 0.6;">{{DATE}}</div>
+            </header>
+            <div class="post-content">
+                {{CONTENT_AR}}
+            </div>
+        </div>
+
+        <div class="cta-box">
+            <h3>Gérez votre fiscalité en toute simplicité.</h3>
+            <p>Factarlou est l'outil indispensable pour les entrepreneurs tunisiens.</p>
+            <a href="/index.html#download" class="btn-primary" style="margin-top: 1.5rem; display: inline-block;">Télécharger l'App</a>
+        </div>
+    </article>
+
+    <script>
+        function setLang(lang) {
+            document.querySelectorAll('.btn-lang').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (lang === 'ar') {
+                document.getElementById('content-fr').style.display = 'none';
+                document.getElementById('content-ar').style.display = 'block';
+            } else {
+                document.getElementById('content-fr').style.display = 'block';
+                document.getElementById('content-ar').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
