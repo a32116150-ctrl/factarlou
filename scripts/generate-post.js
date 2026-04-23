@@ -15,7 +15,7 @@ if (!API_KEY) {
 }
 
 const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 async function generatePost() {
   const date = DateTime.now().setLocale('fr').toFormat('dd MMMM yyyy');
@@ -78,6 +78,7 @@ async function generatePost() {
 
   } catch (error) {
     console.error("Error generating post:", error);
+    process.exit(1);
   }
 }
 
