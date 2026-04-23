@@ -12,40 +12,55 @@
     <script src="main.js" defer></script>
     <style>
         :root {
-            --bg-dark: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --primary: #0097a7;
+            --bg-dark: #070b14;
+            --card-bg: rgba(15, 23, 42, 0.7);
+            --primary: #00e5ff;
+            --primary-glow: rgba(0, 229, 255, 0.3);
             --text-primary: #f8fafc;
             --text-secondary: #94a3b8;
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
         body {
             background-color: var(--bg-dark);
             color: var(--text-primary);
             margin: 0;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
+        
+        /* Reading Progress Bar */
+        #progress-bar {
+            position: fixed;
+            top: 0; left: 0; height: 3px;
+            background: linear-gradient(to right, var(--primary), #00bcd4);
+            width: 0%;
+            z-index: 9999;
+            box-shadow: 0 0 10px var(--primary-glow);
+            transition: width 0.1s ease;
+        }
+
         .mesh-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: 
-                radial-gradient(circle at 0% 0%, rgba(0, 151, 167, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 100% 100%, rgba(0, 188, 212, 0.1) 0%, transparent 50%);
+                radial-gradient(circle at 10% 20%, rgba(0, 229, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 188, 212, 0.05) 0%, transparent 40%);
             z-index: -1;
         }
+
         nav {
             position: fixed;
             top: 0; left: 0; width: 100%;
-            padding: 1.5rem 5%;
+            padding: 1.2rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(10px);
+            background: rgba(7, 11, 20, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
             z-index: 1000;
             box-sizing: border-box;
         }
@@ -53,21 +68,19 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            font-weight: 700;
-            font-size: 1.5rem;
+            font-weight: 800;
+            font-size: 1.6rem;
             color: white;
             text-decoration: none;
+            letter-spacing: -0.5px;
         }
-        .nav-links { display: flex; gap: 2rem; }
-        .nav-links a { color: var(--text-secondary); text-decoration: none; transition: 0.3s; }
-        .nav-links a:hover { color: var(--primary); }
 
         .main-layout {
-            max-width: 1200px;
-            margin: 140px auto 80px;
+            max-width: 1300px;
+            margin: 150px auto 80px;
             display: grid;
-            grid-template-columns: 1fr 350px;
-            gap: 3rem;
+            grid-template-columns: 1fr 380px;
+            gap: 4rem;
             padding: 0 5%;
             flex: 1;
         }
@@ -75,81 +88,109 @@
         .post-container {
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 32px;
-            padding: 3rem;
-            backdrop-filter: blur(20px);
+            border-radius: 40px;
+            padding: 4rem;
+            backdrop-filter: blur(30px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
         }
-        .post-header h1 { font-size: 2.5rem; margin: 1rem 0; line-height: 1.2; }
-        .post-content { line-height: 1.8; color: var(--text-secondary); font-size: 1.15rem; }
-        .post-content h2 { color: white; margin-top: 3rem; }
-        .post-cover { width: 100%; height: 450px; object-fit: cover; border-radius: 24px; margin-bottom: 3rem; }
-        
-        .sidebar { display: flex; flex-direction: column; gap: 2rem; }
+
+        .post-header h1 { 
+            font-size: 3.5rem; 
+            margin: 1.5rem 0; 
+            line-height: 1.1; 
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .post-content { line-height: 1.9; color: var(--text-secondary); font-size: 1.2rem; }
+        .post-content h2 { color: white; margin-top: 4rem; font-size: 2rem; }
+        .post-cover { 
+            width: 100%; 
+            height: 500px; 
+            object-fit: cover; 
+            border-radius: 30px; 
+            margin-bottom: 4rem;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+
+        /* Mind-Blowing Quotes */
+        .premium-quote {
+            border-left: 4px solid var(--primary);
+            padding: 2rem;
+            margin: 3rem 0;
+            background: rgba(0, 229, 255, 0.03);
+            border-radius: 0 24px 24px 0;
+            font-style: italic;
+            font-size: 1.4rem;
+            color: white;
+        }
+
+        /* Modern Sidebar */
+        .sidebar { display: flex; flex-direction: column; gap: 2.5rem; }
         .widget {
             background: var(--card-bg);
             border: 1px solid var(--glass-border);
-            border-radius: 24px;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
+            border-radius: 32px;
+            padding: 2.5rem;
+            backdrop-filter: blur(20px);
         }
-        .widget h3 { font-size: 1.2rem; margin-bottom: 1.5rem; color: var(--primary); }
+        .widget h3 { font-size: 1.3rem; margin-bottom: 2rem; color: var(--primary); text-transform: uppercase; letter-spacing: 2px; }
+
+        /* Newsletter Widget */
+        .newsletter-widget {
+            background: linear-gradient(135deg, rgba(0, 229, 255, 0.1), transparent);
+            border: 1px solid var(--primary);
+        }
+        .newsletter-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            margin-bottom: 1rem;
+            box-sizing: border-box;
+        }
 
         .premium-cta {
-            margin-top: 5rem;
-            padding: 4rem;
-            background: linear-gradient(135deg, rgba(0, 151, 167, 0.2), rgba(0, 188, 212, 0.1));
+            margin-top: 6rem;
+            padding: 5rem;
+            background: radial-gradient(circle at top right, rgba(0, 229, 255, 0.15), transparent), var(--card-bg);
             border: 1px solid var(--primary);
-            border-radius: 32px;
+            border-radius: 40px;
             text-align: center;
         }
-        .btn-primary {
+        
+        .btn-glow {
             background: var(--primary);
-            color: white;
-            padding: 1rem 2.5rem;
+            color: #000;
+            padding: 1.2rem 3rem;
             border-radius: 100px;
             text-decoration: none;
-            font-weight: 600;
+            font-weight: 700;
             display: inline-block;
-            margin-top: 2rem;
+            transition: 0.3s;
+            box-shadow: 0 10px 30px var(--primary-glow);
         }
+        .btn-glow:hover { transform: translateY(-5px); box-shadow: 0 15px 40px var(--primary-glow); }
 
-        .lang-toggle { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2rem; }
-        .btn-lang { padding: 0.6rem 1.5rem; border-radius: 100px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; cursor: pointer; }
-        .btn-lang.active { background: var(--primary); border-color: var(--primary); }
+        footer { padding: 5rem 5%; background: #04070d; text-align: center; border-top: 1px solid var(--glass-border); margin-top: auto; }
         
-        [lang="ar"] { direction: rtl; display: none; text-align: right; }
-        
-        footer { 
-            padding: 4rem 5%; 
-            background: #070b14; 
-            text-align: center; 
-            border-top: 1px solid var(--glass-border);
-            margin-top: auto;
-        }
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1.5rem;
-        }
-        .footer-links { display: flex; gap: 2rem; }
-        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: 0.3s; }
-        .footer-links a:hover { color: white; }
-        
-        @media (max-width: 992px) {
+        @media (max-width: 1100px) {
             .main-layout { grid-template-columns: 1fr; }
             .sidebar { display: none; }
+            .post-header h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
 <body>
+    <div id="progress-bar"></div>
     <div class="mesh-bg"></div>
 
     <nav>
         <a href="index.html" class="logo">
-            <img src="logo-icon.png" alt="Factarlou" style="width: 40px; height: 40px; border-radius: 10px;">
+            <img src="logo-icon.png" alt="Factarlou" style="width: 42px; height: 42px; border-radius: 12px;">
             Factarlou
         </a>
         <div class="nav-links">
@@ -159,8 +200,8 @@
             <a href="showcase.html">Galerie</a>
             <a href="blog.html">Blog</a>
         </div>
-        <button class="search-trigger" id="search-btn" style="background: none; border: none; color: white; cursor: pointer;">
-            <i data-lucide="search"></i>
+        <button id="search-btn" style="background: none; border: none; color: white; cursor: pointer; padding: 10px;">
+            <i data-lucide="search" style="width: 24px; height: 24px;"></i>
         </button>
     </nav>
 
@@ -169,18 +210,22 @@
             <article class="post-container">
                 <img src="https://loremflickr.com/1200/800/finance" alt="Le guide ultime pour les startups tunisiennes : Optimisation de la gestion financière et fiscale avec un ERP local-first" class="post-cover">
                 
-                <div class="lang-toggle">
-                    <button class="btn-lang active" onclick="setLang('fr')">Français</button>
-                    <button class="btn-lang" onclick="setLang('ar')">العربية</button>
+                <div class="lang-toggle" style="display: flex; gap: 1rem; margin-bottom: 3rem;">
+                    <button class="btn-lang active" onclick="setLang('fr')" style="flex: 1; padding: 0.8rem; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; cursor: pointer;">FR</button>
+                    <button class="btn-lang" onclick="setLang('ar')" style="flex: 1; padding: 0.8rem; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; cursor: pointer;">AR</button>
                 </div>
 
                 <div id="content-fr" lang="fr">
                     <header class="post-header">
-                        <span style="color: var(--primary); font-weight: 600;"></span>
+                        <span style="color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem;"></span>
                         <h1>Le guide ultime pour les startups tunisiennes : Optimisation de la gestion financière et fiscale avec un ERP local-first</h1>
-                        <div style="opacity: 0.6; margin-bottom: 3rem;"></div>
+                        <div style="display: flex; gap: 2rem; opacity: 0.6; margin-bottom: 4rem; font-size: 0.9rem;">
+                            <span><i data-lucide="calendar" style="width: 16px; height: 16px; vertical-align: middle;"></i> </span>
+                            <span><i data-lucide="clock" style="width: 16px; height: 16px; vertical-align: middle;"></i> 8 min de lecture</span>
+                        </div>
                     </header>
                     <div class="post-content">
+                        
                         
                         
                 
@@ -216,14 +261,18 @@
             
             
                     
+                    
                     </div>
                 </div>
 
-                <div id="content-ar" lang="ar">
+                <div id="content-ar" lang="ar" style="display: none; direction: rtl; text-align: right;">
                     <header class="post-header">
-                        <span style="color: var(--primary); font-weight: 600;">{{CATEGORY_AR}}</span>
+                        <span style="color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem;">{{CATEGORY_AR}}</span>
                         <h1>تحسين تمويلك مع Factarlou</h1>
-                        <div style="opacity: 0.6; margin-bottom: 3rem;"></div>
+                        <div style="display: flex; gap: 2rem; opacity: 0.6; margin-bottom: 4rem; font-size: 0.9rem; justify-content: flex-end;">
+                            <span><i data-lucide="calendar" style="width: 16px; height: 16px; vertical-align: middle;"></i> </span>
+                            <span><i data-lucide="clock" style="width: 16px; height: 16px; vertical-align: middle;"></i> 8 دقائق قراءة</span>
+                        </div>
                     </header>
                     <div class="post-content">
                         قريباً باللغة العربية
@@ -231,62 +280,87 @@
                 </div>
 
                 <div class="premium-cta">
-                    <h2>Prêt à automatiser votre facturation ?</h2>
-                    <p>Rejoignez les entrepreneurs tunisiens qui gagnent du temps avec Factarlou.</p>
-                    <a href="index.html#download" class="btn-primary">Télécharger Factarlou Gratuitement</a>
+                    <i data-lucide="zap" style="width: 48px; height: 48px; color: var(--primary); margin-bottom: 1.5rem;"></i>
+                    <h2>Passez à la Facturation 2.0</h2>
+                    <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto;">Rejoignez la révolution ERP en Tunisie. Gagnez du temps, évitez les erreurs et gérez votre fiscalité comme un pro.</p>
+                    <a href="index.html#download" class="btn-glow">Essayer Factarlou Gratuitement</a>
                 </div>
             </article>
         </main>
 
         <aside class="sidebar">
-            <div class="widget">
-                <h3>À propos de Factarlou</h3>
-                <p style="color: var(--text-secondary); font-size: 0.9rem;">Le premier ERP local-first en Tunisie. Facturation, stock et fiscalité, sans internet.</p>
+            <div class="widget newsletter-widget">
+                <h3>Newsletter Tech</h3>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1.5rem;">Recevez nos analyses exclusives sur la Fintech et la Fiscalité en Tunisie.</p>
+                <input type="email" placeholder="votre@email.com" class="newsletter-input">
+                <button class="btn-glow" style="width: 100%; padding: 0.8rem;">S'abonner</button>
             </div>
+            
             <div class="widget">
-                <h3>Catégories populaires</h3>
-                <ul style="list-style: none; padding: 0;">
-                    <li style="margin-bottom: 10px;"><a href="blog.html" style="color: white; text-decoration: none;">Fiscalité</a></li>
-                    <li style="margin-bottom: 10px;"><a href="blog.html" style="color: white; text-decoration: none;">Entrepreneuriat</a></li>
-                    <li style="margin-bottom: 10px;"><a href="blog.html" style="color: white; text-decoration: none;">Digitalisation</a></li>
-                </ul>
+                <h3>Sujets Tendances</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.8rem;">
+                    <a href="blog.html" style="padding: 0.5rem 1rem; border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">#Fintech</a>
+                    <a href="blog.html" style="padding: 0.5rem 1rem; border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">#AI</a>
+                    <a href="blog.html" style="padding: 0.5rem 1rem; border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">#Fiscalité</a>
+                    <a href="blog.html" style="padding: 0.5rem 1rem; border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">#Startup</a>
+                </div>
+            </div>
+
+            <div class="widget">
+                <h3>Besoin d'aide ?</h3>
+                <p style="color: var(--text-secondary); font-size: 0.9rem;">Notre équipe d'experts est là pour vous accompagner dans votre digitalisation.</p>
+                <a href="about.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">Contactez-nous →</a>
             </div>
         </aside>
     </div>
 
     <!-- Search Overlay -->
-    <div class="search-overlay" id="search-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 9999;">
-        <div class="search-modal" style="max-width: 600px; margin: 100px auto; background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 2rem;">
-            <div class="search-header" style="display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem;">
-                <i data-lucide="search"></i>
-                <input type="text" id="search-input" placeholder="Rechercher..." style="background: none; border: none; color: white; width: 100%; font-size: 1.2rem; outline: none;">
-                <button id="close-search" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;"><i data-lucide="x"></i></button>
+    <div class="search-overlay" id="search-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(7,11,20,0.95); backdrop-filter: blur(20px); z-index: 9999;">
+        <div style="max-width: 800px; margin: 100px auto; padding: 0 5%;">
+            <div style="display: flex; align-items: center; gap: 1.5rem; border-bottom: 2px solid var(--primary); padding-bottom: 1rem; margin-bottom: 2rem;">
+                <i data-lucide="search" style="color: var(--primary); width: 32px; height: 32px;"></i>
+                <input type="text" id="search-input" placeholder="Rechercher une analyse..." style="background: none; border: none; color: white; width: 100%; font-size: 2rem; outline: none; font-family: 'Outfit';">
+                <button id="close-search" style="background: none; border: none; color: var(--text-secondary); cursor: pointer;"><i data-lucide="x" style="width: 32px; height: 32px;"></i></button>
             </div>
-            <div id="search-results" style="margin-top: 1rem; max-height: 400px; overflow-y: auto;"></div>
+            <div id="search-results"></div>
         </div>
     </div>
 
     <footer>
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="index.html">Accueil</a>
-                <a href="docs.html">Docs</a>
-                <a href="about.html">À Propos</a>
-                <a href="blog.html">Blog</a>
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem;">
+                <a href="index.html" style="color: var(--text-secondary); text-decoration: none;">Accueil</a>
+                <a href="docs.html" style="color: var(--text-secondary); text-decoration: none;">Docs</a>
+                <a href="about.html" style="color: var(--text-secondary); text-decoration: none;">À Propos</a>
+                <a href="blog.html" style="color: var(--text-secondary); text-decoration: none;">Blog</a>
             </div>
-            <p style="color: var(--text-secondary); margin: 0;">&copy; 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+            <p style="color: var(--text-secondary); font-size: 0.95rem;">&copy; 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
         </div>
     </footer>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => { 
             lucide.createIcons();
+            
+            // Reading Progress Logic
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById("progress-bar").style.width = scrolled + "%";
+            });
+
+            // Search Trigger
             const sBtn = document.getElementById('search-btn');
             const sOverlay = document.getElementById('search-overlay');
-            if(sBtn && sOverlay) {
-                sBtn.onclick = () => sOverlay.style.display = 'block';
-            }
+            const closeBtn = document.getElementById('close-search');
+            if(sBtn) sBtn.onclick = () => {
+                sOverlay.style.display = 'block';
+                document.getElementById('search-input').focus();
+            };
+            if(closeBtn) closeBtn.onclick = () => sOverlay.style.display = 'none';
         });
+
         function setLang(lang) {
             document.querySelectorAll('.btn-lang').forEach(btn => btn.classList.remove('active'));
             if(event) event.target.classList.add('active');

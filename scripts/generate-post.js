@@ -24,26 +24,34 @@ const groq = GROQ_KEY ? new Groq({ apiKey: GROQ_KEY }) : null;
 async function generatePost(retryCount = 0, useFallback = false) {
   const date = DateTime.now().setLocale('fr').toFormat('dd MMMM yyyy');
   const slugDate = DateTime.now().toFormat('yyyy-MM-dd');
-  
-  const prompt = `
-    Write a professional, deep-dive blog post for a Tunisian startup called "Factarlou" (an offline-first billing ERP).
-    Rédigez un article de blog expert et détaillé pour Factarlou (ERP tunisien local-first).
-    Le sujet doit porter sur l'entrepreneuriat, la finance ou la fiscalité en Tunisie (ex: Portail TEJ, Déclaration IRPP, gestion de stock, digitalisation).
+    const topics = [
+      "Fiscalité Tunisienne (Déclaration IRPP, Portail TEJ, TVA)",
+      "Entrepreneuriat et Innovation (Startups, Levée de fonds en Tunisie)",
+      "Technologie et SaaS (Architecture Offline-first, Sécurité des données)",
+      "Fintech et Paiements (Réglementations BCT, Solutions de paiement)",
+      "Digitalisation des PME (Gestion de stock, Automatisation des factures)",
+      "Intelligence Artificielle pour les Entreprises (Optimisation, Prédictions)"
+    ];
+    const selectedTopic = topics[Math.floor(Math.random() * topics.length)];
+
+    const prompt = `Rédigez un article de blog EXPERT, PROFOND et PASSIONNANT pour Factarlou.
+    Sujet : ${selectedTopic}
     
-    RÉPONDEZ UNIQUEMENT EN JSON avec cette structure :
+    L'article doit être extrêmement détaillé (>1000 mots), avec des conseils pratiques, des analyses de marché et une vision technologique forte.
+    
+    RÉPONDEZ UNIQUEMENT EN JSON :
     {
-      "title_fr": "Titre impactant en Français",
-      "title_ar": "Titre professionnel en Arabe",
-      "category_fr": "Catégorie (ex: Fiscalité, Entrepreneuriat)",
+      "title_fr": "Titre provocateur et magnétique en Français",
+      "title_ar": "Titre de haut niveau en Arabe",
+      "category_fr": "Catégorie (ex: Fintech, Tech, Fiscalité, Stratégie)",
       "category_ar": "Catégorie en Arabe",
-      "excerpt_fr": "Résumé SEO de 2 phrases",
-      "unsplash_keyword": "Mot-clé anglais pour l'image (ex: 'accounting', 'startup', 'strategy')",
-      "content_fr": "Contenu HTML complet (>800 mots, utilisez h2, h3, p, ul, li)",
-      "content_ar": "Contenu HTML complet en Arabe (Fidèle à la version FR, utilisez h2, h3, p, ul, li)"
+      "excerpt_fr": "Résumé captivant de 2 phrases",
+      "unsplash_keyword": "Mot-clé anglais (ex: 'data', 'future', 'money', 'robot')",
+      "content_fr": "HTML riche : utilisez h2, h3, p, ul, li, et des balises <blockquote class='premium-quote'> pour les citations clés.",
+      "content_ar": "HTML riche en Arabe (Même structure que la version FR)"
     }
     
-    L'article doit être éducatif, rassurer l'utilisateur et positionner Factarlou comme la solution idéale.
-  `;
+    Positionnez Factarlou comme le leader technologique incontournable en Tunisie.`;
 
   try {
     let data;
