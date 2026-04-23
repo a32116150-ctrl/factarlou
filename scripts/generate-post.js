@@ -27,23 +27,22 @@ async function generatePost(retryCount = 0, useFallback = false) {
   
   const prompt = `
     Write a professional, deep-dive blog post for a Tunisian startup called "Factarlou" (an offline-first billing ERP).
-    Topic: Entrepreneurship, finance, or taxation in Tunisia. 
-    Examples: 
-    - "Comment optimiser sa déclaration fiscale en Tunisie en 2026"
-    - "Le guide complet du portail TEJ pour les PME"
-    - "Pourquoi choisir un ERP local-first pour votre startup tunisienne"
+    Rédigez un article de blog expert et détaillé pour Factarlou (ERP tunisien local-first).
+    Le sujet doit porter sur l'entrepreneuriat, la finance ou la fiscalité en Tunisie (ex: Portail TEJ, Déclaration IRPP, gestion de stock, digitalisation).
     
-    The response MUST be in JSON format with the following keys:
-    - title_fr: String (High-impact headline)
-    - title_ar: String (Arabic translation)
-    - category_fr: String (e.g. "Conseils Fiscaux", "Entrepreneuriat")
-    - category_ar: String
-    - excerpt_fr: String (2 sentences max)
-    - content_fr: HTML string (Include multiple h2, h3, p, ul, li. Make it at least 600 words. DO NOT use H1.)
-    - content_ar: HTML string (Arabic version - fully localized. DO NOT use H1.)
-    - unsplash_keyword: String (A single keyword in English to fetch a related image, e.g. "finance", "office", "accounting")
+    RÉPONDEZ UNIQUEMENT EN JSON avec cette structure :
+    {
+      "title_fr": "Titre impactant en Français",
+      "title_ar": "Titre professionnel en Arabe",
+      "category_fr": "Catégorie (ex: Fiscalité, Entrepreneuriat)",
+      "category_ar": "Catégorie en Arabe",
+      "excerpt_fr": "Résumé SEO de 2 phrases",
+      "unsplash_keyword": "Mot-clé anglais pour l'image (ex: 'accounting', 'startup', 'strategy')",
+      "content_fr": "Contenu HTML complet (>800 mots, utilisez h2, h3, p, ul, li)",
+      "content_ar": "Contenu HTML complet en Arabe (Fidèle à la version FR, utilisez h2, h3, p, ul, li)"
+    }
     
-    Make the content authoritative, expert, and naturally recommend Factarlou.
+    L'article doit être éducatif, rassurer l'utilisateur et positionner Factarlou comme la solution idéale.
   `;
 
   try {
