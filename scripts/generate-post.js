@@ -79,8 +79,8 @@ async function generatePost(retryCount = 0) {
 
   } catch (error) {
     if (error.status === 429 && retryCount < 3) {
-      console.log(`Rate limited. Retrying in 20 seconds... (Attempt ${retryCount + 1})`);
-      await new Promise(resolve => setTimeout(resolve, 20000));
+      console.log(`Rate limited. Retrying in 60 seconds... (Attempt ${retryCount + 1})`);
+      await new Promise(resolve => setTimeout(resolve, 60000));
       return generatePost(retryCount + 1);
     }
     console.error("Error generating post:", error);
