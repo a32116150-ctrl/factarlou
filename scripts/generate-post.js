@@ -15,7 +15,7 @@ if (!API_KEY) {
 }
 
 const genAI = new GoogleGenerativeAI(API_KEY);
-const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-8b" });
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 async function generatePost(retryCount = 0) {
   const date = DateTime.now().setLocale('fr').toFormat('dd MMMM yyyy');
@@ -78,7 +78,7 @@ async function generatePost(retryCount = 0) {
     await updateSearchIndex(data, postFileName);
 
   } catch (error) {
-    if (error.status === 429 && retryCount < 5) {
+    if (error.status === 429 && retryCount < 10) {
       console.log(`Rate limited. Retrying in 60 seconds... (Attempt ${retryCount + 1})`);
       await new Promise(resolve => setTimeout(resolve, 60000));
       return generatePost(retryCount + 1);
