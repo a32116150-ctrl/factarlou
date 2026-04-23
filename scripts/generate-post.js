@@ -4,6 +4,7 @@ import fs from "fs-extra";
 import path from "path";
 import { fileURLToPath } from "url";
 import { DateTime } from "luxon";
+import { execSync } from "child_process";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -24,54 +25,57 @@ const groq = GROQ_KEY ? new Groq({ apiKey: GROQ_KEY }) : null;
 async function generatePost(retryCount = 0, useFallback = false) {
   const date = DateTime.now().setLocale('fr').toFormat('dd MMMM yyyy');
   const slugDate = DateTime.now().toFormat('yyyy-MM-dd');
-    const topics = [
-      "Fiscalité Tunisienne (Déclaration IRPP, Portail TEJ, TVA)",
-      "Entrepreneuriat et Innovation (Startups, Levée de fonds en Tunisie)",
-      "Technologie et SaaS (Architecture Offline-first, Sécurité des données)",
-      "Fintech et Paiements (Réglementations BCT, Solutions de paiement)",
-      "Digitalisation des PME (Gestion de stock, Automatisation des factures)",
-      "Intelligence Artificielle pour les Entreprises (Optimisation, Prédictions)"
-    ];
-    const selectedTopic = topics[Math.floor(Math.random() * topics.length)];
+  
+  // Trending Topics specifically for the Tunisian Market
+  const topics = [
+    "Fiscalité Tunisienne (Déclaration IRPP, Portail TEJ, TVA 2026)",
+    "Entrepreneuriat et Innovation (Startups, Levée de fonds en Tunisie)",
+    "Technologie et SaaS (Architecture Offline-first, Sécurité des données)",
+    "Fintech et Paiements (Réglementations BCT, Solutions de paiement)",
+    "Digitalisation des PME (Gestion de stock, Automatisation des factures)",
+    "Intelligence Artificielle pour les Entreprises (Optimisation, Prédictions)",
+    "Loi de Finances Tunisie : Ce que les entrepreneurs doivent savoir",
+    "Transition Digitale : Pourquoi le Local-First est l'avenir de la Tunisie"
+  ];
+  const selectedTopic = topics[Math.floor(Math.random() * topics.length)];
 
-    const prompt = `Rédigez un article de blog EXPERT, PROFOND et PASSIONNANT pour Factarlou.
-    Sujet : ${selectedTopic}
-    
-    L'article doit être extrêmement détaillé (>1000 mots), avec des conseils pratiques, des analyses de marché et une vision technologique forte.
-    
-    RÉPONDEZ UNIQUEMENT EN JSON :
-    {
-      "title_fr": "Titre provocateur et magnétique en Français",
-      "title_ar": "Titre de haut niveau en Arabe",
-      "category_fr": "Catégorie (ex: Fintech, Tech, Fiscalité, Stratégie)",
-      "category_ar": "Catégorie en Arabe",
-      "excerpt_fr": "Résumé captivant de 2 phrases",
-      "unsplash_keyword": "Mot-clé anglais (ex: 'data', 'future', 'money', 'robot')",
-      "content_fr": "HTML riche : utilisez h2, h3, p, ul, li, et des balises <blockquote class='premium-quote'> pour les citations clés.",
-      "content_ar": "HTML riche en Arabe (Même structure que la version FR)"
-    }
-    
-    Positionnez Factarlou comme le leader technologique incontournable en Tunisie.`;
+  const prompt = `Rédigez un article de blog EXPERT, PROFOND et PASSIONNANT pour Factarlou.
+  Sujet : ${selectedTopic}
+  
+  L'article doit être extrêmement détaillé (>1200 mots), avec des conseils pratiques, des analyses de marché et une vision technologique forte. 
+  Utilisez un ton autoritaire, innovant et premium.
+  
+  RÉPONDEZ UNIQUEMENT EN JSON :
+  {
+    "title_fr": "Titre provocateur et magnétique en Français",
+    "title_ar": "Titre de haut niveau en Arabe",
+    "category_fr": "Catégorie (ex: Fintech, Tech, Fiscalité, Stratégie)",
+    "category_ar": "Catégorie en Arabe",
+    "excerpt_fr": "Résumé captivant de 2 phrases pour l'aperçu",
+    "unsplash_keyword": "Mot-clé anglais pour l'image de couverture",
+    "content_fr": "HTML riche : utilisez h2, h3, p, ul, li, et des balises <blockquote class='premium-quote'> pour les citations clés.",
+    "content_ar": "HTML riche en Arabe (Même structure que la version FR)"
+  }
+  
+  Positionnez Factarlou comme le leader technologique incontournable en Tunisie.`;
 
   try {
     let data;
     if (!useFallback && GEMINI_KEY) {
-      console.log("Attempting generation with Gemini...");
+      console.log(`🚀 Attempting generation with Gemini (Topic: ${selectedTopic})...`);
       const result = await geminiModel.generateContent(prompt);
       const response = await result.response;
       const text = response.text();
       const jsonStr = text.replace(/```json/g, "").replace(/```/g, "").trim();
       data = JSON.parse(jsonStr);
     } else if (groq) {
-      console.log("Using Groq Fallback (Llama 3)...");
+      console.log(`🛡️ Using Groq Fallback (Topic: ${selectedTopic})...`);
       const chatCompletion = await groq.chat.completions.create({
         messages: [{ role: "user", content: prompt + "\nRespond ONLY with JSON." }],
         model: "llama-3.3-70b-versatile",
         response_format: { type: "json_object" }
       });
       data = JSON.parse(chatCompletion.choices[0].message.content);
-    } else {
-      throw new Error("No available AI service to handle fallback.");
     }
 
     const coverImage = `https://loremflickr.com/1200/800/${data.unsplash_keyword || 'business'}`;
@@ -79,38 +83,38 @@ async function generatePost(retryCount = 0, useFallback = false) {
     const postFileName = `${slug}.html`;
     const postFilePath = path.join(__dirname, "../public/posts", postFileName);
 
-    let template = await fs.readFile(path.join(__dirname, "../blog-template.html"), "utf-8");
-
-    let postHtml = template
-      .replace(/{{TITLE}}/g, data.title_fr)
-      .replace(/{{TITLE_FR}}/g, data.title_fr)
-      .replace(/{{TITLE_AR}}/g, data.title_ar)
-      .replace(/{{CATEGORY}}/g, data.category_fr)
-      .replace(/{{CATEGORY_AR}}/g, data.category_ar)
-      .replace(/{{EXCERPT}}/g, data.excerpt_fr)
-      .replace(/{{DATE}}/g, date)
-      .replace(/{{COVER_IMAGE}}/g, coverImage)
-      .replace(/{{CONTENT_FR}}/g, data.content_fr)
-      .replace(/{{CONTENT_AR}}/g, data.content_ar);
-
+    // Initial simple write (Will be polished by fix-posts.js later)
     await fs.ensureDir(path.dirname(postFilePath));
-    await fs.writeFile(postFilePath, postHtml);
-    console.log(`Post generated: ${postFileName}`);
+    await fs.writeFile(postFilePath, `<h1>${data.title_fr}</h1><div class="post-content">${data.content_fr}</div>`);
+    console.log(`📄 Raw Post generated: ${postFileName}`);
 
-    await updateBlogListing(data, postFileName, date, coverImage);
-    await updateSitemap(postFileName);
+    // 🔄 RUN AUTOMATION CHAIN
+    console.log("⚙️  Running Automation Pipeline...");
+    
+    // 1. Rebuild Search Index
     await updateSearchIndex(data, postFileName);
+    
+    // 2. Update Blog Listing
+    await updateBlogListing(data, postFileName, date, coverImage);
+    
+    // 3. Polishing & Version Sync (Fix-posts)
+    // This will apply the template, navigation, and Parent Version automatically
+    execSync("node scripts/fix-posts.js", { stdio: 'inherit' });
+
+    // 4. Regenerate Sitemap
+    execSync("node scripts/auto-sitemap.js", { stdio: 'inherit' });
+
+    console.log(`\n✨ SUCCESS: ${postFileName} is now Live, Styled, and Indexed!`);
 
   } catch (error) {
     if (error.status === 429 && retryCount < 2 && !useFallback) {
-      console.log(`Gemini rate limited. Retrying in 15 seconds... (Attempt ${retryCount + 1})`);
+      console.log(`Rate limited. Retrying in 15s...`);
       await new Promise(resolve => setTimeout(resolve, 15000));
       return generatePost(retryCount + 1, false);
     } else if (!useFallback && groq) {
-      console.log("Gemini failed or rate limited. Switching to Groq Fallback...");
       return generatePost(0, true);
     }
-    console.error("Critical Error generating post:", error);
+    console.error("❌ Critical Automation Failure:", error);
     process.exit(1);
   }
 }
@@ -129,6 +133,7 @@ async function updateSearchIndex(data, fileName) {
     type: 'blog'
   });
   await fs.writeJson(indexPath, index.slice(0, 100), { spaces: 2 });
+  console.log("🔍 Search Index updated.");
 }
 
 async function updateBlogListing(data, fileName, date, coverImage) {
@@ -157,18 +162,7 @@ async function updateBlogListing(data, fileName, date, coverImage) {
     blogHtml = blogHtml.replace('<div class="blog-grid" id="posts-grid">', `<div class="blog-grid" id="posts-grid">\n${newCard}`);
   }
   await fs.writeFile(blogPath, blogHtml);
-}
-
-async function updateSitemap(fileName) {
-  const sitemapPath = path.join(__dirname, "../public/sitemap.xml");
-  let sitemap = await fs.readFile(sitemapPath, "utf-8");
-  const newEntry = `  <url>
-    <loc>https://factarlou.online/posts/${fileName}</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>\n</urlset>`;
-  sitemap = sitemap.replace('</urlset>', newEntry);
-  await fs.writeFile(sitemapPath, sitemap);
+  console.log("📰 Blog listing updated.");
 }
 
 generatePost();
