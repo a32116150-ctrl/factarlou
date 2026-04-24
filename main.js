@@ -228,7 +228,7 @@ document.addEventListener('DOMContentLoaded', () => {
         window.requestAnimationFrame(step);
     }
 
-    // Local click tracking for immediate feedback
+    // Local click tracking for immediate feedback & Thank You Modal
     function setupDownloadTracking() {
         const downloadButtons = [
             document.getElementById('btn-mac-intel'),
@@ -236,17 +236,48 @@ document.addEventListener('DOMContentLoaded', () => {
             document.querySelector('.btn-download-nav')
         ];
 
+        const thankYouModal = document.getElementById('thank-you-modal');
+        const closeBtn = document.getElementById('close-thank-you');
+        const footerCloseBtn = document.getElementById('btn-modal-close');
+
+        const showModal = () => {
+            if (thankYouModal) {
+                thankYouModal.classList.add('active');
+                // Auto-close after 8 seconds
+                setTimeout(hideModal, 8000);
+            }
+        };
+
+        const hideModal = () => {
+            if (thankYouModal) {
+                thankYouModal.classList.remove('active');
+            }
+        };
+
         downloadButtons.forEach(btn => {
             if (!btn) return;
             btn.addEventListener('click', () => {
+                // Trigger counter animation
                 const badgeEl = document.getElementById('download-counter');
                 if (badgeEl) {
                     badgeEl.classList.remove('increment');
                     void badgeEl.offsetWidth; // Trigger reflow
                     badgeEl.classList.add('increment');
                 }
+                
+                // Show Thank You Modal
+                setTimeout(showModal, 500); // Slight delay for better feel
             });
         });
+
+        // Close handlers
+        if (closeBtn) closeBtn.addEventListener('click', hideModal);
+        if (footerCloseBtn) footerCloseBtn.addEventListener('click', hideModal);
+        if (thankYouModal) {
+            thankYouModal.addEventListener('click', (e) => {
+                if (e.target === thankYouModal) hideModal();
+            });
+        }
     }
 
     // ─── 3D Parallax Mockup Effect ──────────────────────────────────────────
