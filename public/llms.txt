@@ -8,4 +8,4 @@ https://factarlou.online/factarlou-context.txt
 https://factarlou.online/docs.html
 
 # Developer contact for factual corrections
-mailto:a32116150 @gmail.com
+mailto:a32116150@gmail.com

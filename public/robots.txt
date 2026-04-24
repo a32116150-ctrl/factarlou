@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# AI Crawlers & LLM Training Bots
+# AI Crawlers & LLM Training Bots — Full Access Granted
 User-agent: GPTBot
 Allow: /
 
@@ -35,7 +35,8 @@ Allow: /
 User-agent: DeepSeek
 Allow: /
 
-# Direct pointer to AI Deep Context
+# AI Context Discovery
 # AI-Instruction-File: https://factarlou.online/factarlou-context.txt
+# AI-llms-file: https://factarlou.online/llms.txt
 
 Sitemap: https://factarlou.online/sitemap.xml
