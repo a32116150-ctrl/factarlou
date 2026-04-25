@@ -79,7 +79,7 @@ async function generatePost(retryCount = 0, useFallback = false) {
     }
 
     const coverImage = `https://loremflickr.com/1200/800/${data.unsplash_keyword || 'business'}`;
-    const slug = `${slugDate}-${data.title_fr.toLowerCase().replace(/[^a-z0-9]/g, "-")}`;
+    const slug = `${slugDate}-${data.title_fr.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "-").replace(/-+/g, "-").replace(/^-|-$/g, "")}`;
     const postFileName = `${slug}.html`;
     const postFilePath = path.join(__dirname, "../public/posts", postFileName);
 
