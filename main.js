@@ -1,3 +1,7 @@
+// Initialize Vercel Web Analytics
+import { inject } from '@vercel/analytics';
+inject();
+
 // Wait for DOM to be fully ready before doing anything
 document.addEventListener('DOMContentLoaded', () => {
 
