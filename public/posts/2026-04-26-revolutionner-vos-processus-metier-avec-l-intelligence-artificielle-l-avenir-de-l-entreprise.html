@@ -54,43 +54,7 @@
             z-index: -1;
         }
 
-        nav {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            padding: 1.2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(7, 11, 20, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-            z-index: 1000;
-            box-sizing: border-box;
-        }
-        nav .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 800;
-            font-size: 1.6rem;
-            color: white;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
 
-        .nav-links { 
-            display: flex; 
-            gap: 2.5rem; 
-            align-items: center;
-        }
-        .nav-links a { 
-            color: var(--text-secondary) !important; 
-            text-decoration: none !important; 
-            font-size: 1rem;
-            font-weight: 500;
-            transition: 0.3s; 
-        }
-        .nav-links a:hover { color: var(--primary) !important; }
 
         .main-layout {
             max-width: 1300px;
@@ -199,6 +163,14 @@
             .sidebar { display: none; }
             .post-header h1 { font-size: 2.5rem; }
         }
+        @media (max-width: 768px) {
+            .main-layout { margin-top: 100px; gap: 2rem; }
+            .post-header h1 { font-size: 1.8rem; }
+            .post-container { padding: 1.5rem; border-radius: 20px; }
+            .post-cover { height: 250px; border-radius: 12px; margin-bottom: 2rem; }
+            .premium-cta { padding: 2.5rem 1.5rem; }
+            .lang-toggle { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
@@ -207,7 +179,7 @@
 
     <nav>
         <a href="index.html" class="logo">
-            <img src="logo-icon.png" alt="Factarlou" style="width: 42px; height: 42px; border-radius: 12px;">
+            <img src="logo-icon.png" alt="Factarlou">
             Factarlou
         </a>
         <div class="nav-links">
@@ -217,9 +189,14 @@
             <a href="showcase.html">Galerie</a>
             <a href="blog.html">Blog</a>
         </div>
-        <button id="search-btn" style="background: none; border: none; color: white; cursor: pointer; padding: 10px;">
-            <i data-lucide="search" style="width: 24px; height: 24px;"></i>
-        </button>
+        <div class="nav-right">
+            <button class="menu-toggle" aria-label="Menu">
+                <i data-lucide="menu"></i>
+            </button>
+            <button id="search-btn" class="search-trigger">
+                <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+            </button>
+        </div>
     </nav>
 
     <div class="main-layout">
@@ -244,7 +221,9 @@
                     <div class="post-content">
                         
                         
+                        
                         <h2>Introduction à l'Intelligence Artificielle</h2><p>L'intelligence artificielle (IA) est devenue un élément essentiel dans le monde des entreprises. En effet, elle permet d'automatiser des tâches, d'analyser des données et de prendre des décisions éclairées. Mais qu'est-ce que l'IA exactement ?<br><blockquote class='premium-quote'>L'intelligence artificielle est la capacité d'une machine à simuler l'intelligence humaine, en utilisant des algorithmes et des données pour prendre des décisions et résoudre des problèmes.</blockquote></p><h3>Avantages de l'IA pour les entreprises</h3><ul><li>Optimisation des processus : l'IA peut automatiser des tâches répétitives et libérer du temps pour les tâches plus stratégiques.</li><li>Prédictions : l'IA peut analyser des données pour prédire les tendances et prendre des décisions éclairées.</li><li>Amélioration de la prise de décision : l'IA peut fournir des insights précieux pour aider les entreprises à prendre des décisions plus éclairées.</li></ul><h2>L'IA chez Factarlou</h2><p>Factarlou, le leader technologique en Tunisie, propose des solutions d'IA personnalisées pour les entreprises. Notre équipe d'experts travaille étroitement avec les entreprises pour comprendre leurs besoins et développer des solutions sur mesure.</p><h3>Cas d'étude</h3><p>Une entreprise de commerce électronique a travaillé avec Factarlou pour développer un système de recommandation de produits basé sur l'IA. Grâce à cette solution, l'entreprise a pu augmenter ses ventes de 25% et améliorer la satisfaction de ses clients.</p><h2>Conclusion</h2><p>En conclusion, l'IA est un outil puissant qui peut révolutionner les entreprises. Avec Factarlou, les entreprises peuvent tirer parti de l'IA pour optimiser leurs processus, prédire les tendances et prendre des décisions éclairées. N'attendez pas, découvrez comment l'IA peut vous aider à rester en tête de la concurrence.</p>
+                    
                     
                     
                     </div>
@@ -314,15 +293,13 @@
     </div>
 
     <footer>
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <div style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem;">
-                <a href="index.html" style="color: var(--text-secondary); text-decoration: none;">Accueil</a>
-                <a href="docs.html" style="color: var(--text-secondary); text-decoration: none;">Docs</a>
-                <a href="about.html" style="color: var(--text-secondary); text-decoration: none;">À Propos</a>
-                <a href="blog.html" style="color: var(--text-secondary); text-decoration: none;">Blog</a>
-            </div>
-            <p style="color: var(--text-secondary); font-size: 0.95rem;">&copy; 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+        <div class="footer-links">
+            <a href="index.html">Accueil</a>
+            <a href="docs.html">Documentation</a>
+            <a href="changelog.html">Changelog</a>
+            <a href="privacy.html">Confidentialité</a>
         </div>
+        <p class="copyright">&copy; 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
     </footer>
 
     <script>

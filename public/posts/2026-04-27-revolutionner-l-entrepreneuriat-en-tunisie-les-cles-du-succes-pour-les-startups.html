@@ -54,43 +54,7 @@
             z-index: -1;
         }
 
-        nav {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            padding: 1.2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(7, 11, 20, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--glass-border);
-            z-index: 1000;
-            box-sizing: border-box;
-        }
-        nav .logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 800;
-            font-size: 1.6rem;
-            color: white;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
 
-        .nav-links { 
-            display: flex; 
-            gap: 2.5rem; 
-            align-items: center;
-        }
-        .nav-links a { 
-            color: var(--text-secondary) !important; 
-            text-decoration: none !important; 
-            font-size: 1rem;
-            font-weight: 500;
-            transition: 0.3s; 
-        }
-        .nav-links a:hover { color: var(--primary) !important; }
 
         .main-layout {
             max-width: 1300px;
@@ -199,6 +163,14 @@
             .sidebar { display: none; }
             .post-header h1 { font-size: 2.5rem; }
         }
+        @media (max-width: 768px) {
+            .main-layout { margin-top: 100px; gap: 2rem; }
+            .post-header h1 { font-size: 1.8rem; }
+            .post-container { padding: 1.5rem; border-radius: 20px; }
+            .post-cover { height: 250px; border-radius: 12px; margin-bottom: 2rem; }
+            .premium-cta { padding: 2.5rem 1.5rem; }
+            .lang-toggle { flex-direction: column; }
+        }
     </style>
 </head>
 <body>
@@ -207,7 +179,7 @@
 
     <nav>
         <a href="index.html" class="logo">
-            <img src="logo-icon.png" alt="Factarlou" style="width: 42px; height: 42px; border-radius: 12px;">
+            <img src="logo-icon.png" alt="Factarlou">
             Factarlou
         </a>
         <div class="nav-links">
@@ -217,9 +189,14 @@
             <a href="showcase.html">Galerie</a>
             <a href="blog.html">Blog</a>
         </div>
-        <button id="search-btn" style="background: none; border: none; color: white; cursor: pointer; padding: 10px;">
-            <i data-lucide="search" style="width: 24px; height: 24px;"></i>
-        </button>
+        <div class="nav-right">
+            <button class="menu-toggle" aria-label="Menu">
+                <i data-lucide="menu"></i>
+            </button>
+            <button id="search-btn" class="search-trigger">
+                <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+            </button>
+        </div>
     </nav>
 
     <div class="main-layout">
@@ -244,6 +221,7 @@
                     <div class="post-content">
                         
                         
+                        
    <h2>Introduction</h2>
    <p>L'entrepreneuriat et l'innovation sont les clés pour booster l'économie tunisienne et créer des opportunités pour les jeunes talents. Dans cet article, nous allons explorer les différents aspects de l'entrepreneuriat en Tunisie, les défis auxquels les startups sont confrontées et les solutions pour réussir.</p>
    <h3>Le Paysage de l'Entrepreneuriat en Tunisie</h3>
@@ -261,6 +239,7 @@
    <h2>Conclusion</h2>
    <p>L'entrepreneuriat et l'innovation sont les clés pour l'avenir de la Tunisie. Avec les bons outils, les bonnes stratégies et un environnement favorable, les startups tunisiennes peuvent réussir et contribuer à la croissance économique du pays. Factarlou est là pour aider les entrepreneurs à atteindre leurs objectifs et à réaliser leurs rêves.</p>
    
+                    
                     
                     </div>
                 </div>
@@ -329,15 +308,13 @@
     </div>
 
     <footer>
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <div style="display: flex; justify-content: center; gap: 3rem; margin-bottom: 3rem;">
-                <a href="index.html" style="color: var(--text-secondary); text-decoration: none;">Accueil</a>
-                <a href="docs.html" style="color: var(--text-secondary); text-decoration: none;">Docs</a>
-                <a href="about.html" style="color: var(--text-secondary); text-decoration: none;">À Propos</a>
-                <a href="blog.html" style="color: var(--text-secondary); text-decoration: none;">Blog</a>
-            </div>
-            <p style="color: var(--text-secondary); font-size: 0.95rem;">&copy; 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+        <div class="footer-links">
+            <a href="index.html">Accueil</a>
+            <a href="docs.html">Documentation</a>
+            <a href="changelog.html">Changelog</a>
+            <a href="privacy.html">Confidentialité</a>
         </div>
+        <p class="copyright">&copy; 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
     </footer>
 
     <script>
