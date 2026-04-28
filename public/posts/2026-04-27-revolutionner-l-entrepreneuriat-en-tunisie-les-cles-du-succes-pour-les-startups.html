@@ -56,6 +56,62 @@
 
 
 
+        /* Vite bypass fix: Inline critical CSS for public/posts */
+        nav {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(7, 11, 20, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+        nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 1.6rem;
+            color: white;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+        nav .logo img {
+            height: 38px;
+            width: auto;
+            border-radius: 8px;
+        }
+        .nav-links { 
+            display: flex; 
+            gap: 2.5rem; 
+            align-items: center;
+        }
+        .nav-links a { 
+            color: var(--text-secondary) !important; 
+            text-decoration: none !important; 
+            font-size: 1rem;
+            font-weight: 500;
+            transition: 0.3s; 
+        }
+        .nav-links a:hover { color: var(--primary) !important; }
+        
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .menu-toggle { display: none; }
+
+        footer { padding: 60px 5% 30px; border-top: 1px solid var(--glass-border); text-align: center; background: #04070d; margin-top: auto; }
+        .footer-links { margin-bottom: 2rem; display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+        .footer-links a { color: var(--text-secondary); text-decoration: none; transition: 0.3s; }
+        .footer-links a:hover { color: var(--primary); }
+        .copyright { color: #475569; font-size: 0.9rem; }
+
         .main-layout {
             max-width: 1300px;
             margin: 150px auto 80px;
@@ -164,6 +220,37 @@
             .post-header h1 { font-size: 2.5rem; }
         }
         @media (max-width: 768px) {
+            nav {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .nav-links {
+                display: flex;
+                position: fixed;
+                top: 0; right: -100%;
+                width: 100%; height: 100vh;
+                background: rgba(2, 6, 23, 0.98);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 2.5rem;
+                z-index: 2000;
+                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .nav-links.active { right: 0; }
+            .nav-links a { font-size: 1.5rem; }
+            .menu-toggle {
+                display: block !important;
+                z-index: 2100;
+                cursor: pointer;
+                background: none;
+                border: none;
+                color: white;
+            }
+            .footer-links { flex-wrap: wrap; gap: 1rem; }
+            
             .main-layout { margin-top: 100px; gap: 2rem; }
             .post-header h1 { font-size: 1.8rem; }
             .post-container { padding: 1.5rem; border-radius: 20px; }
@@ -202,7 +289,7 @@
     <div class="main-layout">
         <main>
             <article class="post-container">
-                <img src="logo-icon.png" alt="Révolutionner l'Entrepreneuriat en Tunisie : Les Clés du Succès pour les Startups" class="post-cover">
+                <img src="/logo-icon.png" alt="Révolutionner l'Entrepreneuriat en Tunisie : Les Clés du Succès pour les Startups" class="post-cover">
                 
                 <div class="lang-toggle" style="display: flex; gap: 1rem; margin-bottom: 3rem;">
                     <button class="btn-lang active" onclick="setLang('fr')" style="flex: 1; padding: 0.8rem; border-radius: 12px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: white; cursor: pointer;">FR</button>
@@ -219,6 +306,7 @@
                         </div>
                     </header>
                     <div class="post-content">
+                        
                         
                         
                         
@@ -240,6 +328,7 @@
    <h2>Conclusion</h2>
    <p>L'entrepreneuriat et l'innovation sont les clés pour l'avenir de la Tunisie. Avec les bons outils, les bonnes stratégies et un environnement favorable, les startups tunisiennes peuvent réussir et contribuer à la croissance économique du pays. Factarlou est là pour aider les entrepreneurs à atteindre leurs objectifs et à réaliser leurs rêves.</p>
    
+                    
                     
                     
                     
