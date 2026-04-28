@@ -78,20 +78,24 @@
     <div class="mesh-bg"></div>
 
     <nav>
-        <div class="logo">
+        <a href="index.html" class="logo">
             <img src="/logo-icon.png" alt="Factarlou Logo">
             Factarlou
-        </div>
+        </a>
         <div class="nav-links">
             <a href="/index.html">Accueil</a>
             <a href="/docs.html">Docs</a>
             <a href="/about.html">À Propos</a>
             <a href="/showcase.html">Galerie</a>
+            <a href="/blog.html">Blog</a>
+            <a href="/changelog.html" style="color: var(--primary)">Changelog</a>
         </div>
-        <button class="menu-toggle" aria-label="Ouvrir le menu">
-            <i data-lucide="menu"></i>
-        </button>
-        <a href="/index.html#download" class="btn-download-nav">Essayer Gratuitement</a>
+        <div class="nav-right">
+            <a href="/index.html#download" class="btn-download-nav">Essayer Gratuitement</a>
+            <button class="menu-toggle" aria-label="Menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
     </nav>
 
     <main class="changelog-container">
@@ -102,7 +106,29 @@
         </div>
 
         <div class="version-block" data-reveal>
-            <span class="version-tag">v2.5.2 (LATEST)</span>
+            <span class="version-tag">v2.6.3 (LATEST)</span>
+            <span class="version-date">26 Avril 2026</span>
+            <h2>Compatibilité macOS & Application POS</h2>
+            <ul class="change-list">
+                <li><span class="change-type type-fix">Fix</span> Résolution de l'erreur "disk image corrupted" empêchant l'installation sur macOS.</li>
+                <li><span class="change-type type-new">Nouveau</span> Lancement officiel de l'application Factarlou Point de Vente (POS) connectée.</li>
+                <li><span class="change-type type-imp">Amélioration</span> Mise à jour de sécurité et stabilité du processus de déploiement multiplateforme.</li>
+            </ul>
+        </div>
+
+        <div class="version-block" data-reveal style="opacity: 0.9;">
+            <span class="version-tag" style="background: var(--glass-border);">v2.6.2</span>
+            <span class="version-date">26 Avril 2026</span>
+            <h2>Mobile-First & Build Linux</h2>
+            <ul class="change-list">
+                <li><span class="change-type type-new">Nouveau</span> Implémentation d'une nouvelle logique de tableau de bord optimisée pour mobile (Mobile-First).</li>
+                <li><span class="change-type type-fix">Fix</span> Correction de l'erreur de compilation Glibc dans l'environnement Buildroot (Linux/GitHub Actions).</li>
+                <li><span class="change-type type-imp">Amélioration</span> Ajustements de l'interface utilisateur pour une meilleure lisibilité sur les petits écrans.</li>
+            </ul>
+        </div>
+
+        <div class="version-block" data-reveal style="opacity: 0.85;">
+            <span class="version-tag" style="background: var(--glass-border);">v2.5.2</span>
             <span class="version-date">22 Avril 2026</span>
             <h2>Optimisation & Correction Critique</h2>
             <ul class="change-list">

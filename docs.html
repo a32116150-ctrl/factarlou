@@ -76,10 +76,10 @@
     <div class="mesh-bg"></div>
 
     <nav>
-        <div class="logo">
+        <a href="index.html" class="logo">
             <img src="/logo-icon.png" alt="Factarlou Logo">
             Factarlou
-        </div>
+        </a>
         <div class="nav-links">
             <a href="/index.html">Accueil</a>
             <a href="/docs.html" style="color: var(--primary)">Docs</a>
@@ -87,10 +87,12 @@
             <a href="/showcase.html">Galerie</a>
             <a href="/blog.html">Blog</a>
         </div>
-        <button class="menu-toggle" aria-label="Ouvrir le menu">
-            <i data-lucide="menu"></i>
-        </button>
-        <a href="/index.html#download" class="btn-download-nav">Essayer Gratuitement</a>
+        <div class="nav-right">
+            <button class="menu-toggle" aria-label="Menu">
+                <i data-lucide="menu"></i>
+            </button>
+            <a href="/index.html#download" class="btn-download-nav">Essayer Gratuitement</a>
+        </div>
     </nav>
 
     <main class="docs-container" data-reveal>

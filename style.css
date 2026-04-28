@@ -657,8 +657,24 @@ footer { padding: 60px 5% 30px; border-top: 1px solid var(--glass-border); text-
   .label { display: none; }
   .floating-ui { display: none; }
   
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .btn-download-nav {
+    display: none; /* Hide on mobile to save space */
+  }
+
   .nav-links {
-    display: none;
+    display: flex;
     position: fixed;
     top: 0; right: -100%;
     width: 80%; height: 100vh;
@@ -668,11 +684,11 @@ footer { padding: 60px 5% 30px; border-top: 1px solid var(--glass-border); text-
     align-items: center;
     gap: 2.5rem;
     z-index: 2000;
-    transition: 0.5s ease;
+    transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     border-left: 1px solid var(--glass-border);
   }
 
-  .nav-links.active { right: 0; display: flex; }
+  .nav-links.active { right: 0; }
 
   .menu-toggle {
     display: block !important;
@@ -683,10 +699,32 @@ footer { padding: 60px 5% 30px; border-top: 1px solid var(--glass-border); text-
     color: white;
   }
 
-  .hero-ctas { flex-direction: column; }
+  .hero-ctas { flex-direction: column; width: 100%; gap: 1rem; }
+  .hero-ctas a { width: 100%; text-align: center; }
+  
   .download-options { flex-direction: column; }
   .privacy-content { flex-direction: column; gap: 2rem; }
   .security-guide { flex-direction: column !important; gap: 2rem !important; padding: 2rem !important; }
+  
+  .stats-pills {
+    gap: 1rem;
+    padding: 0.5rem 1.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .stat-value {
+    font-size: 1rem;
+  }
+
+  .version-banner {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.85rem;
+  }
+
+  .hero {
+    padding-top: 100px;
+  }
 }
 
 .menu-toggle { display: none; }
