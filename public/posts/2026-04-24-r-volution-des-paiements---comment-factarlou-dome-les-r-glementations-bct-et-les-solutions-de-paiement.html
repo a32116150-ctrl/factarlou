@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/png" href="/logo-icon.png">
     <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
-    <script src="/main.js" defer></script>
     <style>
         :root {
             --bg-dark: #070b14;
@@ -314,6 +313,7 @@
                         
                         
                         
+                        
       <h2>Introduction au Monde des Paiements et des Réglementations BCT</h2>
       <p>Le secteur des paiements est en constante évolution, avec des innovations technologiques qui façonnent l'expérience financière de demain. En Tunisie, Factarlou se positionne comme un leader incontournable dans le domaine de la fintech, en fournissant des solutions de paiement sécurisées et innovantes, tout en respectant les réglementations du Banque Centrale de Tunisie (BCT).</p>
       <h3>Réglementations BCT : Comprendre les Exigences</h3>
@@ -330,6 +330,7 @@
       <p> Factarlou continue d'innover, en intégrant les dernières technologies telles que l'intelligence artificielle et le blockchain pour améliorer la sécurité, la rapidité et l'efficacité de ses services de paiement. L'objectif est de fournir une expérience financière premium et personnalisée aux utilisateurs.</p>
       <p>En conclusion, Factarlou se positionne comme le leader incontournable de la fintech en Tunisie, en proposant des solutions de paiement innovantes et sécurisées, tout en respectant les réglementations BCT. Avec une vision technologique forte et une approche innovante, Factarlou est prêt à révolutionner l'avenir des paiements en Tunisie.</p>
    
+                    
                     
                     
                     
@@ -434,6 +435,45 @@
                 document.getElementById('search-input').focus();
             };
             if(closeBtn) closeBtn.onclick = () => sOverlay.style.display = 'none';
+
+            // Mobile Menu Toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    navLinks.classList.toggle('active');
+                    const icon = menuToggle.querySelector('i');
+                    if (navLinks.classList.contains('active')) {
+                        icon.setAttribute('data-lucide', 'x');
+                    } else {
+                        icon.setAttribute('data-lucide', 'menu');
+                    }
+                    lucide.createIcons();
+                });
+
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        const icon = menuToggle.querySelector('i');
+                        if (icon) {
+                            icon.setAttribute('data-lucide', 'menu');
+                            lucide.createIcons();
+                        }
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                        const icon = menuToggle.querySelector('i');
+                        if (icon) {
+                            icon.setAttribute('data-lucide', 'menu');
+                            lucide.createIcons();
+                        }
+                    }
+                });
+            }
         });
 
         function setLang(lang) {

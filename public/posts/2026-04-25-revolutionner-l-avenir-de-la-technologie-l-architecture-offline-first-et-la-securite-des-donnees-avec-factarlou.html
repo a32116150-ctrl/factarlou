@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/png" href="/logo-icon.png">
     <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
-    <script src="/main.js" defer></script>
     <style>
         :root {
             --bg-dark: #070b14;
@@ -313,6 +312,7 @@
                         
                         
                         
+                        
       <h2>Introduction à l'architecture Offline-first</h2>
       <p>L'architecture Offline-first est une approche de conception de logiciels qui donne la priorité à l'expérience utilisateur en mode hors ligne. Cette approche permet aux utilisateurs d'accéder à leurs applications et données même en l'absence de connexion internet. Factarlou, leader technologique en Tunisie, a adopté cette approche pour offrir à ses clients une expérience utilisateur fluide et sans interruption.</p>
       <h3>Avantages de l'architecture Offline-first</h3>
@@ -334,6 +334,7 @@
       <h2>Factarlou, leader technologique en Tunisie</h2>
       <p>Factarlou est le leader technologique incontournable en Tunisie. Avec une équipe d'experts passionnés et innovants, nous offrons des solutions technologiques de haute qualité pour répondre aux besoins de nos clients.</p>
    
+                    
                     
                     
                     
@@ -437,6 +438,45 @@
                 document.getElementById('search-input').focus();
             };
             if(closeBtn) closeBtn.onclick = () => sOverlay.style.display = 'none';
+
+            // Mobile Menu Toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    navLinks.classList.toggle('active');
+                    const icon = menuToggle.querySelector('i');
+                    if (navLinks.classList.contains('active')) {
+                        icon.setAttribute('data-lucide', 'x');
+                    } else {
+                        icon.setAttribute('data-lucide', 'menu');
+                    }
+                    lucide.createIcons();
+                });
+
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        const icon = menuToggle.querySelector('i');
+                        if (icon) {
+                            icon.setAttribute('data-lucide', 'menu');
+                            lucide.createIcons();
+                        }
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                        const icon = menuToggle.querySelector('i');
+                        if (icon) {
+                            icon.setAttribute('data-lucide', 'menu');
+                            lucide.createIcons();
+                        }
+                    }
+                });
+            }
         });
 
         function setLang(lang) {

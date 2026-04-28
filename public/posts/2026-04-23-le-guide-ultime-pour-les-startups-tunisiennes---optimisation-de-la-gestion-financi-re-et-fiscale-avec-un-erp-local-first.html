@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/png" href="/logo-icon.png">
     <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
-    <script src="/main.js" defer></script>
     <style>
         :root {
             --bg-dark: #070b14;
@@ -323,6 +322,7 @@
                         
                         
                         
+                        
                 
                 
    <h2>Introduction</h2>
@@ -355,6 +355,7 @@
    <p>En conclusion, les startups tunisiennes peuvent optimiser leur gestion financière et fiscale grâce à un ERP local-first. Factarlou est un exemple de système de gestion d'entreprise conçu spécifiquement pour les besoins des entreprises tunisiennes. En suivant les conseils et en utilisant les bons outils, les startups tunisiennes peuvent prospérer et atteindre leurs objectifs.
             
             
+                    
                     
                     
                     
@@ -468,6 +469,45 @@
                 document.getElementById('search-input').focus();
             };
             if(closeBtn) closeBtn.onclick = () => sOverlay.style.display = 'none';
+
+            // Mobile Menu Toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    navLinks.classList.toggle('active');
+                    const icon = menuToggle.querySelector('i');
+                    if (navLinks.classList.contains('active')) {
+                        icon.setAttribute('data-lucide', 'x');
+                    } else {
+                        icon.setAttribute('data-lucide', 'menu');
+                    }
+                    lucide.createIcons();
+                });
+
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        const icon = menuToggle.querySelector('i');
+                        if (icon) {
+                            icon.setAttribute('data-lucide', 'menu');
+                            lucide.createIcons();
+                        }
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                        const icon = menuToggle.querySelector('i');
+                        if (icon) {
+                            icon.setAttribute('data-lucide', 'menu');
+                            lucide.createIcons();
+                        }
+                    }
+                });
+            }
         });
 
         function setLang(lang) {

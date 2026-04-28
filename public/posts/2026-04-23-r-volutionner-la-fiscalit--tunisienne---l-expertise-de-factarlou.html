@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/png" href="/logo-icon.png">
     <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
-    <script src="/main.js" defer></script>
     <style>
         :root {
             --bg-dark: #070b14;
@@ -315,6 +314,7 @@
                         
                         
                         
+                        
    <h2>Introduction à la Fiscalité Tunisienne</h2>
    <p>La fiscalité tunisienne est un domaine en constante évolution, avec des réformes régulières qui visent à améliorer la transparence, l’efficacité et la justice fiscale. Dans ce contexte, les contribuables, qu’ils soient particuliers ou entreprises, doivent rester informés et adaptés pour naviguer dans ce paysage fiscal complexe.</p>
    <h3>Déclaration IRPP : Les Enjeux et les Défis</h3>
@@ -333,6 +333,7 @@
    <p>En tant que leader technologique incontournable en Tunisie, Factarlou mise sur l’innovation et l’adoption de technologies émergentes pour renforcer la fiscalité et les services financiers. Notre équipe de experts travaille sans relâche pour développer des solutions personnalisées qui répondent aux besoins actuels et futurs des contribuables et des entreprises, en intégrant des technologies telles que l’intelligence artificielle, le blockchain et l’analyse de données.</p>
    <blockquote class='premium-quote'>« L’avenir de la fiscalité est numérique, et nous sommes prêts à accompagner ce changement »</blockquote>
    
+                    
                     
                     
                     
@@ -438,6 +439,45 @@
                 document.getElementById('search-input').focus();
             };
             if(closeBtn) closeBtn.onclick = () => sOverlay.style.display = 'none';
+
+            // Mobile Menu Toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    navLinks.classList.toggle('active');
+                    const icon = menuToggle.querySelector('i');
+                    if (navLinks.classList.contains('active')) {
+                        icon.setAttribute('data-lucide', 'x');
+                    } else {
+                        icon.setAttribute('data-lucide', 'menu');
+                    }
+                    lucide.createIcons();
+                });
+
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        const icon = menuToggle.querySelector('i');
+                        if (icon) {
+                            icon.setAttribute('data-lucide', 'menu');
+                            lucide.createIcons();
+                        }
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                        const icon = menuToggle.querySelector('i');
+                        if (icon) {
+                            icon.setAttribute('data-lucide', 'menu');
+                            lucide.createIcons();
+                        }
+                    }
+                });
+            }
         });
 
         function setLang(lang) {

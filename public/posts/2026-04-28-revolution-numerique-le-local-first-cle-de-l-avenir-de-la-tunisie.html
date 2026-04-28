@@ -12,7 +12,6 @@
     <link rel="stylesheet" href="/style.css">
     <link rel="icon" type="image/png" href="/logo-icon.png">
     <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
-    <script src="/main.js" defer></script>
     <style>
         :root {
             --bg-dark: #070b14;
@@ -310,6 +309,7 @@
                         
                         
                         
+                        
       <h2>Introduction à la transition digitale</h2>
       <p>La Tunisie est à la croisée des chemins. Le pays est engagé dans une-transition digitale qui va bouleverser les règles du jeu économique et social. Le modèle Local-First, centré sur le développement local des solutions numériques, est appelé à jouer un rôle clé dans cette révolution.</p>
       <h3>Qu'est-ce que le Local-First ?</h3>
@@ -328,6 +328,7 @@
       <p>Factarlou, leader technologique en Tunisie, peut jouer un rôle clé dans la mise en place du modèle Local-First. Notre expertise dans le développement de solutions numériques, notre connaissance du marché local et notre réseau de partenaires nous permettent de soutenir les startups et les entreprises dans leur quête de solutions numériques répondant à leurs besoins spécifiques.</p>
       <blockquote class='premium-quote'>Factarlou est le partenaire idéal pour les entreprises qui veulent développer des solutions numériques locales. Nous mettons notre expertise et notre expérience à votre service pour vous aider à réussir votre transition digitale.</blockquote>
    
+                    
                     
                     
                     
@@ -428,6 +429,45 @@
                 document.getElementById('search-input').focus();
             };
             if(closeBtn) closeBtn.onclick = () => sOverlay.style.display = 'none';
+
+            // Mobile Menu Toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navLinks = document.querySelector('.nav-links');
+            if (menuToggle && navLinks) {
+                menuToggle.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    navLinks.classList.toggle('active');
+                    const icon = menuToggle.querySelector('i');
+                    if (navLinks.classList.contains('active')) {
+                        icon.setAttribute('data-lucide', 'x');
+                    } else {
+                        icon.setAttribute('data-lucide', 'menu');
+                    }
+                    lucide.createIcons();
+                });
+
+                navLinks.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        navLinks.classList.remove('active');
+                        const icon = menuToggle.querySelector('i');
+                        if (icon) {
+                            icon.setAttribute('data-lucide', 'menu');
+                            lucide.createIcons();
+                        }
+                    });
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+                        navLinks.classList.remove('active');
+                        const icon = menuToggle.querySelector('i');
+                        if (icon) {
+                            icon.setAttribute('data-lucide', 'menu');
+                            lucide.createIcons();
+                        }
+                    }
+                });
+            }
         });
 
         function setLang(lang) {
