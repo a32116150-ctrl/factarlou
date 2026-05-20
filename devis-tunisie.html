@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="fr-TN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Devis Tunisie — Gratuit, PDF, Conforme | Factarlou</title>
+    <meta name="description" content="Créez des devis professionnels pour vos clients tunisiens. Template PDF, pipeline devis → facture, TVA incluse. Logiciel gratuit, local-first.">
+    <meta name="keywords" content="devis tunisie, devis tunisien, créer un devis en tunisie, modèle devis tunisie, devis facture tunisie, logiciel devis gratuit tunisie, template devis tunisie pdf, devis tva tunisie">
+    <link rel="canonical" href="https://factarlou.online/devis-tunisie.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factarlou.online/devis-tunisie.html">
+    <meta property="og:site_name" content="Factarlou">
+    <meta property="og:title" content="Devis Tunisie — Gratuit, PDF, Conforme | Factarlou">
+    <meta property="og:description" content="Créez des devis professionnels pour vos clients tunisiens. Template PDF, pipeline devis → facture, TVA incluse.">
+    <meta property="og:image" content="https://factarlou.online/social-preview.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://factarlou.online/devis-tunisie.html">
+    <meta name="twitter:title" content="Devis Tunisie — Gratuit, PDF, Conforme | Factarlou">
+    <meta name="twitter:description" content="Créez des devis professionnels pour vos clients tunisiens. Template PDF, pipeline devis → facture, TVA incluse.">
+    <meta name="twitter:image" content="https://factarlou.online/social-preview.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Factarlou",
+      "operatingSystem": "Windows, macOS",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "TND"
+      },
+      "description": "Créez des devis professionnels conformes à la législation tunisienne. TVA, timbre fiscal, conversion devis → facture. Logiciel gratuit et local-first.",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "ratingCount": "120"
+      },
+      "featureList": [
+        "Devis conformes TVA Tunisie",
+        "Template PDF professionnel",
+        "Pipeline devis → facture",
+        "Multi-taux TVA (0%, 7%, 13%, 19%)",
+        "Timbre fiscal automatique"
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Un devis est-il obligatoire en Tunisie ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui, le devis est obligatoire pour toute prestation de services ou vente de biens d'un montant supérieur à 300 TND en Tunisie. Il doit mentionner le matricule fiscal, les taux de TVA applicables, le timbre fiscal et la durée de validité de l'offre."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Comment convertir un devis en facture avec Factarlou ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Avec Factarlou, la conversion est instantanée. Créez votre devis avec tous les détails (client, articles, TVA, timbre), puis cliquez sur 'Convertir en Facture'. Le numéro de facture est automatiquement généré, le lien vers le devis d'origine est conservé, et le document est prêt à être exporté en PDF ou XML."
+        }
+      }]
+    }
+    </script>
+
+    <link rel="icon" type="image/png" href="/logo-icon.png">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+    <style>
+        .page-hero {
+            padding: 160px 5% 80px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .page-hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        .page-hero h1 span {
+            color: var(--primary);
+        }
+        .page-hero p {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            line-height: 1.8;
+            max-width: 750px;
+            margin: 0 auto 2.5rem;
+        }
+        .page-section {
+            padding: 80px 5%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .page-section h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+        .page-section p, .page-section li {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        .page-section ul {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        .page-section ul li {
+            padding-left: 2rem;
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+        .page-section ul li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            backdrop-filter: blur(20px);
+            margin-bottom: 2rem;
+        }
+        .cta-section {
+            text-align: center;
+            padding: 80px 5%;
+            background: linear-gradient(135deg, rgba(0, 151, 167, 0.08), rgba(140, 198, 63, 0.05));
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px var(--primary-glow);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px var(--primary-glow);
+        }
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--text-primary);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            margin-left: 1rem;
+        }
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .faq-item {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+        }
+        .faq-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+        .faq-item p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .res-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .res-link:hover {
+            color: var(--accent);
+            gap: 0.75rem;
+        }
+
+        /* Dropdown */
+        .nav-item-dropdown {
+            position: relative;
+        }
+        .nav-item-dropdown > a {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .nav-item-dropdown > a i {
+            width: 16px;
+            height: 16px;
+            transition: transform 0.3s;
+        }
+        .nav-item-dropdown:hover > a i {
+            transform: rotate(180deg);
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            background: var(--card-bg);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 0.75rem;
+            min-width: 240px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            z-index: 1001;
+        }
+        .nav-item-dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(5px);
+        }
+        .dropdown-menu a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem 1rem;
+            border-radius: 10px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .dropdown-menu a:hover {
+            background: rgba(255,255,255,0.05);
+            color: var(--primary);
+        }
+        .dropdown-menu a i {
+            width: 18px;
+            height: 18px;
+            color: var(--primary);
+            opacity: 0.7;
+        }
+        .dropdown-menu a.active {
+            color: var(--primary);
+            background: rgba(0, 151, 167, 0.1);
+        }
+
+        @media (max-width: 768px) {
+            .dropdown-menu {
+                position: static;
+                transform: none;
+                opacity: 1;
+                visibility: visible;
+                background: transparent;
+                border: none;
+                padding: 0;
+                min-width: auto;
+                box-shadow: none;
+                display: none;
+            }
+            .nav-item-dropdown:hover .dropdown-menu {
+                transform: none;
+            }
+            .nav-item-dropdown.open .dropdown-menu {
+                display: block;
+            }
+            .btn-secondary {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="/logo-icon.png" alt="Factarlou Logo">
+            Factarlou
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="docs.html">Docs</a>
+            <a href="comparatif.html">Comparatif</a>
+            <div class="nav-item-dropdown">
+                <a href="#" style="color: var(--primary);">
+                    Ressources
+                    <i data-lucide="chevron-down"></i>
+                </a>
+                <div class="dropdown-menu">
+                    <a href="blog.html"><i data-lucide="newspaper"></i> Blog</a>
+                    <a href="docs.html"><i data-lucide="book-open"></i> Documentation</a>
+                    <a href="comparatif.html"><i data-lucide="bar-chart-3"></i> Comparatif</a>
+                    <a href="devis-tunisie.html" class="active"><i data-lucide="file-text"></i> Devis Tunisie</a>
+                    <a href="facture-electronique-tunisie.html"><i data-lucide="file-signature"></i> Facture Électronique</a>
+                    <a href="logiciel-facturation-tunisie.html"><i data-lucide="layout"></i> Logiciel Facturation</a>
+                    <a href="changelog.html"><i data-lucide="git-commit"></i> Changelog</a>
+                    <a href="privacy.html"><i data-lucide="shield-check"></i> Confidentialité</a>
+                </div>
+            </div>
+            <button class="search-trigger" id="search-btn">
+                <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+            </button>
+        </div>
+        <div class="nav-right" style="display: flex; align-items: center; gap: 0.75rem;">
+            <a href="#download" class="btn-download-nav">Télécharger</a>
+            <button class="menu-toggle" aria-label="Menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <header class="page-hero" data-reveal>
+            <span class="badge" style="margin-bottom: 1.5rem; display: inline-block;">📄 Devis Professionnel Tunisie</span>
+            <h1>Devis <span>Tunisie</span></h1>
+            <p>Créez des devis conformes à la législation tunisienne en quelques clics. TVA, timbre fiscal, matricule fiscal — tout est calculé automatiquement. Générez un PDF professionnel et suivez le pipeline jusqu'à la facture.</p>
+            <a href="#download" class="btn-primary">Télécharger Factarlou</a>
+            <a href="#faq" class="btn-secondary">Questions fréquentes</a>
+        </header>
+
+        <section class="page-section" data-reveal>
+            <div class="content-card">
+                <h2>Pourquoi un devis professionnel est essentiel en Tunisie ?</h2>
+                <p>Le devis est bien plus qu'une simple estimation de prix. En Tunisie, c'est un document juridique et commercial qui engage le prestataire et rassure le client. Un devis bien structuré, conforme aux normes fiscales tunisiennes, renforce votre crédibilité et facilite la conversion en contrat.</p>
+                <p>Avec <strong>Factarlou</strong>, vous générez des devis complets incluant :</p>
+                <ul>
+                    <li><strong>Matricule fiscal</strong> et coordonnées complètes de votre entreprise</li>
+                    <li><strong>Multi-taux TVA</strong> (0 %, 7 %, 13 %, 19 %) appliqués automatiquement par ligne d'article</li>
+                    <li><strong>Timbre fiscal</strong> à 1.000 TND calculé et inclus</li>
+                    <li><strong>Numérotation automatique</strong> et traçabilité complète</li>
+                    <li><strong>Durée de validité</strong> et conditions de paiement claires</li>
+                </ul>
+                <p>Le rendu PDF est soigné, au format A4, avec votre logo, votre signature et votre cachet numérique. Aucune dépendance à un template Canva ou à un fichier Word bancal.</p>
+            </div>
+        </section>
+
+        <section class="page-section" data-reveal>
+            <div class="content-card">
+                <h2>Pipeline devis → facture : gagnez un temps précieux</h2>
+                <p>L'un des plus grands atouts de Factarlou est son pipeline commercial intégré. Un devis accepté se transforme en facture en <strong>un seul clic</strong>. Le lien entre les deux documents est conservé, le numéro de facture est généré automatiquement, et les articles sont repris à l'identique.</p>
+                <p>Fini les doubles saisies et les erreurs de recopie. De la prospection à l'encaissement, Factarlou vous accompagne à chaque étape :</p>
+                <ul>
+                    <li><strong>Devis</strong> → envoyez-le à votre client par email directement depuis l'application</li>
+                    <li><strong>Facture</strong> → convertissez et suivez le statut de paiement</li>
+                    <li><strong>Bon de Livraison</strong> → liez-le à la facture pour une traçabilité complète</li>
+                </ul>
+                <p>Consultez aussi notre page dédiée au <a href="logiciel-facturation-tunisie.html" class="res-link">logiciel de facturation Tunisie <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></a> et à la <a href="facture-electronique-tunisie.html" class="res-link">facture électronique Tunisie <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></a> pour aller plus loin.</p>
+            </div>
+        </section>
+
+        <section class="cta-section" id="download" data-reveal>
+            <h2>Prêt à créer votre premier devis ?</h2>
+            <p>Téléchargez Factarlou gratuitement et commencez à facturer comme un professionnel.</p>
+            <a href="index.html#download" class="btn-primary">Télécharger l'application</a>
+        </section>
+
+        <section id="faq" class="page-section" data-reveal>
+            <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+                <span class="badge">❓ FAQ</span>
+                <h2>Questions fréquentes sur le devis en Tunisie</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item" data-reveal>
+                    <h3>Un devis est-il obligatoire en Tunisie ?</h3>
+                    <p>Oui, le devis est obligatoire pour toute prestation de services ou vente de biens d'un montant supérieur à <strong>300 TND</strong> en Tunisie. Il doit mentionner le matricule fiscal de l'entreprise, les taux de TVA applicables, le timbre fiscal (1.000 TND) et la durée de validité de l'offre. Factarlou vous aide à respecter toutes ces obligations automatiquement.</p>
+                </div>
+                <div class="faq-item" data-reveal>
+                    <h3>Comment convertir un devis en facture avec Factarlou ?</h3>
+                    <p>Avec Factarlou, la conversion est instantanée. Créez votre devis avec tous les détails (client, articles, TVA, timbre), puis cliquez sur <strong>« Convertir en Facture »</strong>. Le numéro de facture est automatiquement généré, le lien vers le devis d'origine est conservé, et le document est prêt à être exporté en PDF ou XML TEJ pour la facture électronique.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Search Overlay -->
+    <div class="search-overlay" id="search-overlay"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(10px); z-index: 9999;">
+        <div class="search-modal"
+            style="max-width: 600px; margin: 100px auto; background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 2rem;">
+            <div class="search-header"
+                style="display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem;">
+                <i data-lucide="search"></i>
+                <input type="text" id="search-input" placeholder="Rechercher..."
+                    style="background: none; border: none; color: white; width: 100%; font-size: 1.2rem; outline: none;">
+                <button id="close-search"
+                    style="background: none; border: none; color: var(--text-secondary); cursor: pointer;"><i
+                        data-lucide="x"></i></button>
+            </div>
+            <div id="search-results" style="margin-top: 1rem; max-height: 400px; overflow-y: auto;">
+                <p style="color: var(--text-secondary); text-align: center;">Commencez à taper pour rechercher...</p>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html">Documentation</a>
+            <a href="/comparatif.html">Comparatif</a>
+            <a href="/blog.html">Blog</a>
+            <a href="/devis-tunisie.html" style="color: var(--primary);">Devis Tunisie</a>
+            <a href="/facture-electronique-tunisie.html">Facture Électronique</a>
+            <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation</a>
+            <a href="/changelog.html">Changelog</a>
+            <a href="/privacy.html">Confidentialité</a>
+        </div>
+        <p class="copyright">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+    <script>
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        document.querySelector('.menu-toggle')?.addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="fr-TN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Déclaration TVA Tunisie — Assistant Automatisé | Factarlou</title>
+    <meta name="description" content="Déclarez votre TVA mensuelle en un clic. Ventilation par taux (0%, 7%, 13%, 19%), rapport annuel, simulateur. Gratuit avec Factarlou.">
+    <meta name="keywords" content="déclaration tva tunisie, déclaration tva mensuelle tunisie, tva tunisie 2026, simulateur tva tunisie, taux tva tunisie, fodec, timbre fiscal tunisie, logiciel déclaration tva tunisie">
+    <link rel="canonical" href="https://factarlou.online/declaration-tva-tunisie.html">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factarlou.online/declaration-tva-tunisie.html">
+    <meta property="og:site_name" content="Factarlou">
+    <meta property="og:title" content="Déclaration TVA Tunisie — Assistant Automatisé | Factarlou">
+    <meta property="og:description" content="Déclarez votre TVA mensuelle en un clic. Ventilation par taux (0%, 7%, 13%, 19%), rapport annuel, simulateur. Gratuit avec Factarlou.">
+    <meta property="og:image" content="https://factarlou.online/social-preview.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://factarlou.online/declaration-tva-tunisie.html">
+    <meta name="twitter:title" content="Déclaration TVA Tunisie — Assistant Automatisé | Factarlou">
+    <meta name="twitter:description" content="Déclarez votre TVA mensuelle en un clic. Ventilation par taux (0%, 7%, 13%, 19%), rapport annuel, simulateur. Gratuit avec Factarlou.">
+    <meta name="twitter:image" content="https://factarlou.online/social-preview.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Factarlou",
+      "operatingSystem": "Windows, macOS",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "TND"
+      },
+      "description": "Assistant automatisé pour la déclaration de TVA en Tunisie. Ventilation par taux (0%, 7%, 13%, 19%), rapport annuel, simulateur intégré. Gratuit et local-first.",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "ratingCount": "120"
+      },
+      "featureList": [
+        "Déclaration TVA mensuelle automatisée",
+        "Ventilation multi-taux (0%, 7%, 13%, 19%)",
+        "Calcul FODEC et timbre fiscal",
+        "Rapport annuel TVA",
+        "Simulateur TVA intégré",
+        "Export XML pour portail TEJ"
+      ]
+    }
+    </script>
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Comment déclarer la TVA mensuelle en Tunisie ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La déclaration de TVA en Tunisie s'effectue mensuellement via le formulaire unique mis à disposition par l'administration fiscale. Les assujettis doivent transmettre leur déclaration avant le 20 du mois suivant la période taxable. Le calcul intègre la TVA collectée sur les ventes, la TVA déductible sur les achats, ainsi que les contributions complémentaires comme le FODEC (1% du CA) et le timbre fiscal (1.000 TND par document). Factarlou automatise l'intégralité de ces calculs et génère un rapport prêt à être transmis."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Quels sont les taux de TVA applicables en Tunisie en 2026 ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "La Tunisie applique quatre taux de TVA : 0% pour les produits de première nécessité et les exportations, 7% pour les produits alimentaires transformés et certains services, 13% pour les services intermédiaires, et 19% pour les produits et services standards. Factarlou gère automatiquement la ventilation de vos ventes et achats par taux, et intègre le calcul du FODEC (1% du chiffre d'affaires) ainsi que le timbre fiscal de 1.000 TND par facture."
+        }
+      }]
+    }
+    </script>
+
+    <link rel="icon" type="image/png" href="/logo-icon.png">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+    <style>
+        .page-hero {
+            padding: 160px 5% 80px;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .page-hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+        .page-hero h1 span {
+            color: var(--primary);
+        }
+        .page-hero p {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            line-height: 1.8;
+            max-width: 750px;
+            margin: 0 auto 2.5rem;
+        }
+        .page-section {
+            padding: 80px 5%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        .page-section h2 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 2rem;
+            color: var(--primary);
+        }
+        .page-section p, .page-section li {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.8;
+        }
+        .page-section ul {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        .page-section ul li {
+            padding-left: 2rem;
+            position: relative;
+            margin-bottom: 0.75rem;
+        }
+        .page-section ul li::before {
+            content: "\2192";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .content-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            backdrop-filter: blur(20px);
+            margin-bottom: 2rem;
+        }
+        .cta-section {
+            text-align: center;
+            padding: 80px 5%;
+            background: linear-gradient(135deg, rgba(0, 151, 167, 0.08), rgba(140, 198, 63, 0.05));
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .cta-section p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: var(--transition);
+            box-shadow: 0 4px 20px var(--primary-glow);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px var(--primary-glow);
+        }
+        .btn-secondary {
+            background: var(--glass);
+            color: var(--text-primary);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-block;
+            transition: var(--transition);
+            border: 1px solid var(--glass-border);
+            margin-left: 1rem;
+        }
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .faq-grid {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .faq-item {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--glass-border);
+        }
+        .faq-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+        .faq-item p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .res-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        .res-link:hover {
+            color: var(--accent);
+            gap: 0.75rem;
+        }
+
+        .badge {
+            display: inline-block;
+            background: rgba(0, 151, 167, 0.1);
+            color: var(--primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1px solid var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        /* Nav dropdown */
+        .nav-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .nav-dropdown-toggle {
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .nav-dropdown-toggle:hover {
+            color: var(--primary);
+        }
+        .nav-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15,23,42,0.98);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 0.5rem;
+            min-width: 200px;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            margin-top: 0.75rem;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .nav-dropdown:hover .nav-dropdown-menu {
+            display: block;
+        }
+        .nav-dropdown-menu a {
+            display: block;
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            white-space: nowrap;
+        }
+        .nav-dropdown-menu a:hover {
+            background: var(--glass);
+            color: var(--primary);
+        }
+        .nav-dropdown-menu a.active {
+            color: var(--primary);
+            background: rgba(0, 151, 167, 0.1);
+        }
+
+        /* Footer ressource section */
+        .footer-ressources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            text-align: left;
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            padding: 0 5%;
+        }
+        .footer-ressources h4 {
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .footer-ressources a {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.3rem 0;
+            transition: var(--transition);
+        }
+        .footer-ressources a:hover {
+            color: var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .nav-dropdown-menu {
+                left: auto;
+                right: 0;
+                transform: none;
+            }
+            .btn-secondary {
+                margin-left: 0;
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="/logo-icon.png" alt="Factarlou Logo">
+            Factarlou
+        </a>
+        <div class="nav-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html">Docs</a>
+            <a href="/comparatif.html">Comparatif</a>
+            <div class="nav-dropdown">
+                <span class="nav-dropdown-toggle">Ressources ▾</span>
+                <div class="nav-dropdown-menu">
+                    <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation</a>
+                    <a href="/facture-electronique-tunisie.html">Facture Électronique</a>
+                    <a href="/devis-tunisie.html">Devis Tunisie</a>
+                    <a href="/declaration-tva-tunisie.html" class="active">Déclaration TVA</a>
+                    <a href="/logiciel-caisse-tunisie.html">Logiciel Caisse</a>
+                    <a href="/calculateur-tva-tunisie.html">Calculateur TVA</a>
+                    <a href="/logiciel-gestion-commerciale-tunisie.html">Gestion Commerciale</a>
+                    <a href="/facture-gratuite-tunisie.html">Facture Gratuite</a>
+                </div>
+            </div>
+            <a href="/about.html">À Propos</a>
+            <a href="/showcase.html">Galerie</a>
+            <a href="/blog.html">Blog</a>
+        </div>
+        <div class="nav-right" style="display: flex; align-items: center; gap: 0.75rem;">
+            <a href="/index.html#download" class="btn-download-nav">Télécharger</a>
+            <button class="menu-toggle" aria-label="Menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <header class="page-hero" data-reveal>
+            <span class="badge">📊 Déclaration TVA Tunisie</span>
+            <h1>Déclaration <span>TVA Tunisie</span></h1>
+            <p>Automatisez votre déclaration de TVA mensuelle en un clic. Ventilation par taux (0%, 7%, 13%, 19%), calcul du FODEC et du timbre fiscal, rapport annuel complet. Factarlou vous fait gagner des heures de saisie chaque mois.</p>
+            <a href="/index.html#download" class="btn-primary">Télécharger Factarlou</a>
+            <a href="#faq" class="btn-secondary">Questions fréquentes</a>
+        </header>
+
+        <section class="page-section" data-reveal>
+            <div class="content-card">
+                <h2>La déclaration de TVA en Tunisie simplifiée</h2>
+                <p>La déclaration de la TVA est une obligation mensuelle pour tout assujetti en Tunisie. Elle consiste à déclarer la TVA collectée sur vos ventes, la TVA déductible sur vos achats, et à verser la différence à l'administration fiscale avant le <strong>20 du mois suivant</strong>. Une déclaration annuelle de régularisation est également requise en fin d'exercice.</p>
+                <p>Le calcul peut vite devenir complexe avec les <strong>quatre taux de TVA</strong> applicables en Tunisie :</p>
+                <ul>
+                    <li><strong>Taux 0 %</strong> — Produits de première nécessité, exportations, opérations exonérées</li>
+                    <li><strong>Taux 7 %</strong> — Produits alimentaires transformés, transport, certaines prestations</li>
+                    <li><strong>Taux 13 %</strong> — Services intermédiaires, hôtellerie, restauration</li>
+                    <li><strong>Taux 19 %</strong> — Taux standard pour la majorité des biens et services</li>
+                </ul>
+                <p>À ces montants s'ajoutent le <strong>FODEC</strong> (Fonds de Développement de la Compétitivité) au taux de 1 % du chiffre d'affaires, et le <strong>timbre fiscal</strong> de 1.000 TND par document. Factarlou calcule et ventile automatiquement l'ensemble de ces contributions dans votre déclaration.</p>
+            </div>
+        </section>
+
+        <section class="page-section" data-reveal>
+            <div class="content-card">
+                <h2>Comment Factarlou automatise votre déclaration TVA</h2>
+                <p>Factarlou intègre un <strong>assistant de déclaration TVA</strong> qui analyse l'ensemble de vos documents (factures, avoirs, notes de crédit) et génère automatiquement le rapport mensuel. Le moteur ventille chaque montant par taux, calcule le FODEC et le timbre, et produit un export prêt pour le portail fiscal.</p>
+                <ul>
+                    <li><strong>Ventilation automatique</strong> — Chaque document est classé par taux de TVA applicable</li>
+                    <li><strong>Calcul FODEC</strong> — 1 % du chiffre d'affaires calculé et inclus dans la déclaration</li>
+                    <li><strong>Timbre fiscal</strong> — Total des timbres comptabilisé automatiquement</li>
+                    <li><strong>Rapport annuel</strong> — Synthèse complète pour la déclaration de régularisation</li>
+                    <li><strong>Export XML</strong> — Format compatible avec le portail TEJ de l'administration</li>
+                </ul>
+                <p>Contrairement aux solutions en ligne, Factarlou traite toutes vos données <strong>en local</strong>. Aucune information fiscale ne quitte votre ordinateur. La confidentialité de vos déclarations est totale.</p>
+                <p style="margin-top: 1.5rem;">
+                    Découvrez aussi notre <a href="/logiciel-facturation-tunisie.html" class="res-link">logiciel de facturation Tunisie <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></a> et la <a href="/facture-electronique-tunisie.html" class="res-link">facture électronique Tunisie <i data-lucide="arrow-right" style="width: 16px; height: 16px;"></i></a> pour un suivi complet de votre cycle commercial.
+                </p>
+            </div>
+        </section>
+
+        <section class="cta-section" id="download" data-reveal>
+            <h2>Prêt à simplifier votre déclaration ?</h2>
+            <p>Téléchargez Factarlou gratuitement et automatisez votre TVA dès aujourd'hui.</p>
+            <a href="/index.html#download" class="btn-primary">Télécharger l'application</a>
+        </section>
+
+        <section id="faq" class="page-section" data-reveal>
+            <div class="section-header" style="text-align: center; margin-bottom: 3rem;">
+                <span class="badge">❓ FAQ</span>
+                <h2>Questions fréquentes sur la déclaration TVA en Tunisie</h2>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item" data-reveal>
+                    <h3>Comment déclarer la TVA mensuelle en Tunisie ?</h3>
+                    <p>La déclaration de TVA en Tunisie s'effectue mensuellement via le formulaire unique mis à disposition par l'administration fiscale. Les assujettis doivent transmettre leur déclaration avant le <strong>20 du mois suivant</strong> la période taxable. Le calcul intègre la TVA collectée sur les ventes, la TVA déductible sur les achats, ainsi que les contributions complémentaires comme le <strong>FODEC</strong> (1 % du CA) et le <strong>timbre fiscal</strong> (1.000 TND par document). Factarlou automatise l'intégralité de ces calculs et génère un rapport prêt à être transmis.</p>
+                </div>
+                <div class="faq-item" data-reveal>
+                    <h3>Quels sont les taux de TVA applicables en Tunisie en 2026 ?</h3>
+                    <p>La Tunisie applique quatre taux de TVA : <strong>0 %</strong> pour les produits de première nécessité et les exportations, <strong>7 %</strong> pour les produits alimentaires transformés et certains services, <strong>13 %</strong> pour les services intermédiaires, et <strong>19 %</strong> pour les produits et services standards. Factarlou gère automatiquement la ventilation de vos ventes et achats par taux, et intègre le calcul du <strong>FODEC</strong> (1 % du chiffre d'affaires) ainsi que le <strong>timbre fiscal</strong> de 1.000 TND par facture.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-ressources">
+            <div>
+                <h4>Logiciel</h4>
+                <a href="/index.html">Accueil</a>
+                <a href="/docs.html">Documentation</a>
+                <a href="/changelog.html">Changelog</a>
+                <a href="/privacy.html">Confidentialité</a>
+            </div>
+            <div>
+                <h4>Fonctionnalités</h4>
+                <a href="/logiciel-facturation-tunisie.html">Facturation</a>
+                <a href="/facture-electronique-tunisie.html">Facture Électronique</a>
+                <a href="/declaration-tva-tunisie.html">Déclaration TVA</a>
+                <a href="/logiciel-caisse-tunisie.html">Logiciel Caisse</a>
+            </div>
+            <div>
+                <h4>Ressources</h4>
+                <a href="/comparatif.html">Comparatif</a>
+                <a href="/devis-tunisie.html">Devis Tunisie</a>
+                <a href="/calculateur-tva-tunisie.html">Calculateur TVA</a>
+                <a href="/logiciel-gestion-commerciale-tunisie.html">Gestion Commerciale</a>
+                <a href="/facture-gratuite-tunisie.html">Facture Gratuite</a>
+            </div>
+            <div>
+                <h4>À propos</h4>
+                <a href="/about.html">À Propos</a>
+                <a href="/showcase.html">Galerie</a>
+                <a href="/blog.html">Blog</a>
+            </div>
+        </div>
+        <div class="footer-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html">Documentation</a>
+            <a href="/comparatif.html">Comparatif</a>
+            <a href="/changelog.html">Changelog</a>
+            <a href="/privacy.html">Confidentialité</a>
+        </div>
+        <p class="copyright">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+    <script>
+        lucide.createIcons();
+
+        document.querySelector('.menu-toggle')?.addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="fr-TN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facture Électronique Tunisie — Export XML TEJ | Factarlou</title>
+    <meta name="description" content="Générez des factures électroniques conformes à la législation tunisienne. Export XML TEJ, signature électronique, TVA incluse. Gratuit avec Factarlou.">
+    <meta property="og:title" content="Facture Électronique Tunisie — Export XML TEJ | Factarlou">
+    <meta property="og:description" content="Générez des factures électroniques conformes à la législation tunisienne. Export XML TEJ, signature électronique, TVA incluse. Gratuit avec Factarlou.">
+    <meta property="og:image" content="/social-preview.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factarlou.online/facture-electronique-tunisie.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="canonical" href="https://factarlou.online/facture-electronique-tunisie.html">
+    <meta name="twitter:image" content="/social-preview.png">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="/logo-icon.png">
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Factarlou",
+      "operatingSystem": "Windows, macOS",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "TND"
+      },
+      "description": "Générez des factures électroniques conformes à la législation tunisienne avec export XML TEJ, signature électronique, et TVA incluse.",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "ratingCount": "120"
+      }
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Qu'est-ce que le portail TEJ et comment faire une facture électronique en Tunisie ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Le portail TEJ (Tableau d'Échanges Journalier) est la plateforme de l'administration fiscale tunisienne pour la transmission des factures électroniques. Les assujettis doivent générer des fichiers XML conformes au format TEJ et les transmettre périodiquement. Factarlou génère automatiquement ces fichiers XML compatibles pour tous vos documents (factures, avoirs, notes de crédit) avec le calcul correct de la TVA, du timbre fiscal et de la retenue à la source."
+        }
+      }, {
+        "@type": "Question",
+        "name": "Factarlou exporte-t-il bien en XML pour la facture électronique tunisienne ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Oui. Factarlou propose un export XML TEJ complet compatible avec le portail fiscal tunisien. L'export inclut toutes les informations obligatoires : identification du fournisseur et du client, montant HT/TTC, ventilation par taux de TVA (0%, 7%, 13%, 19%), timbre fiscal (1.000 TND), FODEC et retenue à la source. Les fichiers générés peuvent être importés directement sur le portail TEJ sans conversion supplémentaire."
+        }
+      }]
+    }
+    </script>
+    <style>
+        .fe-hero {
+            max-width: 1100px;
+            margin: 140px auto 60px;
+            padding: 0 5%;
+            text-align: center;
+        }
+        .fe-hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            margin-bottom: 1rem;
+        }
+        .fe-hero .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+        .fe-content {
+            max-width: 900px;
+            margin: 0 auto 4rem;
+            padding: 0 5%;
+        }
+        .fe-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(20px);
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+        .fe-card h2 {
+            color: var(--primary);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .fe-card h3 {
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+        .fe-card p {
+            margin-bottom: 1rem;
+        }
+        .fe-card ul {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        .fe-card li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .fe-card li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+            font-weight: 700;
+        }
+        .fe-highlight {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .fe-badge {
+            display: inline-block;
+            background: var(--primary-glow);
+            color: var(--primary);
+            padding: 0.5rem 1.5rem;
+            border-radius: 100px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border: 1px solid var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .fe-cta {
+            text-align: center;
+            margin: 4rem 0;
+        }
+        .fe-cta .btn-primary {
+            font-size: 1.2rem;
+            padding: 1.2rem 3rem;
+        }
+        .fe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        .fe-grid-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        .fe-grid-item i {
+            width: 32px;
+            height: 32px;
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+        .fe-grid-item strong {
+            display: block;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            margin-bottom: 0.25rem;
+        }
+        .fe-grid-item span {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .fe-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        .fe-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1.5rem;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            transition: var(--transition);
+        }
+        .fe-links a:hover {
+            background: var(--primary-glow);
+            border-color: var(--primary);
+        }
+        .faq-item {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .faq-item h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.75rem;
+            color: var(--primary);
+        }
+        .faq-item p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Nav dropdown */
+        .nav-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .nav-dropdown-toggle {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .nav-dropdown-toggle:hover {
+            color: var(--primary);
+        }
+        .nav-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.98);
+            backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 0.75rem;
+            min-width: 240px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            z-index: 3000;
+            margin-top: 0.75rem;
+        }
+        .nav-dropdown-menu a {
+            display: block;
+            padding: 0.6rem 1rem;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+        .nav-dropdown-menu a:hover {
+            background: rgba(0,151,167,0.1);
+            color: var(--primary);
+        }
+        .nav-dropdown:hover .nav-dropdown-menu {
+            display: block;
+        }
+
+        /* Footer dropdown style override on mobile */
+        @media (max-width: 768px) {
+            .nav-dropdown-menu {
+                left: auto;
+                right: 0;
+                transform: none;
+            }
+        }
+
+        /* Footer ressource section */
+        .footer-ressources {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 2rem;
+            text-align: left;
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            padding: 0 5%;
+        }
+        .footer-ressources h4 {
+            color: var(--text-primary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        .footer-ressources a {
+            display: block;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.3rem 0;
+            transition: var(--transition);
+        }
+        .footer-ressources a:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="/logo-icon.png" alt="Factarlou Logo">
+            Factarlou
+        </a>
+        <div class="nav-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html">Docs</a>
+            <a href="/comparatif.html">Comparatif</a>
+            <div class="nav-dropdown">
+                <a href="#" class="nav-dropdown-toggle">Ressources ▾</a>
+                <div class="nav-dropdown-menu">
+                    <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation</a>
+                    <a href="/facture-electronique-tunisie.html">Facture Électronique</a>
+                    <a href="/devis-tunisie.html">Devis Tunisie</a>
+                    <a href="/declaration-tva-tunisie.html">Déclaration TVA</a>
+                    <a href="/logiciel-caisse-tunisie.html">Logiciel Caisse</a>
+                    <a href="/calculateur-tva-tunisie.html">Calculateur TVA</a>
+                    <a href="/logiciel-gestion-commerciale-tunisie.html">Gestion Commerciale</a>
+                    <a href="/facture-gratuite-tunisie.html">Facture Gratuite</a>
+                </div>
+            </div>
+            <a href="/about.html">À Propos</a>
+            <a href="/showcase.html">Galerie</a>
+            <a href="/blog.html">Blog</a>
+        </div>
+        <div class="nav-right" style="display: flex; align-items: center; gap: 0.75rem;">
+            <a href="/index.html#download" class="btn-download-nav">Télécharger</a>
+            <button class="menu-toggle" aria-label="Menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main>
+        <section class="fe-hero" data-reveal>
+            <span class="fe-badge">📄 Facture Électronique Tunisie</span>
+            <h1>Facture Électronique Tunisie</h1>
+            <p class="subtitle">
+                Générez des factures électroniques conformes à la législation tunisienne avec export XML TEJ,
+                signature électronique et calcul automatique de la TVA. Gratuit, local-first, 100% privé.
+            </p>
+            <div class="fe-cta">
+                <a href="/index.html#download" class="btn-primary">Télécharger Factarlou gratuitement</a>
+            </div>
+        </section>
+
+        <div class="fe-content">
+            <div class="fe-card" data-reveal>
+                <h2>Qu'est-ce que la facture électronique en Tunisie ?</h2>
+                <p>
+                    Depuis la mise en place du portail <strong>TEJ (Tableau d'Échanges Journalier)</strong>,
+                    l'administration fiscale tunisienne exige des assujettis qu'ils transmettent leurs factures
+                    électroniques dans un format XML normalisé. Cette obligation concerne les factures, avoirs,
+                    notes de crédit et autres documents commerciaux émis entre professionnels.
+                </p>
+                <p>
+                    La facture électronique tunisienne doit comporter un certain nombre de mentions obligatoires :
+                    identification du fournisseur et du client (matricule fiscal, adresse), montant HT et TTC,
+                    ventilation par taux de TVA (0%, 7%, 13%, 19%), timbre fiscal de 1.000 TND, FODEC,
+                    et le cas échéant la retenue à la source. Toutes ces informations doivent être structurées
+                    dans un fichier XML compatible avec le portail TEJ.
+                </p>
+            </div>
+
+            <div class="fe-card" data-reveal>
+                <h2>Comment Factarlou génère vos factures électroniques</h2>
+                <p>
+                    Factarlou est le <strong>seul logiciel de facturation tunisien 100% gratuit</strong> qui propose
+                    un export XML TEJ complet. En quelques clics, vous générez des fichiers XML parfaitement conformes
+                    aux spécifications du portail fiscal. Le moteur de documents calcule automatiquement :
+                </p>
+                <ul>
+                    <li><strong>TVA</strong> — Multi-taux (0%, 7%, 13%, 19%) avec ventilation automatique</li>
+                    <li><strong>Timbre fiscal</strong> — 1.000 TND appliqué selon la réglementation en vigueur</li>
+                    <li><strong>FODEC</strong> — Contribution incluse dans le calcul</li>
+                    <li><strong>Retenue à la source</strong> — 0.5% à 15% selon le type de prestation</li>
+                    <li><strong>Signature électronique</strong> — Certificat de retenue intégré dans l'export</li>
+                </ul>
+                <p>
+                    Avec <strong>8 types de documents</strong> supportés (Facture, Avoir, Devis, Bon de Commande,
+                    Bon de Livraison, Bon d'Arrivage, Bon de Sortie, Bon d'Entrée), Factarlou couvre l'ensemble
+                    de votre cycle commercial.
+                </p>
+            </div>
+
+            <div class="fe-card" data-reveal>
+                <h2>Local-first : vos factures vous appartiennent</h2>
+                <p>
+                    Contrairement aux solutions cloud, Factarlou stocke toutes vos données en local sur votre
+                    ordinateur. Vos factures électroniques, vos exports XML TEJ, vos déclarations de TVA —
+                    <strong>rien ne quitte votre machine</strong>. Pas de serveur, pas de fuite, pas de risque
+                    de confidentialité.
+                </p>
+                <p>
+                    Vous gardez le contrôle total de vos documents fiscaux. Factarlou ne collecte aucune donnée,
+                    n'affiche aucune publicité et ne limite aucune fonctionnalité. C'est la transparence absolue.
+                </p>
+                <div class="fe-grid">
+                    <div class="fe-grid-item">
+                        <i data-lucide="file-code"></i>
+                        <strong>Export XML TEJ</strong>
+                        <span>Compatible portail fiscal</span>
+                    </div>
+                    <div class="fe-grid-item">
+                        <i data-lucide="calculator"></i>
+                        <strong>TVA Automatique</strong>
+                        <span>Taux 0% à 19%</span>
+                    </div>
+                    <div class="fe-grid-item">
+                        <i data-lucide="shield-check"></i>
+                        <strong>Local-first</strong>
+                        <span>Vos données chez vous</span>
+                    </div>
+                    <div class="fe-grid-item">
+                        <i data-lucide="file-text"></i>
+                        <strong>8 types de doc.</strong>
+                        <span>Cycle complet</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fe-links" data-reveal>
+                <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation Tunisie</a>
+                <a href="/declaration-tva-tunisie.html">Déclaration TVA Tunisie</a>
+            </div>
+
+            <div class="fe-cta" data-reveal>
+                <a href="/index.html#download" class="btn-primary">Télécharger Factarlou gratuitement</a>
+            </div>
+
+            <div class="section-header" data-reveal style="margin-top: 6rem;">
+                <span class="badge">❓ FAQ</span>
+                <h2>Questions fréquentes sur la facture électronique</h2>
+            </div>
+
+            <div class="faq-item" data-reveal>
+                <h3>Qu'est-ce que le portail TEJ et comment faire une facture électronique en Tunisie ?</h3>
+                <p>
+                    Le portail TEJ (Tableau d'Échanges Journalier) est la plateforme de l'administration fiscale
+                    tunisienne pour la transmission des factures électroniques. Les assujettis doivent générer
+                    des fichiers XML conformes au format TEJ et les transmettre périodiquement. Factarlou génère
+                    automatiquement ces fichiers XML compatibles pour tous vos documents (factures, avoirs,
+                    notes de crédit) avec le calcul correct de la TVA, du timbre fiscal et de la retenue à la source.
+                </p>
+            </div>
+
+            <div class="faq-item" data-reveal>
+                <h3>Factarlou exporte-t-il bien en XML pour la facture électronique tunisienne ?</h3>
+                <p>
+                    Oui. Factarlou propose un export XML TEJ complet compatible avec le portail fiscal tunisien.
+                    L'export inclut toutes les informations obligatoires : identification du fournisseur et du client,
+                    montant HT/TTC, ventilation par taux de TVA (0%, 7%, 13%, 19%), timbre fiscal (1.000 TND),
+                    FODEC et retenue à la source. Les fichiers générés peuvent être importés directement sur
+                    le portail TEJ sans conversion supplémentaire.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-ressources">
+            <div>
+                <h4>Logiciel</h4>
+                <a href="/index.html">Accueil</a>
+                <a href="/docs.html">Documentation</a>
+                <a href="/changelog.html">Changelog</a>
+                <a href="/privacy.html">Confidentialité</a>
+            </div>
+            <div>
+                <h4>Fonctionnalités</h4>
+                <a href="/logiciel-facturation-tunisie.html">Facturation</a>
+                <a href="/facture-electronique-tunisie.html">Facture Électronique</a>
+                <a href="/declaration-tva-tunisie.html">Déclaration TVA</a>
+                <a href="/logiciel-caisse-tunisie.html">Logiciel Caisse</a>
+            </div>
+            <div>
+                <h4>Ressources</h4>
+                <a href="/comparatif.html">Comparatif</a>
+                <a href="/devis-tunisie.html">Devis Tunisie</a>
+                <a href="/calculateur-tva-tunisie.html">Calculateur TVA</a>
+                <a href="/logiciel-gestion-commerciale-tunisie.html">Gestion Commerciale</a>
+                <a href="/facture-gratuite-tunisie.html">Facture Gratuite</a>
+            </div>
+            <div>
+                <h4>À propos</h4>
+                <a href="/about.html">À Propos</a>
+                <a href="/showcase.html">Galerie</a>
+                <a href="/blog.html">Blog</a>
+            </div>
+        </div>
+        <div class="footer-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html">Documentation</a>
+            <a href="/comparatif.html">Comparatif</a>
+            <a href="/changelog.html">Changelog</a>
+            <a href="/privacy.html">Confidentialité</a>
+        </div>
+        <p class="copyright">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

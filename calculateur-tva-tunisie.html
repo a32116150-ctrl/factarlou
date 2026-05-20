@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="fr-TN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur TVA Tunisie — HT / TTC en Ligne | Factarlou</title>
+    <meta name="description" content="Calculez vos montants HT, TTC et TVA en ligne. Taux Tunisie : 0%, 7%, 13%, 19%. Simulateur gratuit, pas d'inscription requise.">
+    <meta property="og:title" content="Calculateur TVA Tunisie — HT / TTC en Ligne | Factarlou">
+    <meta property="og:description" content="Calculez vos montants HT, TTC et TVA en ligne. Taux Tunisie : 0%, 7%, 13%, 19%. Simulateur gratuit, pas d'inscription requise.">
+    <meta property="og:image" content="/social-preview.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factarlou.online/calculateur-tva-tunisie.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="/social-preview.png">
+    <link rel="canonical" href="https://factarlou.online/calculateur-tva-tunisie.html">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="/logo-icon.png">
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Factarlou",
+      "operatingSystem": "Windows, macOS",
+      "applicationCategory": "BusinessApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "TND"
+      },
+      "description": "Calculez vos montants HT, TTC et TVA en ligne. Taux Tunisie : 0%, 7%, 13%, 19%. Simulateur gratuit, pas d'inscription requise.",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "ratingCount": "120"
+      }
+    }
+    </script>
+    <style>
+        .lp-container { max-width: 800px; margin: 140px auto 80px; padding: 0 5%; }
+        .lp-intro { text-align: center; margin-bottom: 4rem; }
+        .lp-intro h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem; }
+        .lp-intro p { color: var(--text-secondary); font-size: 1.1rem; line-height: 1.7; }
+        .lp-content { color: var(--text-secondary); line-height: 1.9; font-size: 1.05rem; }
+        .lp-content p { margin-bottom: 1.5rem; }
+        .lp-content a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .lp-content a:hover { text-decoration: underline; }
+        .lp-cta { text-align: center; margin: 4rem 0; }
+        .lp-cta h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+        .lp-cta p { color: var(--text-secondary); margin-bottom: 2rem; }
+        .lp-cta .btn-primary { font-size: 1.2rem; padding: 1.2rem 3rem; }
+        .lp-faq { margin: 4rem 0; }
+        .lp-faq h2 { text-align: center; margin-bottom: 3rem; }
+
+        .nav-dropdown { position: relative; display: inline-block; }
+        .nav-dropdown-toggle { cursor: pointer; text-decoration: none; color: var(--text-secondary); font-weight: 500; font-size: 0.95rem; transition: var(--transition); background: none; border: none; padding: 0; }
+        .nav-dropdown-toggle:hover { color: var(--primary); }
+        .nav-dropdown-menu { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.75rem; min-width: 220px; z-index: 100; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .nav-dropdown-menu a { display: block; padding: 0.6rem 1rem; color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; border-radius: 8px; transition: var(--transition); white-space: nowrap; }
+        .nav-dropdown-menu a:hover { background: var(--glass); color: var(--primary); }
+        .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+        @media (max-width: 768px) {
+            .nav-dropdown-menu { position: static; transform: none; background: transparent; border: none; padding: 0; box-shadow: none; }
+            .nav-dropdown-menu a { font-size: 1.1rem; text-align: center; padding: 0.5rem 1rem; }
+        }
+
+        .calc-card { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 2.5rem; max-width: 500px; margin: 2rem auto; }
+        .calc-card label { display: block; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.4rem; font-weight: 500; }
+        .calc-card input, .calc-card select { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 8px; padding: 0.8rem 1rem; color: white; width: 100%; font-size: 1rem; margin-bottom: 1rem; }
+        .calc-card input:focus, .calc-card select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
+        .calc-card select option { background: #1e293b; }
+        .calc-result { background: rgba(0,151,167,0.1); border: 1px solid var(--primary); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; }
+        .calc-result .line { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 1.05rem; }
+        .calc-result .line.total { font-weight: 700; color: var(--text-primary); border-top: 1px solid var(--glass-border); margin-top: 0.3rem; padding-top: 0.8rem; }
+        .calc-result .line .label { color: var(--text-secondary); }
+        .calc-result .line .value { color: var(--text-primary); font-weight: 600; }
+        .calc-result .line .value.tva { color: var(--primary); }
+        .calc-result .line .value.timbre { color: var(--accent); }
+
+        .res-links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin: 2rem 0; }
+        .res-links a { color: var(--primary); text-decoration: none; font-weight: 600; padding: 0.5rem 1.5rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 50px; transition: var(--transition); }
+        .res-links a:hover { background: var(--primary-glow); border-color: var(--primary); }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="/logo-icon.png" alt="Factarlou Logo">
+            Factarlou
+        </a>
+        <div class="nav-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html">Docs</a>
+            <a href="/comparatif.html">Comparatif</a>
+            <div class="nav-dropdown">
+                <a href="#" class="nav-dropdown-toggle" style="color: var(--primary);">Ressources ▾</a>
+                <div class="nav-dropdown-menu">
+                    <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation</a>
+                    <a href="/facture-electronique-tunisie.html">Facture Électronique</a>
+                    <a href="/devis-tunisie.html">Devis Tunisie</a>
+                    <a href="/declaration-tva-tunisie.html">Déclaration TVA</a>
+                    <a href="/logiciel-caisse-tunisie.html">Logiciel Caisse</a>
+                    <a href="/calculateur-tva-tunisie.html" style="color: var(--primary);">Calculateur TVA</a>
+                    <a href="/logiciel-gestion-commerciale-tunisie.html">Gestion Commerciale</a>
+                    <a href="/facture-gratuite-tunisie.html">Facture Gratuite</a>
+                </div>
+            </div>
+            <a href="/about.html">À Propos</a>
+            <a href="/showcase.html">Galerie</a>
+            <a href="/blog.html">Blog</a>
+        </div>
+        <div class="nav-right" style="display: flex; align-items: center; gap: 0.75rem;">
+            <a href="/index.html#download" class="btn-download-nav">Télécharger</a>
+            <button class="menu-toggle" aria-label="Menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <main class="lp-container">
+        <div class="lp-intro" data-reveal>
+            <span class="badge">🇹🇳 TVA Tunisie</span>
+            <h1>Calculateur TVA Tunisie</h1>
+            <p>Calculez instantanément vos montants HT, TVA et TTC aux taux tunisiens (0 %, 7 %, 13 %, 19 %). Simulateur gratuit, zéro inscription, 100 % en ligne.</p>
+        </div>
+
+        <div class="calc-card" data-reveal>
+            <form id="tva-calculator" onsubmit="return false;">
+                <label for="montant-ht">Montant HT (en TND)</label>
+                <input type="number" id="montant-ht" min="0" step="0.001" value="1000" placeholder="Ex: 1000">
+
+                <label for="taux-tva">Taux TVA</label>
+                <select id="taux-tva">
+                    <option value="0">0 %</option>
+                    <option value="7">7 %</option>
+                    <option value="13" selected>13 %</option>
+                    <option value="19">19 %</option>
+                </select>
+
+                <div class="calc-result" id="calc-result">
+                    <div class="line"><span class="label">Montant HT</span><span class="value" id="res-ht">1 000,000 TND</span></div>
+                    <div class="line"><span class="label">TVA</span><span class="value tva" id="res-tva">130,000 TND</span></div>
+                    <div class="line"><span class="label">Timbre fiscal</span><span class="value timbre" id="res-timbre">1,000 TND</span></div>
+                    <div class="line total"><span class="label">Montant TTC</span><span class="value" id="res-ttc">1 131,000 TND</span></div>
+                </div>
+            </form>
+        </div>
+
+        <div class="lp-content" data-reveal>
+            <p>La <strong>TVA (Taxe sur la Valeur Ajoutée)</strong> est un impôt indirect appliqué sur la consommation de biens et de services en Tunisie. Son calcul est essentiel pour tout professionnel qui établit des factures, des devis ou des déclarations fiscales.</p>
+
+            <p>En Tunisie, quatre taux de TVA sont en vigueur : <strong>0 %</strong> (opérations export et exonérations), <strong>7 %</strong> (taux réduit pour certains produits de première nécessité), <strong>13 %</strong> (taux intermédiaire) et <strong>19 %</strong> (taux normal). Le choix du taux dépend de la nature des biens ou services facturés et de la réglementation fiscale en vigueur.</p>
+
+            <p>Pour calculer la TVA, il suffit de multiplier le montant <strong>HT (Hors Taxes)</strong> par le taux applicable. Le montant <strong>TTC (Toutes Taxes Comprises)</strong> est obtenu en additionnant le montant HT et la TVA. Par exemple, pour un montant HT de 1 000 TND au taux de 19 %, la TVA est de 190 TND et le TTC de 1 190 TND.</p>
+
+            <p>À chaque facture s'ajoute également le <strong>timbre fiscal</strong> d'un montant de <strong>1,000 TND</strong> (applicable dès lors que le montant de la facture est supérieur à zéro). Ce timbre est une contribution due à l'administration fiscale tunisienne pour chaque document émis.</p>
+
+            <p>Avec <strong>Factarlou</strong>, votre logiciel de facturation tunisien gratuit, ces calculs sont automatisés. Plus besoin de simulateur : saisissez vos articles, choisissez le taux, et Factarlou calcule la TVA, le timbre, la <strong>FODEC</strong> et la <strong>retenue à la source</strong> en un clin d'œil. Générez vos factures conformes, exportez en PDF et XML TEJ, le tout sans abonnement.</p>
+
+            <p>Consultez notre <a href="/logiciel-facturation-tunisie.html">logiciel de facturation Tunisie</a> pour une solution complète, ou notre guide sur la <a href="/declaration-tva-tunisie.html">déclaration TVA en Tunisie</a> pour comprendre vos obligations fiscales.</p>
+        </div>
+
+        <div class="res-links" data-reveal>
+            <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation Tunisie</a>
+            <a href="/declaration-tva-tunisie.html">Déclaration TVA Tunisie</a>
+        </div>
+
+        <div class="lp-cta" data-reveal>
+            <h2>Besoin de facturer ? Téléchargez Factarlou</h2>
+            <p>Logiciel de facturation tunisien gratuit — TVA, timbre, FODEC, retenue à la source. Tout est calculé automatiquement.</p>
+            <a href="/index.html#download" class="btn-primary">Télécharger Factarlou gratuitement</a>
+        </div>
+
+        <div class="lp-faq" data-reveal>
+            <h2>Questions Fréquentes</h2>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div class="faq-item" style="background: var(--card-bg); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
+                    <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Comment calculer la TVA en Tunisie ?</h3>
+                    <p style="color: var(--text-secondary);">Pour calculer la TVA en Tunisie, multipliez le montant HT par le taux applicable (0%, 7%, 13% ou 19%). Le montant TTC s'obtient en ajoutant la TVA au montant HT. N'oubliez pas d'ajouter le timbre fiscal de 1,000 TND par facture. Utilisez notre simulateur ci-dessus pour un calcul instantané.</p>
+                </div>
+                <div class="faq-item" style="background: var(--card-bg); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
+                    <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Quels sont les taux de TVA en Tunisie ?</h3>
+                    <p style="color: var(--text-secondary);">La Tunisie applique quatre taux de TVA : 0% (exportations, exonérations), 7% (taux réduit), 13% (taux intermédiaire) et 19% (taux normal). Le taux standard le plus couramment appliqué est de 19%.</p>
+                </div>
+                <div class="faq-item" style="background: var(--card-bg); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
+                    <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Qu'est-ce que le timbre fiscal sur les factures en Tunisie ?</h3>
+                    <p style="color: var(--text-secondary);">Le timbre fiscal est une contribution de 1,000 TND due sur chaque facture émise en Tunisie, quel que soit le montant (dès lors qu'il est supérieur à zéro). Il est à la charge du fournisseur et doit être reversé à l'administration fiscale. Factarlou l'inclut automatiquement dans toutes vos factures.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links" style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
+            <div style="text-align: left; min-width: 150px;">
+                <strong style="color: var(--primary);">Pages</strong><br>
+                <a href="/index.html">Accueil</a><br>
+                <a href="/docs.html">Documentation</a><br>
+                <a href="/comparatif.html">Comparatif</a><br>
+                <a href="/changelog.html">Changelog</a><br>
+                <a href="/privacy.html">Confidentialité</a>
+            </div>
+            <div style="text-align: left; min-width: 150px;">
+                <strong style="color: var(--primary);">Ressources</strong><br>
+                <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation</a><br>
+                <a href="/facture-electronique-tunisie.html">Facture Électronique</a><br>
+                <a href="/devis-tunisie.html">Devis Tunisie</a><br>
+                <a href="/declaration-tva-tunisie.html">Déclaration TVA</a><br>
+                <a href="/logiciel-caisse-tunisie.html">Logiciel Caisse</a><br>
+                <a href="/calculateur-tva-tunisie.html" style="color: var(--primary);">Calculateur TVA</a><br>
+                <a href="/logiciel-gestion-commerciale-tunisie.html">Gestion Commerciale</a><br>
+                <a href="/facture-gratuite-tunisie.html">Facture Gratuite</a>
+            </div>
+        </div>
+        <p class="copyright">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+    <script>
+        lucide.createIcons();
+
+        document.querySelector('.menu-toggle')?.addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+
+        function formatDinars(val) {
+            return Number(val).toLocaleString('fr-FR', { minimumFractionDigits: 3, maximumFractionDigits: 3 }) + ' TND';
+        }
+
+        function calculerTVA() {
+            var ht = parseFloat(document.getElementById('montant-ht').value) || 0;
+            var taux = parseFloat(document.getElementById('taux-tva').value);
+            var tva = ht * (taux / 100);
+            var ttc = ht + tva;
+            var timbre = ht > 0 ? 1.000 : 0;
+            document.getElementById('res-ht').textContent = formatDinars(ht);
+            document.getElementById('res-tva').textContent = formatDinars(tva);
+            document.getElementById('res-ttc').textContent = formatDinars(ttc + timbre);
+            document.getElementById('res-timbre').textContent = formatDinars(timbre);
+        }
+
+        document.getElementById('montant-ht').addEventListener('input', calculerTVA);
+        document.getElementById('taux-tva').addEventListener('change', calculerTVA);
+        calculerTVA();
+    </script>
+</body>
+</html>
