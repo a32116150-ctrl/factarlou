@@ -9,9 +9,10 @@ export default defineConfig({
         about:     resolve(__dirname, 'about.html'),
         docs:      resolve(__dirname, 'docs.html'),
         showcase:  resolve(__dirname, 'showcase.html'),
-        changelog: resolve(__dirname, 'changelog.html'),
-        privacy:   resolve(__dirname, 'privacy.html'),
-        blog:      resolve(__dirname, 'blog.html'),
+        changelog:  resolve(__dirname, 'changelog.html'),
+        comparatif: resolve(__dirname, 'comparatif.html'),
+        privacy:    resolve(__dirname, 'privacy.html'),
+        blog:       resolve(__dirname, 'blog.html'),
       }
     }
   }
