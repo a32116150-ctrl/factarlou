@@ -145,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
 
-            const latestVersion = releases[0]?.tag_name || 'v2.6.0';
+            const latestVersion = releases[0]?.tag_name || 'v3.1.0';
 
             // 1.5 Apply Test Offset (Exclude developer testing)
             const TEST_OFFSET = 24;

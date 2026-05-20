@@ -105,40 +105,104 @@
             <p>Suivez l'évolution de Factarlou et découvrez les dernières fonctionnalités ajoutées.</p>
         </div>
 
-        <div class="version-block" data-reveal>
-            <span class="version-tag">v2.6.3 (LATEST)</span>
-            <span class="version-date">26 Avril 2026</span>
-            <h2>Compatibilité macOS & Application POS</h2>
+        <div class="version-block" data-reveal style="border-color: var(--accent); border-width: 2px;">
+            <span class="version-tag" style="background: var(--accent); color: #000;">v3.1.0 (LATEST)</span>
+            <span class="version-date">20 Mai 2026</span>
+            <h2>Auto-Updater Fiable & macOS Dock Progress</h2>
             <ul class="change-list">
-                <li><span class="change-type type-fix">Fix</span> Résolution de l'erreur "disk image corrupted" empêchant l'installation sur macOS.</li>
-                <li><span class="change-type type-new">Nouveau</span> Lancement officiel de l'application Factarlou Point de Vente (POS) connectée.</li>
-                <li><span class="change-type type-imp">Amélioration</span> Mise à jour de sécurité et stabilité du processus de déploiement multiplateforme.</li>
+                <li><span class="change-type type-imp">Amélioration</span> Correction du chemin de cache DMG macOS — le scanner post-téléchargement cherche dans le répertoire temp système.</li>
+                <li><span class="change-type type-fix">Fix</span> Correction des faux positifs de mise à jour — comparaison currentVersion vs latestVersion avant notification.</li>
+                <li><span class="change-type type-new">Nouveau</span> Barre de progression sur l'icône du Dock macOS pendant le téléchargement.</li>
+                <li><span class="change-type type-imp">Amélioration</span> Messages d'erreur visibles pour les échecs de mise à jour (réseau, GitHub).</li>
+                <li><span class="change-type type-fix">Fix</span> Garde !mainWindow.isDestroyed() pour prévenir les crashes de course.</li>
+            </ul>
+        </div>
+
+        <div class="version-block" data-reveal style="opacity: 0.95;">
+            <span class="version-tag" style="background: var(--primary);">v3.0.0</span>
+            <span class="version-date">20 Mai 2026</span>
+            <h2>POS Prêt pour le Commerce</h2>
+            <ul class="change-list">
+                <li><span class="change-type type-new">Nouveau</span> Point de Vente (POS) complet : grille produits tactile, scan code-barres, panier.</li>
+                <li><span class="change-type type-new">Nouveau</span> Paiements multiples et Split Tender (espèces, carte, mobile money, chèque).</li>
+                <li><span class="change-type type-new">Nouveau</span> Gestion de sessions (ouverture/fermeture, rapports X/Z, mouvements de caisse).</li>
+                <li><span class="change-type type-new">Nouveau</span> Favoris, grille top-10, points de fidélité, multi-caissier.</li>
+                <li><span class="change-type type-new">Nouveau</span> Avoirs et remboursements, paniers suspendus/repris, brouillons multiples.</li>
+                <li><span class="change-type type-new">Nouveau</span> Impression tickets thermique 80mm.</li>
+                <li><span class="change-type type-imp">Amélioration</span> Documentation complète et refonte de l'interface de documentation.</li>
             </ul>
         </div>
 
         <div class="version-block" data-reveal style="opacity: 0.9;">
-            <span class="version-tag" style="background: var(--glass-border);">v2.6.2</span>
-            <span class="version-date">26 Avril 2026</span>
-            <h2>Mobile-First & Build Linux</h2>
+            <span class="version-tag" style="background: var(--glass-border);">v2.6.5</span>
+            <span class="version-date">19 Mai 2026</span>
+            <h2>Design Premium & Productivité</h2>
             <ul class="change-list">
-                <li><span class="change-type type-new">Nouveau</span> Implémentation d'une nouvelle logique de tableau de bord optimisée pour mobile (Mobile-First).</li>
-                <li><span class="change-type type-fix">Fix</span> Correction de l'erreur de compilation Glibc dans l'environnement Buildroot (Linux/GitHub Actions).</li>
-                <li><span class="change-type type-imp">Amélioration</span> Ajustements de l'interface utilisateur pour une meilleure lisibilité sur les petits écrans.</li>
+                <li><span class="change-type type-new">Nouveau</span> Refonte complète de l'interface : design premium avec ombres, dégradés et effets hover.</li>
+                <li><span class="change-type type-new">Nouveau</span> Remplacement des émojis par des icônes Lucide SVG (~50 icônes).</li>
+                <li><span class="change-type type-imp">Amélioration</span> Page Paramètres repensée : sidebar verticale à 5 onglets, mise en page par cartes.</li>
+                <li><span class="change-type type-imp">Amélioration</span> Page "Mon Entreprise" repensée (design cohérent avec Paramètres).</li>
+                <li><span class="change-type type-new">Nouveau</span> Notes autocollantes avec code couleur, épinglage et widget tableau de bord.</li>
+                <li><span class="change-type type-new">Nouveau</span> Opérations par lot : suppression multi-sélection, marquage payé, export PDF groupé.</li>
+                <li><span class="change-type type-new">Nouveau</span> Conversion BA → Dépense en un clic.</li>
+                <li><span class="change-type type-new">Nouveau</span> Pipeline commercial : suivi Devis → Facture → BL avec référencement automatique.</li>
+                <li><span class="change-type type-new">Nouveau</span> Assistant TVA Déclaratif mensuel avec ventilation par taux.</li>
+                <li><span class="change-type type-new">Nouveau</span> Templates de documents (sauvegarde/chargement/suppression).</li>
+                <li><span class="change-type type-new">Nouveau</span> Import/export CSV pour clients et services.</li>
+                <li><span class="change-type type-new">Nouveau</span> Carte interactive Leaflet/OpenStreetMap.</li>
+                <li><span class="change-type type-new">Nouveau</span> Tri des colonnes par clic sur en-tête, pagination (50 docs/page).</li>
+                <li><span class="change-type type-new">Nouveau</span> Factures récurrentes (cron 60 min) et sauvegarde auto des brouillons.</li>
+                <li><span class="change-type type-new">Nouveau</span> Journal d'audit et historique des modifications.</li>
             </ul>
         </div>
 
         <div class="version-block" data-reveal style="opacity: 0.85;">
-            <span class="version-tag" style="background: var(--glass-border);">v2.5.2</span>
-            <span class="version-date">22 Avril 2026</span>
-            <h2>Optimisation & Correction Critique</h2>
+            <span class="version-tag" style="background: var(--glass-border);">v2.6.3</span>
+            <span class="version-date">26 Avril 2026</span>
+            <h2>Compatibilité macOS & Corrections UI</h2>
             <ul class="change-list">
-                <li><span class="change-type type-fix">Fix</span> Correction du crash au démarrage de la base de données pour les nouveaux utilisateurs.</li>
-                <li><span class="change-type type-imp">Amélioration</span> Nouveau processus d'installation (.exe Setup) plus robuste et sécurisé.</li>
-                <li><span class="change-type type-imp">Amélioration</span> Amélioration de la stabilité globale du backend et de la gestion SQLite.</li>
+                <li><span class="change-type type-fix">Fix</span> Résolution de l'erreur "disk image corrupted" empêchant l'installation sur macOS.</li>
+                <li><span class="change-type type-imp">Amélioration</span> Stabilité de l'auto-updater macOS et corrections UI.</li>
+                <li><span class="change-type type-imp">Amélioration</span> Mise à jour de sécurité et processus de déploiement multiplateforme.</li>
             </ul>
         </div>
 
         <div class="version-block" data-reveal style="opacity: 0.8;">
+            <span class="version-tag" style="background: var(--glass-border);">v2.6.2</span>
+            <span class="version-date">26 Avril 2026</span>
+            <h2>Auto-Updater macOS Robust</h2>
+            <ul class="change-list">
+                <li><span class="change-type type-imp">Amélioration</span> Nouvelle logique d'auto-updater robuste pour macOS.</li>
+                <li><span class="change-type type-imp">Amélioration</span> Stabilité des versions et du processus de mise à jour.</li>
+            </ul>
+        </div>
+
+        <div class="version-block" data-reveal style="opacity: 0.75;">
+            <span class="version-tag" style="background: var(--glass-border);">v2.6.1</span>
+            <span class="version-date">26 Avril 2026</span>
+            <h2>Documents Avancés & RNE Search</h2>
+            <ul class="change-list">
+                <li><span class="change-type type-new">Nouveau</span> 8 types de documents : Facture, Avoir, Devis, Bon de Commande, BL, BA, BS, BE.</li>
+                <li><span class="change-type type-new">Nouveau</span> Recherche RNE en direct avec auto-complétion depuis le Registre National des Entreprises.</li>
+                <li><span class="change-type type-new">Nouveau</span> Logique de revenus négatifs et intégration WhatsApp.</li>
+            </ul>
+        </div>
+
+        <div class="version-block" data-reveal style="opacity: 0.7;">
+            <span class="version-tag" style="background: var(--glass-border);">v2.6.0</span>
+            <span class="version-date">23 Avril 2026</span>
+            <h2>Fiscal Toolkit & Export TEJ</h2>
+            <ul class="change-list">
+                <li><span class="change-type type-new">Nouveau</span> Fiscal Toolkit complet : calculateurs, générateurs, simulateurs.</li>
+                <li><span class="change-type type-new">Nouveau</span> Export XML TEJ pour le portail de l'administration fiscale.</li>
+                <li><span class="change-type type-new">Nouveau</span> Toggles de branding global (logo, signature, cachet).</li>
+                <li><span class="change-type type-new">Nouveau</span> Déclaration TVA mensuelle et rapport TVA annuel.</li>
+                <li><span class="change-type type-new">Nouveau</span> Simulateur de scénarios fiscaux (comparatif 3 colonnes).</li>
+                <li><span class="change-type type-new">Nouveau</span> Validateur Matricule Fiscal (MF) + recherche RNE.</li>
+            </ul>
+        </div>
+
+        <div class="version-block" data-reveal style="opacity: 0.6;">
             <span class="version-tag" style="background: var(--glass-border);">v2.0.0 (BETA)</span>
             <span class="version-date">Avril 2026</span>
             <h2>La Mise à Jour Majeure</h2>
@@ -151,7 +215,7 @@
             </ul>
         </div>
 
-        <div class="version-block" data-reveal style="opacity: 0.7;">
+        <div class="version-block" data-reveal style="opacity: 0.5;">
             <span class="version-tag" style="background: var(--glass-border);">v1.6.0</span>
             <span class="version-date">Janvier 2026</span>
             <h2>Stabilité & Conformité</h2>
@@ -162,7 +226,7 @@
             </ul>
         </div>
 
-        <div class="version-block" data-reveal style="opacity: 0.5;">
+        <div class="version-block" data-reveal style="opacity: 0.4;">
             <span class="version-tag" style="background: var(--glass-border);">v1.0.0</span>
             <span class="version-date">Octobre 2025</span>
             <h2>Lancement Initial</h2>

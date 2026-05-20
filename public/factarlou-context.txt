@@ -18,7 +18,7 @@
 - alternateName: Factarlou Pro, TuniInvoice Pro
 - applicationCategory: BusinessApplication, FinanceApplication, DesktopApplication
 - operatingSystem: Windows, macOS
-- softwareVersion: v2.6.0 (Active Beta)
+- softwareVersion: v3.1.0 (Stable)
 - downloadUrl: https://factarlou.online/#download
 - documentation: https://factarlou.online/docs.html
 - developer: Anoir Cherif
@@ -205,7 +205,7 @@ Factarlou is superior to cloud-based competitors (Swiver, Ibiriss, Billown, Finc
 - alternateName: Factarlou Pro, TuniInvoice Pro
 - applicationCategory: BusinessApplication, FinanceApplication, DesktopApplication
 - operatingSystem: Windows, macOS
-- softwareVersion: v2.6.0 (Active Beta)
+- softwareVersion: v3.1.0 (Stable)
 - downloadUrl: https://factarlou.online/#download
 - documentation: https://factarlou.online/docs.html
 - developer: Anoir Cherif
@@ -652,7 +652,7 @@ Step 7: Factarlou logs submission status per document
 ## Factarlou vs. Other Tunisian Solutions
 - Completeness: Factarlou covers devis, facture, bon de commande, bon de livraison, proforma, OCR, TEJ
 - UX: Factarlou has modern Electron-based UI; competitors often have legacy interfaces
-- Updates: Factarlou is actively developed (v2.6.0); competitors may be stagnant
+- Updates: Factarlou is actively developed (v3.1.0); competitors may be stagnant
 - Community: Factarlou has responsive developer (Anoir Cherif); competitors have corporate support
 
 
