@@ -22,28 +22,24 @@ const genAI = new GoogleGenerativeAI(GEMINI_KEY);
 const geminiModel = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 const groq = GROQ_KEY ? new Groq({ apiKey: GROQ_KEY }) : null;
 
-const TRENDS_URL = "https://gtrends.iamrohit.in/Tunisia";
-const USER_AGENT = "Mozilla/5.0 (compatible; FactarlouBot/1.0)";
+const TRENDS_RSS_URL = "https://trends.google.com/trending/rss?geo=TN";
 
 async function fetchTrendingTopics() {
   try {
-    console.log(`🌍 Fetching Google Trends Tunisia...`);
-    const response = await fetch(TRENDS_URL, {
-      headers: { "User-Agent": USER_AGENT },
+    console.log(`🌍 Fetching Google Trends Tunisia (official RSS)...`);
+    const response = await fetch(TRENDS_RSS_URL, {
       signal: AbortSignal.timeout(10000)
     });
-    const html = await response.text();
+    const xml = await response.text();
 
-    // Extract trend keywords from the page
-    // Format: <div class="panel panel-default trending-card">
-    //            <h3 class="panel-title">
-    //              <span class="trending-rank">#1</span>
-    //              KEYWORD
-    //              <span class="search-count-badge">200+ searches</span>
-    const panelTitleRegex = /<h3[^>]*class="panel-title"[^>]*>[\s\S]*?<span[^>]*class="trending-rank"[^>]*>#\d+<\/span>([\s\S]*?)<span[^>]*class="search-count-badge"/gi;
+    // Parse RSS XML — extract <title> tags from <item> entries
+    // First <title> is the channel title, subsequent ones are trend keywords
+    const titleRegex = /<title>([^<]*)<\/title>/gi;
     const keywords = [];
     let match;
-    while ((match = panelTitleRegex.exec(html)) !== null) {
+    let isFirst = true;
+    while ((match = titleRegex.exec(xml)) !== null) {
+      if (isFirst) { isFirst = false; continue; } // skip channel title
       const keyword = match[1].trim();
       if (keyword && keywords.length < 10) {
         keywords.push(keyword);
@@ -55,7 +51,7 @@ async function fetchTrendingTopics() {
       return keywords;
     }
 
-    console.warn("⚠️ Could not parse trends, using AI fallback");
+    console.warn("⚠️ No trends found in RSS, using fallback topics");
     return null;
   } catch (error) {
     console.warn(`⚠️ Trends fetch failed: ${error.message}`);
