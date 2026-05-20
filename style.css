@@ -326,12 +326,28 @@ h1 {
     50% { box-shadow: 0 0 0 10px rgba(140, 198, 63, 0); }
 }
 
-@media (max-width: 768px) {
+.pos-features > div:hover {
+    border-color: var(--primary) !important;
+    background: rgba(30, 41, 59, 0.8) !important;
+    transform: translateY(-3px);
+}
+
+@media (max-width: 1024px) {
     .pos-content {
         grid-template-columns: 1fr !important;
+        gap: 2rem !important;
     }
     .pos-content .floating-ui {
         display: none;
+    }
+    .pos-features {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .pos-features {
+        grid-template-columns: 1fr !important;
     }
 }
 
