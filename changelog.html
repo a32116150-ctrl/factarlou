@@ -72,6 +72,67 @@
         .type-new { color: var(--accent); }
         .type-fix { color: #f87171; }
         .type-imp { color: #60a5fa; }
+
+        /* Roadmap */
+        .roadmap { margin: 4rem 0; }
+        .roadmap-cards { display: grid; gap: 1rem; margin-top: 2rem; }
+        .roadmap-card {
+            background: var(--card-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            transition: var(--transition);
+        }
+        .roadmap-card:hover { border-color: var(--primary); background: rgba(30,41,59,0.8); }
+        .roadmap-status {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .status-done { background: rgba(140,198,63,0.15); color: var(--accent); }
+        .status-progress { background: rgba(0,151,167,0.15); color: var(--primary); }
+        .status-planned { background: rgba(250,204,21,0.15); color: #facc15; }
+        .roadmap-info { flex: 1; }
+        .roadmap-info h4 { font-size: 1rem; margin-bottom: 0.25rem; }
+        .roadmap-info p { font-size: 0.85rem; color: var(--text-secondary); margin: 0; }
+        .roadmap-vote {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+            flex-shrink: 0;
+            min-width: 60px;
+        }
+        .vote-btn {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            border-radius: 8px;
+            padding: 0.35rem 0.75rem;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .vote-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .vote-btn.voted { border-color: var(--accent); color: var(--accent); background: rgba(140,198,63,0.1); }
+        .vote-count { font-size: 0.85rem; font-weight: 800; color: var(--text-primary); }
+        .vote-label { font-size: 0.65rem; color: var(--text-secondary); text-transform: uppercase; }
+
+        @media (max-width: 640px) {
+            .roadmap-card { flex-direction: column; text-align: center; padding: 1.5rem; }
+            .roadmap-vote { flex-direction: row; gap: 0.5rem; min-width: auto; }
+        }
     </style>
 </head>
 <body>
@@ -87,6 +148,7 @@
             <a href="/docs.html">Docs</a>
             <a href="/about.html">À Propos</a>
             <a href="/showcase.html">Galerie</a>
+            <a href="/comparatif.html">Comparatif</a>
             <a href="/blog.html">Blog</a>
             <a href="/changelog.html" style="color: var(--primary)">Changelog</a>
         </div>
@@ -104,6 +166,20 @@
             <h1>Journal des Modifications</h1>
             <p>Suivez l'évolution de Factarlou et découvrez les dernières fonctionnalités ajoutées.</p>
         </div>
+
+        <!-- Interactive Roadmap -->
+        <section class="roadmap" id="roadmap" data-reveal>
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+                <div>
+                    <h2 style="font-size: 2rem;">🚀 Roadmap</h2>
+                    <p style="color: var(--text-secondary);">Votez pour les fonctionnalités à venir</p>
+                </div>
+                <span id="total-votes" style="font-size: 0.9rem; color: var(--text-secondary);">0 votes</span>
+            </div>
+            <div class="roadmap-cards" id="roadmap-cards">
+                <!-- Injected by JS -->
+            </div>
+        </section>
 
         <div class="version-block" data-reveal style="border-color: var(--accent); border-width: 2px;">
             <span class="version-tag" style="background: var(--accent); color: #000;">v3.1.0 (LATEST)</span>
@@ -238,12 +314,97 @@
         <div class="footer-links">
             <a href="/index.html">Accueil</a>
             <a href="/docs.html">Documentation</a>
+            <a href="/comparatif.html">Comparatif</a>
             <a href="/changelog.html">Changelog</a>
             <a href="/privacy.html">Confidentialité</a>
         </div>
         <p class="copyright">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
     </footer>
 
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const ROADMAP_ITEMS = [
+            { id: 'devis-en-ligne', title: 'Générateur de Devis en Lien Partagé', desc: 'Partagez un devis par lien sécurisé — le client valide en ligne.', status: 'planned', icon: 'link' },
+            { id: 'api-publique', title: 'API Publique REST', desc: 'Intégrez Factarlou à vos outils existants via une API documentée.', status: 'planned', icon: 'code' },
+            { id: 'modele-ia', title: 'Génération de Description par IA', desc: 'L\'IA rédige automatiquement les descriptions de vos services et produits.', status: 'planned', icon: 'sparkles' },
+            { id: 'tableau-bord-mobile', title: 'App Mobile (Dashboard)', desc: 'Consultez vos chiffres clés depuis votre téléphone. Vue en temps réel.', status: 'planned', icon: 'smartphone' },
+            { id: 'multi-devise', title: 'Support Multi-Devise', desc: 'Facturez en EUR, USD, GBP avec conversion automatique vers TND.', status: 'planned', icon: 'globe' },
+            { id: 'relances-auto', title: 'Relances Automatiques par Email', desc: 'Envoyer des rappels de paiement automatiques aux clients en retard.', status: 'planned', icon: 'bell' },
+            { id: 'signature-electronique', title: 'Signature Électronique', desc: 'Signez vos devis et factures numériquement. Valeur légale.', status: 'planned', icon: 'pen-tool' },
+            { id: 'sync-google-drive', title: 'Sauvegarde Cloud (Google Drive / Dropbox)', desc: 'Sauvegardez automatiquement votre base de données sur votre cloud.', status: 'progress', icon: 'cloud' },
+            { id: 'tableau-de-bord', title: 'Tableau de Bord Amélioré', desc: 'Nouveaux graphiques, filtres avancés, export PDF des rapports.', status: 'progress', icon: 'bar-chart-3' },
+            { id: 'mode-sombre', title: 'Mode Sombre Amélioré', desc: 'Thèmes additionnels et personnalisation des couleurs de l\'interface.', status: 'done', icon: 'moon' },
+        ];
+
+        const container = document.getElementById('roadmap-cards');
+        const totalVotesEl = document.getElementById('total-votes');
+
+        // Load votes from localStorage
+        let votes = {};
+        try {
+            const raw = localStorage.getItem('factarlou_roadmap_votes');
+            if (raw) votes = JSON.parse(raw);
+        } catch (e) {}
+
+        function getTotalVotes() {
+            return Object.values(votes).reduce((sum, v) => sum + v, 0);
+        }
+
+        function renderRoadmap() {
+            const sorted = [...ROADMAP_ITEMS].sort((a, b) => {
+                const order = { done: 0, progress: 1, planned: 2 };
+                if (order[a.status] !== order[b.status]) return order[a.status] - order[b.status];
+                return (votes[b.id] || 0) - (votes[a.id] || 0);
+            });
+
+            container.innerHTML = sorted.map(item => {
+                const count = votes[item.id] || 0;
+                const statusLabels = { done: '✅ Livré', progress: '🔨 En cours', planned: '📋 Planifié' };
+                const statusClass = { done: 'status-done', progress: 'status-progress', planned: 'status-planned' };
+                const hasVoted = localStorage.getItem(`factarlou_voted_${item.id}`) === 'true';
+                return `
+                    <div class="roadmap-card" data-reveal>
+                        <span class="roadmap-status ${statusClass[item.status]}">${statusLabels[item.status]}</span>
+                        <div class="roadmap-info">
+                            <h4>${item.title}</h4>
+                            <p>${item.desc}</p>
+                        </div>
+                        ${item.status !== 'done' ? `
+                        <div class="roadmap-vote">
+                            <button class="vote-btn ${hasVoted ? 'voted' : ''}" data-id="${item.id}">
+                                <i data-lucide="${hasVoted ? 'check' : 'thumbs-up'}" style="width:14px;height:14px;"></i>
+                                ${hasVoted ? 'Voté' : 'Voter'}
+                            </button>
+                            <span class="vote-count" data-count="${item.id}">${count}</span>
+                            <span class="vote-label">votes</span>
+                        </div>
+                        ` : ''}
+                    </div>
+                `;
+            }).join('');
+
+            totalVotesEl.textContent = `${getTotalVotes()} votes`;
+
+            // Attach vote handlers
+            container.querySelectorAll('.vote-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const id = btn.getAttribute('data-id');
+                    if (localStorage.getItem(`factarlou_voted_${id}`) === 'true') return;
+                    votes[id] = (votes[id] || 0) + 1;
+                    localStorage.setItem('factarlou_roadmap_votes', JSON.stringify(votes));
+                    localStorage.setItem(`factarlou_voted_${id}`, 'true');
+                    renderRoadmap();
+                    // Re-create Lucide icons
+                    if (window.lucide) lucide.createIcons();
+                });
+            });
+
+            if (window.lucide) lucide.createIcons();
+        }
+
+        renderRoadmap();
+    });
+    </script>
     <script type="module" src="./main.js"></script>
 </body>
 </html>
