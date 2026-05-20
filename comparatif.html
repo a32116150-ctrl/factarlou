@@ -290,29 +290,80 @@
         </div>
     </main>
 
-    <footer>
-        <div class="footer-links" style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
-            <div style="text-align: left; min-width: 150px;">
-                <strong style="color: var(--primary);">Pages</strong><br>
-                <a href="/index.html">Accueil</a><br>
-                <a href="/docs.html">Documentation</a><br>
-                <a href="/comparatif.html">Comparatif</a><br>
-                <a href="/changelog.html">Changelog</a><br>
-                <a href="/privacy.html">Confidentialité</a>
+    <footer style="padding: 80px 5% 0; border-top: 1px solid var(--glass-border); background: linear-gradient(180deg, transparent 0%, rgba(0, 151, 167, 0.03) 100%);">
+        <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 3rem; text-align: left;">
+            <div>
+                <a href="/index.html" style="display: flex; align-items: center; gap: 0.75rem; text-decoration: none; margin-bottom: 1rem;">
+                    <img src="/logo-icon.png" alt="Factarlou Logo" style="height: 38px; border-radius: 8px;">
+                    <span style="font-size: 1.4rem; font-weight: 800; color: white;">Factarlou</span>
+                </a>
+                <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.7; margin-bottom: 1.5rem;">
+                    Le premier logiciel de facturation <strong style="color: var(--primary);">local-first</strong> conçu pour les entrepreneurs tunisiens.
+                    Gratuit, privé, puissant.
+                </p>
+                <div style="display: flex; align-items: center; gap: 0.75rem; font-size: 0.85rem; color: var(--text-secondary);">
+                    <span style="display: flex; align-items: center; gap: 0.35rem;"><i data-lucide="download" style="width: 14px; height: 14px; color: var(--primary);"></i> <span id="footer-download-count">...</span> téléchargements</span>
+                </div>
             </div>
-            <div style="text-align: left; min-width: 150px;">
-                <strong style="color: var(--primary);">Ressources</strong><br>
-                <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation</a><br>
-                <a href="/facture-electronique-tunisie.html">Facture Électronique</a><br>
-                <a href="/devis-tunisie.html">Devis Tunisie</a><br>
-                <a href="/declaration-tva-tunisie.html">Déclaration TVA</a><br>
-                <a href="/logiciel-caisse-tunisie.html">Logiciel Caisse</a><br>
-                <a href="/calculateur-tva-tunisie.html">Calculateur TVA</a><br>
-                <a href="/logiciel-gestion-commerciale-tunisie.html">Gestion Commerciale</a><br>
-                <a href="/facture-gratuite-tunisie.html">Facture Gratuite</a>
+
+            <div>
+                <strong style="color: white; font-size: 1rem; display: block; margin-bottom: 1.25rem;">Produit</strong>
+                <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+                    <a href="/index.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition);">Accueil</a>
+                    <a href="/docs.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition);">Documentation</a>
+                    <a href="/comparatif.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition);">Comparatif</a>
+                    <a href="/changelog.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition);">Changelog</a>
+                    <a href="/privacy.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition);">Confidentialité</a>
+                </div>
+            </div>
+
+            <div>
+                <strong style="color: white; font-size: 1rem; display: block; margin-bottom: 1.25rem;">Ressources</strong>
+                <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+                    <a href="/logiciel-facturation-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition);">Logiciel Facturation</a>
+                    <a href="/facture-electronique-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition);">Facture Électronique</a>
+                    <a href="/devis-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition);">Devis Tunisie</a>
+                    <a href="/declaration-tva-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition);">Déclaration TVA</a>
+                    <a href="/logiciel-caisse-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition);">Logiciel Caisse</a>
+                    <a href="/calculateur-tva-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition);">Calculateur TVA</a>
+                    <a href="/logiciel-gestion-commerciale-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition);">Gestion Commerciale</a>
+                    <a href="/facture-gratuite-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition);">Facture Gratuite</a>
+                </div>
+            </div>
+
+            <div>
+                <strong style="color: white; font-size: 1rem; display: block; margin-bottom: 1.25rem;">Contact</strong>
+                <div style="display: flex; flex-direction: column; gap: 0.65rem;">
+                    <a href="mailto:a32116150@gmail.com" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition); display: flex; align-items: center; gap: 0.5rem;">
+                        <i data-lucide="mail" style="width: 14px; height: 14px; color: var(--primary);"></i> Email
+                    </a>
+                    <a href="https://github.com/a32116150-ctrl/tuninvoice" target="_blank" rel="noopener" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition); display: flex; align-items: center; gap: 0.5rem;">
+                        <i data-lucide="github" style="width: 14px; height: 14px; color: var(--primary);"></i> GitHub
+                    </a>
+                    <a href="/blog.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition); display: flex; align-items: center; gap: 0.5rem;">
+                        <i data-lucide="newspaper" style="width: 14px; height: 14px; color: var(--primary);"></i> Blog
+                    </a>
+                    <a href="/showcase.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition); display: flex; align-items: center; gap: 0.5rem;">
+                        <i data-lucide="image" style="width: 14px; height: 14px; color: var(--primary);"></i> Galerie
+                    </a>
+                </div>
+                <div style="margin-top: 1.5rem; padding: 0.75rem 1rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; font-size: 0.8rem; color: var(--text-secondary);">
+                    <i data-lucide="shield-check" style="width: 12px; height: 12px; color: var(--accent); vertical-align: middle; margin-right: 0.35rem;"></i>
+                    Données 100% locales — aucun cloud
+                </div>
             </div>
         </div>
-        <p class="copyright">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+
+        <div style="max-width: 1200px; margin: 3rem auto 0; padding: 1.5rem 0; border-top: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <p class="copyright" style="font-size: 0.85rem;">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+            <div style="display: flex; gap: 0.5rem;">
+                <a href="https://github.com/a32116150-ctrl/tuninvoice" target="_blank" rel="noopener" style="color: var(--text-secondary); font-size: 0.85rem; text-decoration: none; transition: var(--transition);">GitHub</a>
+                <span style="color: var(--glass-border);">·</span>
+                <a href="mailto:a32116150@gmail.com" style="color: var(--text-secondary); font-size: 0.85rem; text-decoration: none; transition: var(--transition);">Contact</a>
+                <span style="color: var(--glass-border);">·</span>
+                <span style="color: var(--text-secondary); font-size: 0.85rem;">Version <span id="footer-version">v3.1.0</span></span>
+            </div>
+        </div>
     </footer>
 
     <script type="module" src="./main.js"></script>
