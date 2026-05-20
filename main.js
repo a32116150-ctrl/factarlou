@@ -316,6 +316,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (macVersionEl) macVersionEl.innerText = `Version ${version}`;
         if (winVersionEl) winVersionEl.innerText = `Version ${version}`;
 
+        // Footer stats
+        const footerCount = document.getElementById('footer-download-count');
+        if (footerCount) footerCount.innerText = total.toLocaleString('fr-TN');
+        const footerVersion = document.getElementById('footer-version');
+        if (footerVersion) footerVersion.innerText = version;
+
         if (animate) {
             if (totalEl) animateValue(totalEl, 0, total, 1500);
             if (macEl) animateValue(macEl, 0, mac, 1800);
