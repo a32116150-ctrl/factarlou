@@ -22,25 +22,77 @@ const genAI = new GoogleGenerativeAI(GEMINI_KEY);
 const geminiModel = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 const groq = GROQ_KEY ? new Groq({ apiKey: GROQ_KEY }) : null;
 
+const TRENDS_URL = "https://gtrends.iamrohit.in/Tunisia";
+const USER_AGENT = "Mozilla/5.0 (compatible; FactarlouBot/1.0)";
+
+async function fetchTrendingTopics() {
+  try {
+    console.log(`🌍 Fetching Google Trends Tunisia...`);
+    const response = await fetch(TRENDS_URL, {
+      headers: { "User-Agent": USER_AGENT },
+      signal: AbortSignal.timeout(10000)
+    });
+    const html = await response.text();
+
+    // Extract trend keywords from the page
+    // Format: <div class="panel panel-default trending-card">
+    //            <h3 class="panel-title">
+    //              <span class="trending-rank">#1</span>
+    //              KEYWORD
+    //              <span class="search-count-badge">200+ searches</span>
+    const panelTitleRegex = /<h3[^>]*class="panel-title"[^>]*>[\s\S]*?<span[^>]*class="trending-rank"[^>]*>#\d+<\/span>([\s\S]*?)<span[^>]*class="search-count-badge"/gi;
+    const keywords = [];
+    let match;
+    while ((match = panelTitleRegex.exec(html)) !== null) {
+      const keyword = match[1].trim();
+      if (keyword && keywords.length < 10) {
+        keywords.push(keyword);
+      }
+    }
+
+    if (keywords.length > 0) {
+      console.log(`📈 Trending in Tunisia today:\n  → ${keywords.join("\n  → ")}`);
+      return keywords;
+    }
+
+    console.warn("⚠️ Could not parse trends, using AI fallback");
+    return null;
+  } catch (error) {
+    console.warn(`⚠️ Trends fetch failed: ${error.message}`);
+    return null;
+  }
+}
+
 async function generatePost(retryCount = 0, useFallback = false) {
   const date = DateTime.now().setLocale('fr').toFormat('dd MMMM yyyy');
   const slugDate = DateTime.now().toFormat('yyyy-MM-dd');
   
-  // Trending Topics specifically for the Tunisian Market
-  const topics = [
-    "Fiscalité Tunisienne (Déclaration IRPP, Portail TEJ, TVA 2026)",
-    "Entrepreneuriat et Innovation (Startups, Levée de fonds en Tunisie)",
-    "Technologie et SaaS (Architecture Offline-first, Sécurité des données)",
-    "Fintech et Paiements (Réglementations BCT, Solutions de paiement)",
-    "Digitalisation des PME (Gestion de stock, Automatisation des factures)",
-    "Intelligence Artificielle pour les Entreprises (Optimisation, Prédictions)",
-    "Loi de Finances Tunisie : Ce que les entrepreneurs doivent savoir",
-    "Transition Digitale : Pourquoi le Local-First est l'avenir de la Tunisie"
-  ];
-  const selectedTopic = topics[Math.floor(Math.random() * topics.length)];
+  // Try to fetch live trending topics from Tunisia
+  const trends = await fetchTrendingTopics();
+  
+  let selectedTopic;
+  if (trends && trends.length > 0) {
+    selectedTopic = `Sujet trending en Tunisie aujourd'hui : "${trends[0]}". Rédige un article qui lie ce sujet tendance à la vie des entrepreneurs/freelances/PME tunisiens, à la fiscalité, à la facturation ou à la gestion d'entreprise.`;
+  } else {
+    // Fallback: pick from hardcoded topics
+    const fallbackTopics = [
+      "Fiscalité Tunisienne (Déclaration IRPP, Portail TEJ, TVA 2026)",
+      "Entrepreneuriat et Innovation (Startups, Levée de fonds en Tunisie)",
+      "Technologie et SaaS (Architecture Offline-first, Sécurité des données)",
+      "Fintech et Paiements (Réglementations BCT, Solutions de paiement)",
+      "Digitalisation des PME (Gestion de stock, Automatisation des factures)",
+      "Intelligence Artificielle pour les Entreprises (Optimisation, Prédictions)",
+      "Loi de Finances Tunisie : Ce que les entrepreneurs doivent savoir",
+      "Transition Digitale : Pourquoi le Local-First est l'avenir de la Tunisie"
+    ];
+    selectedTopic = fallbackTopics[Math.floor(Math.random() * fallbackTopics.length)];
+    console.log(`📋 Fallback topic: ${selectedTopic}`);
+  }
 
-  const prompt = `Rédigez un article de blog EXPERT, PROFOND et PASSIONNANT pour Factarlou.
+  const todayDate = DateTime.now().setLocale('fr').toFormat('dd MMMM yyyy');
+  const prompt = `Rédigez un article de blog EXPERT, PROFOND et PASSIONNANT pour Factarlou (Date: ${todayDate}).
   Sujet : ${selectedTopic}
+  ${trends ? `\n  Tendances Google Tunisie du jour (pour inspiration contextuelle) : ${trends.slice(0, 5).join(", ")}` : ""}
   
   L'article doit être extrêmement détaillé (>1200 mots), avec des conseils pratiques, des analyses de marché et une vision technologique forte. 
   Utilisez un ton autoritaire, innovant et premium.
