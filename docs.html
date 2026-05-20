@@ -98,71 +98,130 @@
     <main class="docs-container" data-reveal>
         <div class="docs-content">
             <h1>📚 Factarlou — Documentation Complète</h1>
-            <p>Bienvenue dans la documentation officielle de <strong>Factarlou</strong>, la première application de bureau intelligente pour la facturation et la gestion d'entreprise conçue pour le marché tunisien.</p>
+            <p>Bienvenue dans la documentation officielle de <strong>Factarlou v3.1.0</strong>, l'ERP Local-First intelligent pour la facturation, le Point de Vente et la gestion d'entreprise — conçu exclusivement pour le marché tunisien.</p>
 
             <hr>
 
             <h2>1. Aperçu</h2>
-            <p><strong>Factarlou</strong> est une application de bureau haute performance, "offline-first", construite avec <strong>Electron.js</strong>. Elle est conçue pour gérer l'intégralité du cycle financier des freelances, PME et startups tunisiennes — de la génération de devis au suivi des dépenses et à la conformité fiscale — tout en garantissant une confidentialité des données à 100%.</p>
+            <p><strong>Factarlou</strong> est une application de bureau haute performance, "offline-first", construite avec <strong>Electron.js</strong>. Elle gère l'intégralité du cycle financier des commerces de détail, freelances, PME et startups tunisiennes — de la caisse enregistreuse (POS) à la génération de factures, en passant par la paie, la conformité fiscale et l'export XML TEJ.</p>
 
             <hr>
 
             <h2>2. Fonctionnalités Clés</h2>
 
-            <h3>🏢 Facturation de Base (Invoicing)</h3>
+            <h3>🛒 Point de Vente (POS) — Caisse Enregistreuse</h3>
             <ul>
-                <li><strong>Types de Documents</strong> : Créez des Factures professionnelles, des Devis et des Bons de Commande.</li>
-                <li><strong>Devis en Facture</strong> : Conversion en un clic d'un Devis en Facture avec mise à jour automatique du statut.</li>
-                <li><strong>Logique Fiscale Tunisienne</strong> :
-                    <ul>
-                        <li>Calcul automatique du <strong>Timbre Fiscal</strong> (1.000 TND).</li>
-                        <li>Support pour plusieurs taux de <strong>TVA</strong> (0%, 7%, 13%, 19%).</li>
-                        <li>Gestion du <strong>FODEC</strong> et autres taxes spécifiques.</li>
-                    </ul>
-                </li>
-                <li><strong>Formatage des Nombres</strong> : Support des normes comptables tunisiennes (jusqu'à 3 décimales) avec ajustements automatiques des arrondis.</li>
+                <li><strong>Grille Produits Tactile</strong> : Interface optimisée pour le toucher (targets 44px+). Navigation par catégories, favoris et top-10.</li>
+                <li><strong>Scan Code-Barres</strong> : Ajout rapide de produits par scan.</li>
+                <li><strong>Paiements Multiples & Split Tender</strong> : Espèces, carte, mobile money, chèque. Fractionnez un paiement sur plusieurs moyens.</li>
+                <li><strong>Gestion de Sessions</strong> : Ouverture/fermeture de caisse, rapports X/Z, mouvements de fonds.</li>
+                <li><strong>Multi-Caissier</strong> : Utilisateurs séparés avec suivi individuel.</li>
+                <li><strong>Avoirs & Remboursements</strong> : Retours et remboursements depuis l'interface caisse.</li>
+                <li><strong>Paniers Suspendus</strong> : Mettez en attente, reprenez, gérez plusieurs brouillons.</li>
+                <li><strong>Impression Thermique</strong> : Tickets sur imprimante 80mm.</li>
+                <li><strong>Raccourcis Clavier</strong> : F1-F8 pour toutes les actions POS.</li>
             </ul>
 
-            <h3>🧠 Scanner de Dépenses Intelligent (OCR)</h3>
+            <h3>📄 Moteur de Documents (8 Types)</h3>
             <ul>
-                <li><strong>Saisie Automatisée</strong> : Utilise <strong>Tesseract.js</strong> pour scanner les reçus papier et les PDF.</li>
+                <li><strong>Types supportés</strong> : Facture, Avoir, Devis, Bon de Commande, Bon de Livraison, Bon d'Entrée, Bon de Sortie, Bon d'Échange.</li>
+                <li><strong>Pipeline Commercial</strong> : Suivi Devis → Facture → BL avec référencement automatique des documents liés.</li>
+                <li><strong>Conversion BA → Dépense</strong> : Transformez un Bon d'Achat en dépense en un clic.</li>
+                <li><strong>Duplication & Conversion</strong> : Dupliquez n'importe quel document ou convertissez-le vers un autre type.</li>
+                <li><strong>Templates</strong> : Sauvegardez/chargez des configurations de formulaire réutilisables.</li>
+                <li><strong>Glisser-Déposer</strong> : Réorganisez les lignes d'articles par glisser-déposer.</li>
+                <li><strong>Notes Internes</strong> : Ajoutez des notes invisibles sur le PDF mais visibles dans l'app.</li>
+                <li><strong>Champs Personnalisés</strong> : Paires clé/valeur pour informations spécifiques.</li>
+            </ul>
+
+            <h3>🧠 Scanner OCR Intelligent</h3>
+            <ul>
+                <li><strong>Saisie Automatisée</strong> : Utilise <strong>Tesseract.js</strong> pour scanner les reçus papier et PDF.</li>
                 <li><strong>Extraction de Données</strong> : Détecte automatiquement le nom du fournisseur, la date et le montant total (TTC).</li>
-                <li><strong>Texte en Nombre</strong> : Conversion intelligente des montants écrits en mots (ex: "deux cent dinars" → 200.000).</li>
-                <li><strong>Gestion des Pièces Jointes</strong> : Chaque dépense est liée à son scan numérique pour un audit facile.</li>
+                <li><strong>Texte en Nombre</strong> : Conversion intelligente des montants écrits en mots ("deux cent dinars" → 200.000).</li>
+                <li><strong>Bilingue FR + AR</strong> : Support du français et de l'arabe dans la reconnaissance.</li>
+                <li><strong>Cache Persistant</strong> : Les analyses suivantes sont quasi-instantanées.</li>
             </ul>
 
             <h3>🇹🇳 Conformité Fiscale & Exports XML (Portail TEJ)</h3>
             <ul>
-                <li><strong>Certificats Automatiques</strong> : Générez des certificats officiels de "Retenue à la Source" basés sur la loi tunisienne actuelle.</li>
-                <li><strong>Préréglages de Taux</strong> : Support intégré pour les taux de 0,5%, 1%, 1,5%, 5%, 10% et 15%.</li>
-                <li><strong>Export XML TEJ</strong> : Factarlou génère des fichiers XML structurés conformes aux spécifications du portail TEJ. 
+                <li><strong>Multi-Taux TVA</strong> : 0%, 7%, 13%, 19% sur un même document (précision 3 décimales).</li>
+                <li><strong>Timbre Fiscal</strong> : Calcul automatique à 1.000 TND.</li>
+                <li><strong>Retenue à la Source</strong> : Certificats de 0,5% à 15%, conformes à la législation.</li>
+                <li><strong>FODEC</strong> : Gestion de la taxe FODEC incluse.</li>
+                <li><strong>Export XML TEJ</strong> :
                     <ul>
-                        <li><strong>Retenues à la Source (RS)</strong> : Fichiers prêts pour la déclaration mensuelle.</li>
+                        <li><strong>Retenues à la Source (RS)</strong> : Fichiers prêts pour déclaration mensuelle.</li>
                         <li><strong>Facturation Électronique (TEIF)</strong> : Structure XML compatible avec l'administration fiscale.</li>
                     </ul>
                 </li>
-                <li><strong>Exportation par Lot</strong> : Visualisez et exportez les résumés de toutes les retenues fiscales pour une période spécifique.</li>
+                <li><strong>Validateur MF</strong> : Validation du Matricule Fiscal en direct.</li>
+                <li><strong>RNE Search</strong> : Auto-complétion depuis le Registre National des Entreprises.</li>
             </ul>
 
-            <h3>🤝 Gestion Clients & Contrats</h3>
+            <h3>📊 Assistant TVA Déclaratif</h3>
             <ul>
-                <li><strong>CRM Lite</strong> : Gère une base de données complète de clients avec historique et coordonnées.</li>
-                <li><strong>Aperçu Intelligent</strong> : Vue détaillée instantanée des profils clients.</li>
-                <li><strong>Générateur de Contrats</strong> : Générez divers contrats de travail et de service tunisiens (CDI, CDD, Freelance, etc.) à l'aide de modèles professionnels.</li>
+                <li><strong>Déclaration Mensuelle</strong> : TVA collectée et déductible ventilée par taux.</li>
+                <li><strong>Rapport TVA Annuel</strong> : Mois par mois avec cumuls annuels.</li>
+                <li><strong>Simulateur de Scénarios</strong> : Comparatif 3 colonnes pour projections fiscales.</li>
+                <li><strong>Calculateur IRPP</strong> : Simulation d'impôt sur le revenu.</li>
+                <li><strong>Calculateur de Pénalités</strong> : Estimation des pénalités de retard.</li>
+            </ul>
+
+            <h3>👔 Paie & Ressources Humaines</h3>
+            <ul>
+                <li><strong>Base Employés</strong> : Gestion des employés avec contrats (CDI, CDD, CIVP).</li>
+                <li><strong>Fiches de Paie</strong> : Génération automatique avec cotisations CNSS (@ 9.18%).</li>
+                <li><strong>Générateurs de Contrats</strong> : Modèles professionnels tunisiens (CDI, CDD, Freelance).</li>
+            </ul>
+
+            <h3>🤝 Gestion Clients (CRM)</h3>
+            <ul>
+                <li><strong>Base Complète</strong> : Historique, coordonnées, paiements.</li>
+                <li><strong>Carte Interactive</strong> : Visualisation clients sur Leaflet/OpenStreetMap.</li>
+                <li><strong>Générateur de Contrats</strong> : Contrats de travail et de service tunisiens.</li>
+                <li><strong>Recherche Globale</strong> : Recherche clients et services depuis toutes les pages.</li>
             </ul>
 
             <h3>🎨 Personnalisation & Branding</h3>
             <ul>
-                <li><strong>Identité Visuelle</strong> : Importez votre logo, votre cachet numérique et votre signature.</li>
-                <li><strong>Visuels Automatiques</strong> : Vos visuels sont automatiquement intégrés à vos factures, devis et certificats de retenue.</li>
-                <li><strong>Barre d'Accent</strong> : Personnalisez les éléments graphiques pour qu'ils correspondent à votre charte graphique.</li>
+                <li><strong>Identité Visuelle</strong> : Logo, cachet numérique, signature.</li>
+                <li><strong>Design Premium</strong> : Thème sombre avec ombres, dégradés, effets hover et système de design complet.</li>
+                <li><strong>Icônes Lucide SVG</strong> : Plus de 50 icônes vectorielles remplaçant les anciens émojis.</li>
+                <li><strong>Paramètres Repensés</strong> : Sidebar verticale à 5 onglets, mise en page par cartes.</li>
             </ul>
 
-            <h3>📊 Analyses en Temps Réel</h3>
+            <h3>📊 Analyses & Tableau de Bord</h3>
             <ul>
-                <li><strong>Tableau de Bord</strong> : Graphiques interactifs montrant les revenus vs les dépenses.</li>
-                <li><strong>Suivi de Statut</strong> : Indicateurs visuels pour les documents non payés, partiellement payés et payés.</li>
-                <li><strong>Métriques Clés</strong> : Identifiez vos clients les plus précieux et vos catégories de dépenses les plus élevées.</li>
+                <li><strong>Graphiques Revenus/Dépenses</strong> : Canvas natif, aucune dépendance.</li>
+                <li><strong>Top 5 Clients</strong> : Barres horizontales des meilleurs clients.</li>
+                <li><strong>Suivi des Impayés</strong> : Liste des factures en retard avec montants.</li>
+                <li><strong>Auto-Redimensionnement</strong> : Via ResizeObserver.</li>
+            </ul>
+
+            <h3>📌 Notes & Productivité</h3>
+            <ul>
+                <li><strong>Notes Autocollantes</strong> : Code couleur, épinglage, widget tableau de bord.</li>
+                <li><strong>Templates Email</strong> : Sauvegarde/chargement de sujets + corps d'email.</li>
+                <li><strong>Envoi Groupé</strong> : Email par lot avec barre de progression.</li>
+                <li><strong>Saisie Semi-Automatique</strong> : Auto-complétion et suggestions.</li>
+            </ul>
+
+            <h3>📁 Import / Export</h3>
+            <ul>
+                <li><strong>CSV</strong> : Import/export clients et services.</li>
+                <li><strong>XLSX</strong> : Export documents, clients, services.</li>
+                <li><strong>Sauvegarde SQLite</strong> : Export complet de la base de données en un clic.</li>
+                <li><strong>Opérations par Lot</strong> : Suppression multi-sélection, marquage payé groupé, export PDF batch.</li>
+            </ul>
+
+            <h3>🔄 Opérations Avancées</h3>
+            <ul>
+                <li><strong>Tri par Colonnes</strong> : Cliquez sur un en-tête pour trier.</li>
+                <li><strong>Pagination</strong> : 50 documents par page.</li>
+                <li><strong>Factures Récurrentes</strong> : Génération automatique (cron 60 min).</li>
+                <li><strong>Sauvegarde Auto des Brouillons</strong> : Debounce 2s vers localStorage.</li>
+                <li><strong>Journal d'Audit</strong> : Historique des modifications.</li>
             </ul>
 
             <hr>
@@ -171,40 +230,57 @@
 
             <h3>🛠️ Stack Technique</h3>
             <ul>
-                <li><strong>Runtime</strong> : Electron.js (Support multiplateforme Windows, macOS, Linux).</li>
-                <li><strong>Frontend</strong> : Vanilla JS, HTML5, CSS3 (Pas de frameworks lourds pour une performance maximale).</li>
-                <li><strong>Base de données</strong> : SQLite (via <code>better-sqlite3</code>) pour un stockage de données local et robuste.</li>
-                <li><strong>Moteur OCR</strong> : Tesseract.js (Reconnaissance Optique de Caractères).</li>
-                <li><strong>Moteur PDF</strong> : Processus d'arrière-plan Electron isolé pour un rendu A4 parfait au pixel près.</li>
+                <li><strong>Runtime</strong> : Electron.js (Windows, macOS, Linux).</li>
+                <li><strong>Frontend</strong> : Vanilla JS, HTML5, CSS3 (Pas de frameworks lourds).</li>
+                <li><strong>Base de données</strong> : SQLite via <code>better-sqlite3</code>.</li>
+                <li><strong>Moteur OCR</strong> : Tesseract.js.</li>
+                <li><strong>Moteur PDF</strong> : Processus Electron isolé pour rendu A4 pixel-perfect.</li>
+                <li><strong>Moteur Mathématique</strong> : <code>math-utils.js</code> — calculs TVA/taxes centralisés.</li>
+                <li><strong>Validation</strong> : <code>validate.js</code> — couche de validation IPC avec messages d'erreur en français.</li>
             </ul>
 
             <h3>🔒 Confidentialité & Sécurité</h3>
             <ul>
-                <li><strong>Local-First</strong> : Toutes les données financières, listes de clients et mots de passe restent sur votre machine physique.</li>
-                <li><strong>Chiffrement</strong> : Les mots de passe sont hachés avec <strong>bcrypt</strong> avant stockage.</li>
-                <li><strong>Pas de Télémétrie</strong> : Pas de suivi, pas d'analyses, pas de téléchargements cloud.</li>
+                <li><strong>Local-First</strong> : Toutes les données restent sur votre machine.</li>
+                <li><strong>Chiffrement</strong> : Mots de passe hachés avec <strong>bcrypt</strong>.</li>
+                <li><strong>Pas de Télémétrie</strong> : Aucun suivi, analytics ou upload cloud.</li>
+                <li><strong>Migrations Sécurisées</strong> : Base de données migrée sans DROP TABLE (modèle RENAME).</li>
+                <li><strong>ON DELETE CASCADE</strong> : en JavaScript pour clients et documents.</li>
             </ul>
 
             <h3>💼 Positionnement ERP Tunisie</h3>
-            <p>Contrairement aux solutions ERP traditionnelles (comme Odoo ou Sage) qui nécessitent des serveurs distants et des abonnements coûteux, Factarlou se positionne comme un <strong>ERP Local-First</strong>. Il offre la puissance d'un système de gestion complet tout en restant léger, rapide et totalement souverain.</p>
+            <p>Contrairement aux ERP traditionnels (Odoo, Sage) qui nécessitent des serveurs distants et des abonnements, Factarlou est un <strong>ERP Local-First</strong> : puissant, léger, rapide et totalement souverain.</p>
 
             <hr>
 
             <h2>4. Fonctionnement Interne</h2>
 
-            <h3>Le Moteur de Génération PDF</h3>
-            <p>Contrairement aux applications web traditionnelles, Factarlou utilise un processus d'arrière-plan spécialisé pour générer les PDF. Cela garantit que l'interface utilisateur (barres latérales, boutons) n'apparaît jamais sur le document final, ce qui donne un fichier A4 parfaitement professionnel.</p>
+            <h3>Moteur de Génération PDF</h3>
+            <p>Un processus d'arrière-plan Electron isolé génère les PDF. L'interface utilisateur (barres latérales, boutons) n'apparaît jamais sur le document final.</p>
 
             <h3>Persistance des Données</h3>
-            <p>Les données sont stockées dans le dossier d'application système de l'utilisateur (<code>userData</code>).</p>
+            <p>Données stockées dans le dossier <code>userData</code> de l'OS :</p>
             <ul>
                 <li><strong>macOS</strong> : <code>~/Library/Application Support/factarlou/</code></li>
                 <li><strong>Windows</strong> : <code>%AppData%\factarlou\</code></li>
             </ul>
-            <p>Cela garantit que même lorsque l'application est mise à jour, vos données restent intactes et en sécurité.</p>
+            <p>Les données restent intactes après mise à jour. Sauvegarde automatique incluant les pièces jointes.</p>
 
-            <h3>Système de Mise à Update Automatique</h3>
-            <p>L'application est intégrée à notre système de distribution sécurisé. Chaque fois qu'une nouvelle version est publiée, l'application la détecte, la télécharge en arrière-plan et invite l'utilisateur à redémarrer pour appliquer les dernières mises à jour fiscales ou nouvelles fonctionnalités.</p>
+            <h3>Système de Mise à Jour Automatique</h3>
+            <ul>
+                <li><strong>Détection</strong> : Vérification GitHub Releases au démarrage.</li>
+                <li><strong>Téléchargement</strong> : Barre de progression (Dock macOS / Taskbar Windows).</li>
+                <li><strong>Installation</strong> : Windows : auto-install avec redémarrage. macOS : copie DMG vers Downloads + instructions.</li>
+                <li><strong>Fiabilité v3.1.0</strong> : Correction des faux positifs, messages d'erreur visibles, garde isDestroyed().</li>
+            </ul>
+
+            <h3>Raccourcis Clavier</h3>
+            <ul>
+                <li><strong>Cmd/Ctrl + N</strong> : Nouveau document.</li>
+                <li><strong>Cmd/Ctrl + Shift + N</strong> : Nouveau client.</li>
+                <li><strong>Cmd/Ctrl + F</strong> : Recherche globale.</li>
+                <li><strong>F1-F8</strong> : Actions POS.</li>
+            </ul>
 
             <hr>
 
@@ -212,24 +288,26 @@
 
             <h3>Installation</h3>
             <ol>
-                <li>Téléchargez le dernier installateur pour votre OS (<code>.dmg</code> pour Mac, <code>.exe</code> for Windows).</li>
-                <li>Installez comme n'importe quelle autre application de bureau.</li>
-                <li><strong>Inscription</strong> : Créez votre premier utilisateur local (ces données ne quittent jamais votre ordinateur).</li>
-                <li><strong>Configuration</strong> : Allez dans "Mon Entreprise" pour télécharger votre logo, votre cachet et votre signature.</li>
+                <li>Téléchargez le dernier installateur (<code>.dmg</code> Mac / <code>.exe</code> Windows) depuis <a href="/index.html#download">factarlou.online</a>.</li>
+                <li>Installez comme une application de bureau standard.</li>
+                <li><strong>Inscription</strong> : Créez votre compte local (données 100% sur votre machine).</li>
+                <li><strong>Configuration</strong> : Allez dans "Mon Entreprise" → logo, cachet, signature.</li>
             </ol>
 
             <h3>Flux de Travail Quotidien</h3>
             <ol>
-                <li><strong>Créer Client</strong> → <strong>Générer Devis</strong> → <strong>Convertir en Facture</strong> lors de l'acceptation.</li>
-                <li><strong>Scanner Reçu</strong> → <strong>Confirmer les Données</strong> → <strong>Enregistrer comme Achat</strong>.</li>
-                <li><strong>Vérifier le Tableau de Bord</strong> périodiquement pour surveiller les factures impayées et la croissance mensuelle.</li>
+                <li><strong>Commerce (POS)</strong> : Ouvrez une session caisse → Scannez produits → Encaissez → Ticket thermique.</li>
+                <li><strong>Bureau (Documents)</strong> : Créer Client → Devis → Convertir en Facture → BL → Suivi paiement.</li>
+                <li><strong>Dépenses</strong> : Scanner Reçu → OCR extrait les données → Enregistrer comme Achat.</li>
+                <li><strong>Fiscal</strong> : Fin de mois → Assistant TVA → Export XML TEJ → Déclaration.</li>
+                <li><strong>Suivi</strong> : Tableau de bord → Vérifier impayés → Analyser tendances.</li>
             </ol>
 
             <hr>
 
             <div style="text-align: center; margin-top: 4rem;">
-                <p><strong>Factarlou</strong> — L'avenir de la gestion d'entreprise en Tunisie.<br>
-                <em>Conçu pour la vitesse. Conçu pour la confidentialité. Conçu pour vous.</em></p>
+                <p><strong>Factarlou v3.1.0</strong> — L'ERP Local-First qui grandit avec vous.<br>
+                <em>Point de Vente. Facturation. Paie. Fiscalité. 100% Privé.</em></p>
             </div>
         </div>
     </main>
