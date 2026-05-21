@@ -22,6 +22,8 @@ export default defineConfig({
         gc:         resolve(__dirname, 'logiciel-gestion-commerciale-tunisie.html'),
         fg:         resolve(__dirname, 'facture-gratuite-tunisie.html'),
         notfound:   resolve(__dirname, '404.html'),
+        irpp:       resolve(__dirname, 'simulateur-irpp-tunisie.html'),
+        cnss:       resolve(__dirname, 'calculateur-cnss-tunisie.html'),
       }
     }
   }
