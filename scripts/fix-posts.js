@@ -39,10 +39,14 @@ async function fixPosts() {
       const coverMatch = content.match(/<img src="(.*?)"/) || content.match(/url\((.*?)\)/);
       const cover = coverMatch ? coverMatch[1] : "https://loremflickr.com/1200/800/business";
 
+      const excerptMatch = content.match(/<meta name="description" content="(.*?)">/) || content.match(/<p>(.*?)<\/p>/);
+      const excerpt = excerptMatch ? excerptMatch[1] : `${title} — Découvrez l'article complet sur Factarlou.`;
+
       const frContentMatch = content.match(/<div class="post-content">([\s\S]*?)<\/div>/);
       const frContent = frContentMatch ? frContentMatch[1] : "Contenu...";
 
       // Build New HTML
+      const postUrl = `/posts/${file}`;
       let newHtml = template
         .replace(/{{TITLE_FR}}/g, title)
         .replace(/{{TITLE_AR}}/g, "تحسين تمويلك مع Factarlou")
@@ -52,6 +56,8 @@ async function fixPosts() {
         .replace(/{{COVER_IMAGE}}/g, cover)
         .replace(/{{CONTENT_FR}}/g, frContent)
         .replace(/{{CONTENT_AR}}/g, "قريباً باللغة العربية")
+        .replace(/{{POST_URL}}/g, postUrl)
+        .replace(/{{EXCERPT}}/g, excerpt)
         .replace(/{{VERSION}}/g, cleanVersion);
 
       await fs.writeFile(filePath, newHtml);

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr-TN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulateur IRPP Tunisie 2026 — Calcul Impôt Revenu | Factarlou</title>
+    <meta name="description" content="Simulez votre IRPP 2026 en ligne. Calculez votre impôt sur le revenu en Tunisie : barème progressif, déductions, charges. Gratuit, sans inscription.">
+    <meta property="og:title" content="Simulateur IRPP Tunisie 2026 — Calcul Impôt Revenu | Factarlou">
+    <meta property="og:description" content="Simulez votre IRPP 2026 en ligne. Calculez votre impôt sur le revenu en Tunisie : barème progressif, déductions, charges.">
+    <meta property="og:image" content="/social-preview.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factarlou.online/simulateur-irpp-tunisie.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="/social-preview.png">
+    <link rel="canonical" href="https://factarlou.online/simulateur-irpp-tunisie.html">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="/logo-icon.png">
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Simulateur IRPP Tunisie 2026",
+      "operatingSystem": "All",
+      "applicationCategory": "FinanceApplication",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TND" },
+      "description": "Simulez votre Impôt sur le Revenu des Personnes Physiques (IRPP) en Tunisie. Barème 2026."
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [{
+        "@type": "Question",
+        "name": "Comment calculer l'IRPP en Tunisie ?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "L'IRPP en Tunisie se calcule en appliquant un barème progressif au revenu net imposable. Le barème 2026 comporte plusieurs tranches : 0% jusqu'à 5 000 TND, 15% de 5 001 à 20 000 TND, 25% de 20 001 à 30 000 TND, 35% au-delà."
+        }
+      }]
+    }
+    </script>
+    <style>
+        .lp-container { max-width: 800px; margin: 140px auto 80px; padding: 0 5%; }
+        .lp-intro { text-align: center; margin-bottom: 4rem; }
+        .lp-intro h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem; }
+        .lp-intro p { color: var(--text-secondary); font-size: 1.1rem; line-height: 1.7; }
+        .lp-content { color: var(--text-secondary); line-height: 1.9; font-size: 1.05rem; }
+        .lp-content p { margin-bottom: 1.5rem; }
+        .lp-content a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .lp-content a:hover { text-decoration: underline; }
+        .lp-cta { text-align: center; margin: 4rem 0; }
+        .lp-cta h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+        .lp-cta p { color: var(--text-secondary); margin-bottom: 2rem; }
+        .lp-cta .btn-primary { font-size: 1.2rem; padding: 1.2rem 3rem; }
+        .lp-faq { margin: 4rem 0; }
+        .lp-faq h2 { text-align: center; margin-bottom: 3rem; }
+        .calc-card { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 2.5rem; max-width: 500px; margin: 2rem auto; }
+        .calc-card label { display: block; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.4rem; font-weight: 500; }
+        .calc-card input, .calc-card select { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 8px; padding: 0.8rem 1rem; color: white; width: 100%; font-size: 1rem; margin-bottom: 1rem; box-sizing: border-box; }
+        .calc-card input:focus, .calc-card select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
+        .calc-card select option { background: #1e293b; }
+        .calc-result { background: rgba(0,151,167,0.1); border: 1px solid var(--primary); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; }
+        .calc-result .line { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 1.05rem; }
+        .calc-result .line.total { font-weight: 700; color: var(--text-primary); border-top: 1px solid var(--glass-border); margin-top: 0.3rem; padding-top: 0.8rem; }
+        .calc-result .line .label { color: var(--text-secondary); }
+        .calc-result .line .value { color: var(--text-primary); font-weight: 600; }
+        .calc-result .line .value.tax { color: var(--primary); }
+        .calc-result .badge-result { background: rgba(140,198,63,0.15); color: var(--accent); border-radius: 8px; padding: 0.5rem 1rem; font-size: 0.85rem; display: inline-block; margin-bottom: 1rem; }
+        .info-box { background: rgba(0,229,255,0.05); border: 1px solid var(--glass-border); border-radius: 16px; padding: 2rem; margin: 2rem 0; text-align: center; }
+        .nav-dropdown { position: relative; display: inline-block; }
+        .nav-dropdown-toggle { cursor: pointer; text-decoration: none; color: var(--text-secondary); font-weight: 500; font-size: 0.95rem; transition: var(--transition); background: none; border: none; padding: 0; }
+        .nav-dropdown-toggle:hover { color: var(--primary); }
+        .nav-dropdown-menu { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.75rem; min-width: 220px; z-index: 100; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .nav-dropdown-menu a { display: block; padding: 0.6rem 1rem; color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; border-radius: 8px; transition: var(--transition); white-space: nowrap; }
+        .nav-dropdown-menu a:hover { background: var(--glass); color: var(--primary); }
+        .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+        @media (max-width: 768px) {
+            .nav-dropdown-menu { position: static; transform: none; background: transparent; border: none; padding: 0; box-shadow: none; }
+            .nav-dropdown-menu a { font-size: 1.1rem; text-align: center; padding: 0.5rem 1rem; }
+        }
+        .res-links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin: 2rem 0; }
+        .res-links a { color: var(--primary); text-decoration: none; font-weight: 600; padding: 0.5rem 1.5rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 50px; transition: var(--transition); }
+        .res-links a:hover { background: var(--primary-glow); border-color: var(--primary); }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+    <nav>
+        <a href="index.html" class="logo"><img src="/logo-icon.png" alt="Factarlou Logo"> Factarlou</a>
+        <div class="nav-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html">Docs</a>
+            <a href="/comparatif.html">Comparatif</a>
+            <div class="nav-dropdown">
+                <a href="#" class="nav-dropdown-toggle" style="color: var(--primary);">Ressources ▾</a>
+                <div class="nav-dropdown-menu">
+                    <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation</a>
+                    <a href="/facture-electronique-tunisie.html">Facture Électronique</a>
+                    <a href="/devis-tunisie.html">Devis Tunisie</a>
+                    <a href="/declaration-tva-tunisie.html">Déclaration TVA</a>
+                    <a href="/logiciel-caisse-tunisie.html">Logiciel Caisse</a>
+                    <a href="/calculateur-tva-tunisie.html">Calculateur TVA</a>
+                    <a href="/simulateur-irpp-tunisie.html" style="color: var(--primary);">Simulateur IRPP</a>
+                    <a href="/logiciel-gestion-commerciale-tunisie.html">Gestion Commerciale</a>
+                    <a href="/facture-gratuite-tunisie.html">Facture Gratuite</a>
+                </div>
+            </div>
+            <a href="/about.html">À Propos</a>
+            <a href="/showcase.html">Galerie</a>
+            <a href="/blog.html">Blog</a>
+        </div>
+        <div class="nav-right" style="display: flex; align-items: center; gap: 0.75rem;">
+            <a href="/index.html#download" class="btn-download-nav">Télécharger</a>
+            <button class="menu-toggle" aria-label="Menu"><i data-lucide="menu"></i></button>
+        </div>
+    </nav>
+
+    <main class="lp-container">
+        <div class="lp-intro" data-reveal>
+            <span class="badge">🇹🇳 IRPP Tunisie 2026</span>
+            <h1>Simulateur IRPP Tunisie</h1>
+            <p>Calculez votre Impôt sur le Revenu des Personnes Physiques selon le barème tunisien 2026. Résultat instantané, gratuit, sans inscription.</p>
+        </div>
+
+        <div class="calc-card" data-reveal>
+            <form id="irpp-calculator" onsubmit="return false;">
+                <label for="revenu-annuel">Revenu net annuel imposable (en TND)</label>
+                <input type="number" id="revenu-annuel" min="0" step="100" value="36000" placeholder="Ex: 36000">
+
+                <label for="situation">Situation familiale</label>
+                <select id="situation">
+                    <option value="celibataire">Célibataire</option>
+                    <option value="marie" selected>Marié(e) sans enfants</option>
+                    <option value="marie_1">Marié(e) avec 1 enfant</option>
+                    <option value="marie_2">Marié(e) avec 2 enfants</option>
+                    <option value="marie_3">Marié(e) avec 3 enfants</option>
+                    <option value="marie_4">Marié(e) avec 4 enfants ou plus</option>
+                </select>
+
+                <div class="calc-result" id="calc-result">
+                    <div class="badge-result">📊 Résultat IRPP 2026</div>
+                    <div class="line"><span class="label">Revenu net imposable</span><span class="value" id="res-revenu">36 000,000 TND</span></div>
+                    <div class="line"><span class="label">Déduction forfaitaire (10%)</span><span class="value" id="res-deduction">3 600,000 TND</span></div>
+                    <div class="line"><span class="label">Abattement familial</span><span class="value" id="res-abattement">0,000 TND</span></div>
+                    <div class="line"><span class="label">Revenu imposable après abattement</span><span class="value" id="res-base">32 400,000 TND</span></div>
+                    <div class="line total"><span class="label">IRPP dû</span><span class="value tax" id="res-irpp">5 060,000 TND</span></div>
+                    <div class="line" style="font-size:0.85rem; color: var(--text-secondary); border-top: 1px solid var(--glass-border); padding-top:0.8rem; margin-top:0.5rem;">
+                        <span class="label">Taux effectif</span><span class="value" id="res-taux-effectif">14,1 %</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="info-box" data-reveal>
+            <p style="color: var(--text-secondary); margin:0;"><strong style="color: var(--primary);">Barème IRPP 2026 (Loi de Finances)</strong><br>
+            • 0 TND — 5 000 TND : <strong>0 %</strong><br>
+            • 5 001 TND — 20 000 TND : <strong>15 %</strong><br>
+            • 20 001 TND — 30 000 TND : <strong>25 %</strong><br>
+            • 30 001 TND — 50 000 TND : <strong>35 %</strong><br>
+            • Au-delà de 50 000 TND : <strong>45 %</strong></p>
+        </div>
+
+        <div class="lp-content" data-reveal>
+            <p>L'<strong>Impôt sur le Revenu des Personnes Physiques (IRPP)</strong> est l'impôt direct applicable aux revenus des personnes physiques en Tunisie. Il est calculé selon un barème progressif qui comporte plusieurs tranches d'imposition, allant de 0 % à 45 % pour les plus hauts revenus.</p>
+
+            <p>Le calcul de l'IRPP commence par le <strong>revenu net imposable</strong> (après déduction des charges sociales et des frais professionnels). Une déduction forfaitaire de <strong>10 %</strong> est appliquée au titre des frais professionnels, plafonnée à un certain montant. Des abattements supplémentaires sont accordés selon la <strong>situation familiale</strong> : 0 TND pour un célibataire, 1 500 TND pour un marié sans enfants, 3 000 TND pour un marié avec 2 enfants, etc.</p>
+
+            <p>Le barème progressif tunisien 2026 commence à <strong>0 %</strong> pour la première tranche jusqu'à 5 000 TND, puis <strong>15 %</strong> de 5 001 à 20 000 TND, <strong>25 %</strong> de 20 001 à 30 000 TND, <strong>35 %</strong> de 30 001 à 50 000 TND, et enfin <strong>45 %</strong> au-delà de 50 000 TND. Chaque tranche s'applique uniquement à la portion du revenu qui y correspond.</p>
+
+            <p>Pour une gestion fiscale complète, <strong>Factarlou</strong> vous accompagne dans la création de vos factures, la gestion de votre TVA et la génération de vos déclarations. Téléchargez l'application et simplifiez votre comptabilité au quotidien.</p>
+        </div>
+
+        <div class="res-links" data-reveal>
+            <a href="/calculateur-tva-tunisie.html">Calculateur TVA Tunisie</a>
+            <a href="/declaration-tva-tunisie.html">Déclaration TVA Tunisie</a>
+            <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation</a>
+        </div>
+
+        <div class="lp-cta" data-reveal>
+            <h2>Gérez votre fiscalité sans effort</h2>
+            <p>Factarlou calcule automatiquement TVA, timbre, FODEC et retenue à la source. Factures conformes, export XML TEJ, zéro abonnement.</p>
+            <a href="/index.html#download" class="btn-primary">Télécharger Factarlou gratuitement</a>
+        </div>
+
+        <div class="lp-faq" data-reveal>
+            <h2>Questions sur l'IRPP en Tunisie</h2>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div class="faq-item" style="background: var(--card-bg); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
+                    <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Comment calculer l'IRPP en Tunisie ?</h3>
+                    <p style="color: var(--text-secondary);">L'IRPP se calcule en appliquant le barème progressif au revenu net imposable après déduction des frais professionnels (10%) et des abattements familiaux. Le barème 2026 comporte 5 tranches de 0% à 45%. Utilisez notre simulateur ci-dessus pour un calcul instantané de votre impôt.</p>
+                </div>
+                <div class="faq-item" style="background: var(--card-bg); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
+                    <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Quel est le plafond de la déduction forfaitaire de 10% ?</h3>
+                    <p style="color: var(--text-secondary);">La déduction forfaitaire de 10% au titre des frais professionnels est plafonnée à 2 400 TND par an (sauf pour certaines catégories de revenus spécifiques). Ce plafond s'applique indépendamment du montant réel des frais engagés.</p>
+                </div>
+                <div class="faq-item" style="background: var(--card-bg); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
+                    <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Quels sont les abattements pour charge de famille ?</h3>
+                    <p style="color: var(--text-secondary);">Les abattements pour charges de famille sont déduits du revenu imposable : célibataire : 0 TND, marié sans enfant : 1 500 TND, marié avec 2 enfants : 3 000 TND. Ces abattements visent à réduire la base imposable des contribuables ayant des personnes à charge.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links" style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
+            <div style="text-align: left; min-width: 150px;">
+                <strong style="color: var(--primary);">Pages</strong><br>
+                <a href="/index.html">Accueil</a><br>
+                <a href="/docs.html">Documentation</a><br>
+                <a href="/comparatif.html">Comparatif</a><br>
+                <a href="/changelog.html">Changelog</a><br>
+                <a href="/privacy.html">Confidentialité</a>
+            </div>
+            <div style="text-align: left; min-width: 150px;">
+                <strong style="color: var(--primary);">Ressources</strong><br>
+                <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation</a><br>
+                <a href="/facture-electronique-tunisie.html">Facture Électronique</a><br>
+                <a href="/devis-tunisie.html">Devis Tunisie</a><br>
+                <a href="/declaration-tva-tunisie.html">Déclaration TVA</a><br>
+                <a href="/logiciel-caisse-tunisie.html">Logiciel Caisse</a><br>
+                <a href="/calculateur-tva-tunisie.html">Calculateur TVA</a><br>
+                <a href="/simulateur-irpp-tunisie.html" style="color: var(--primary);">Simulateur IRPP</a><br>
+                <a href="/logiciel-gestion-commerciale-tunisie.html">Gestion Commerciale</a><br>
+                <a href="/facture-gratuite-tunisie.html">Facture Gratuite</a>
+            </div>
+        </div>
+        <p class="copyright">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+    <script>
+        lucide.createIcons();
+        document.querySelector('.menu-toggle')?.addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+
+        function formatDinars(val) {
+            return Number(val).toLocaleString('fr-FR', { minimumFractionDigits: 3, maximumFractionDigits: 3 }) + ' TND';
+        }
+
+        function calculerIRPP() {
+            var revenu = parseFloat(document.getElementById('revenu-annuel').value) || 0;
+            var situation = document.getElementById('situation').value;
+
+            var deduction = Math.min(revenu * 0.10, 2400);
+            var abattements = { celibataire: 0, marie: 1500, marie_1: 2000, marie_2: 3000, marie_3: 3500, marie_4: 4000 };
+            var abattement = abattements[situation] || 0;
+            var base = Math.max(0, revenu - deduction - abattement);
+
+            var taux = [0, 15, 25, 35, 45];
+            var seuils = [5000, 20000, 30000, 50000, Infinity];
+            var irpp = 0;
+            var reste = base;
+
+            for (var i = 0; i < seuils.length; i++) {
+                var precedent = i === 0 ? 0 : seuils[i - 1];
+                var tranche = Math.min(reste, seuils[i] - precedent);
+                if (tranche > 0) {
+                    irpp += tranche * (taux[i] / 100);
+                    reste -= tranche;
+                }
+            }
+
+            document.getElementById('res-revenu').textContent = formatDinars(revenu);
+            document.getElementById('res-deduction').textContent = formatDinars(deduction);
+            document.getElementById('res-abattement').textContent = formatDinars(abattement);
+            document.getElementById('res-base').textContent = formatDinars(base);
+            document.getElementById('res-irpp').textContent = formatDinars(irpp);
+            document.getElementById('res-taux-effectif').textContent = (revenu > 0 ? (irpp / revenu * 100).toFixed(1) : '0,0') + ' %';
+        }
+
+        document.getElementById('revenu-annuel').addEventListener('input', calculerIRPP);
+        document.getElementById('situation').addEventListener('change', calculerIRPP);
+        calculerIRPP();
+    </script>
+</body>
+</html>

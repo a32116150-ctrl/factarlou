@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="fr-TN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculateur CNSS Tunisie 2026 — Charges Sociales | Factarlou</title>
+    <meta name="description" content="Calculez vos cotisations CNSS en Tunisie : salarié, employeur, taux 2026. Simulateur gratuit des charges sociales tunisiennes.">
+    <meta property="og:title" content="Calculateur CNSS Tunisie 2026 — Charges Sociales | Factarlou">
+    <meta property="og:description" content="Calculez vos cotisations CNSS en Tunisie : salarié, employeur, taux 2026. Simulateur gratuit.">
+    <meta property="og:image" content="/social-preview.png">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://factarlou.online/calculateur-cnss-tunisie.html">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="/social-preview.png">
+    <link rel="canonical" href="https://factarlou.online/calculateur-cnss-tunisie.html">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="icon" type="image/png" href="/logo-icon.png">
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "Calculateur CNSS Tunisie 2026",
+      "operatingSystem": "All",
+      "applicationCategory": "FinanceApplication",
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "TND" },
+      "description": "Calculez vos cotisations CNSS en Tunisie : salarié, employeur, taux 2026."
+    }
+    </script>
+    <style>
+        .lp-container { max-width: 800px; margin: 140px auto 80px; padding: 0 5%; }
+        .lp-intro { text-align: center; margin-bottom: 4rem; }
+        .lp-intro h1 { font-size: clamp(2rem, 5vw, 3.5rem); margin-bottom: 1rem; }
+        .lp-intro p { color: var(--text-secondary); font-size: 1.1rem; line-height: 1.7; }
+        .lp-content { color: var(--text-secondary); line-height: 1.9; font-size: 1.05rem; }
+        .lp-content p { margin-bottom: 1.5rem; }
+        .lp-content a { color: var(--primary); text-decoration: none; font-weight: 600; }
+        .lp-content a:hover { text-decoration: underline; }
+        .lp-cta { text-align: center; margin: 4rem 0; }
+        .lp-cta h2 { font-size: 2rem; margin-bottom: 1.5rem; }
+        .lp-cta p { color: var(--text-secondary); margin-bottom: 2rem; }
+        .lp-cta .btn-primary { font-size: 1.2rem; padding: 1.2rem 3rem; }
+        .lp-faq { margin: 4rem 0; }
+        .lp-faq h2 { text-align: center; margin-bottom: 3rem; }
+        .calc-card { background: var(--card-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 2.5rem; max-width: 500px; margin: 2rem auto; }
+        .calc-card label { display: block; color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 0.4rem; font-weight: 500; }
+        .calc-card input, .calc-card select { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); border-radius: 8px; padding: 0.8rem 1rem; color: white; width: 100%; font-size: 1rem; margin-bottom: 1rem; box-sizing: border-box; }
+        .calc-card input:focus, .calc-card select:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-glow); }
+        .calc-card select option { background: #1e293b; }
+        .calc-result { background: rgba(0,151,167,0.1); border: 1px solid var(--primary); border-radius: 12px; padding: 1.5rem; margin-top: 1.5rem; }
+        .calc-result .line { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 1.05rem; }
+        .calc-result .line.total { font-weight: 700; color: var(--text-primary); border-top: 1px solid var(--glass-border); margin-top: 0.3rem; padding-top: 0.8rem; }
+        .calc-result .line .label { color: var(--text-secondary); }
+        .calc-result .line .value { color: var(--text-primary); font-weight: 600; }
+        .calc-result .line .value.part-salarie { color: var(--primary); }
+        .calc-result .line .value.patronal { color: var(--accent); }
+        .res-links { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin: 2rem 0; }
+        .res-links a { color: var(--primary); text-decoration: none; font-weight: 600; padding: 0.5rem 1.5rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 50px; transition: var(--transition); }
+        .res-links a:hover { background: var(--primary-glow); border-color: var(--primary); }
+        .nav-dropdown { position: relative; display: inline-block; }
+        .nav-dropdown-toggle { cursor: pointer; text-decoration: none; color: var(--text-secondary); font-weight: 500; font-size: 0.95rem; transition: var(--transition); background: none; border: none; padding: 0; }
+        .nav-dropdown-toggle:hover { color: var(--primary); }
+        .nav-dropdown-menu { display: none; position: absolute; top: 100%; left: 50%; transform: translateX(-50%); background: rgba(15, 23, 42, 0.95); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 12px; padding: 0.75rem; min-width: 220px; z-index: 100; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .nav-dropdown-menu a { display: block; padding: 0.6rem 1rem; color: var(--text-secondary); text-decoration: none; font-size: 0.85rem; border-radius: 8px; transition: var(--transition); white-space: nowrap; }
+        .nav-dropdown-menu a:hover { background: var(--glass); color: var(--primary); }
+        .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+        @media (max-width: 768px) {
+            .nav-dropdown-menu { position: static; transform: none; background: transparent; border: none; padding: 0; box-shadow: none; }
+            .nav-dropdown-menu a { font-size: 1.1rem; text-align: center; padding: 0.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+    <nav>
+        <a href="index.html" class="logo"><img src="/logo-icon.png" alt="Factarlou Logo"> Factarlou</a>
+        <div class="nav-links">
+            <a href="/index.html">Accueil</a>
+            <a href="/docs.html">Docs</a>
+            <a href="/comparatif.html">Comparatif</a>
+            <div class="nav-dropdown">
+                <a href="#" class="nav-dropdown-toggle" style="color: var(--primary);">Ressources ▾</a>
+                <div class="nav-dropdown-menu">
+                    <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation</a>
+                    <a href="/facture-electronique-tunisie.html">Facture Électronique</a>
+                    <a href="/devis-tunisie.html">Devis Tunisie</a>
+                    <a href="/declaration-tva-tunisie.html">Déclaration TVA</a>
+                    <a href="/logiciel-caisse-tunisie.html">Logiciel Caisse</a>
+                    <a href="/calculateur-tva-tunisie.html">Calculateur TVA</a>
+                    <a href="/simulateur-irpp-tunisie.html">Simulateur IRPP</a>
+                    <a href="/calculateur-cnss-tunisie.html" style="color: var(--primary);">Calculateur CNSS</a>
+                    <a href="/logiciel-gestion-commerciale-tunisie.html">Gestion Commerciale</a>
+                    <a href="/facture-gratuite-tunisie.html">Facture Gratuite</a>
+                </div>
+            </div>
+            <a href="/about.html">À Propos</a>
+            <a href="/showcase.html">Galerie</a>
+            <a href="/blog.html">Blog</a>
+        </div>
+        <div class="nav-right" style="display: flex; align-items: center; gap: 0.75rem;">
+            <a href="/index.html#download" class="btn-download-nav">Télécharger</a>
+            <button class="menu-toggle" aria-label="Menu"><i data-lucide="menu"></i></button>
+        </div>
+    </nav>
+
+    <main class="lp-container">
+        <div class="lp-intro" data-reveal>
+            <span class="badge">🇹🇳 CNSS Tunisie 2026</span>
+            <h1>Calculateur CNSS Tunisie</h1>
+            <p>Calculez les cotisations sociales (part salariale et patronale) selon les taux CNSS tunisiens 2026. Simulateur gratuit en ligne.</p>
+        </div>
+
+        <div class="calc-card" data-reveal>
+            <form id="cnss-calculator" onsubmit="return false;">
+                <label for="salaire-brut">Salaire brut mensuel (en TND)</label>
+                <input type="number" id="salaire-brut" min="0" step="10" value="2500" placeholder="Ex: 2500">
+
+                <div class="calc-result" id="calc-result">
+                    <div style="margin-bottom: 1rem; font-weight: 700; color: var(--text-primary);">📊 Cotisations CNSS</div>
+                    <div class="line"><span class="label">Salaire brut</span><span class="value" id="res-brut">2 500,000 TND</span></div>
+                    <div class="line"><span class="label">Part salariale (9,18 %)</span><span class="value part-salarie" id="res-salarie">229,500 TND</span></div>
+                    <div class="line"><span class="label">Part patronale (16,57 %)</span><span class="value patronal" id="res-patronal">414,250 TND</span></div>
+                    <div class="line total"><span class="label">Total cotisations</span><span class="value" id="res-total">643,750 TND</span></div>
+                    <div class="line"><span class="label">Salaire net (après CNSS)</span><span class="value" id="res-net">2 270,500 TND</span></div>
+                    <div class="line" style="font-size:0.85rem; color: var(--text-secondary); border-top: 1px solid var(--glass-border); padding-top:0.8rem; margin-top:0.5rem;">
+                        <span class="label">Coût total employeur</span><span class="value" id="res-cout">2 914,250 TND</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="lp-content" data-reveal>
+            <p>La <strong>CNSS (Caisse Nationale de Sécurité Sociale)</strong> est l'organisme tunisien de sécurité sociale qui gère les cotisations sociales des salariés du secteur privé. Chaque mois, employeur et salarié cotisent à la CNSS selon des taux fixés par la loi.</p>
+
+            <p>En 2026, le taux de cotisation <strong>salariale</strong> est de <strong>9,18 %</strong> du salaire brut, déduit directement du salaire du employé. La part <strong>patronale</strong> est de <strong>16,57 %</strong>, prise en charge par l'employeur. Ces cotisations couvrent les risques vieillesse, maladie, maternité, accidents du travail et allocations familiales.</p>
+
+            <p>Le plafond de cotisation CNSS est fixé à <strong>4 500 TND</strong> par mois pour 2026. Les cotisations ne sont dues que sur la partie du salaire brut qui n'excède pas ce plafond. Au-delà, les cotisations ne s'appliquent pas sur la partie excédentaire.</p>
+
+            <p>Avec <strong>Factarlou</strong>, gérez vos fiches de paie, vos employés et vos déclarations CNSS facilement. L'application calcule automatiquement les cotisations, génère les bulletins de paie et suit les congés et absences.</p>
+        </div>
+
+        <div class="res-links" data-reveal>
+            <a href="/simulateur-irpp-tunisie.html">Simulateur IRPP Tunisie</a>
+            <a href="/declaration-tva-tunisie.html">Déclaration TVA Tunisie</a>
+            <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation</a>
+        </div>
+
+        <div class="lp-cta" data-reveal>
+            <h2>Gérez votre paie simplement</h2>
+            <p>Factarlou intègre la gestion des employés, les fiches de paie et les cotisations CNSS. Gratuit.</p>
+            <a href="/index.html#download" class="btn-primary">Télécharger Factarlou gratuitement</a>
+        </div>
+
+        <div class="lp-faq" data-reveal>
+            <h2>Questions sur la CNSS en Tunisie</h2>
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                <div class="faq-item" style="background: var(--card-bg); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
+                    <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Quels sont les taux CNSS pour 2026 ?</h3>
+                    <p style="color: var(--text-secondary);">En 2026, le taux de cotisation CNSS est de 9,18% pour la part salariale et 16,57% pour la part patronale. Le plafond mensuel de cotisation est fixé à 4 500 TND. Ces taux couvrent les branches vieillesse, maladie, maternité, accidents du travail et allocations familiales.</p>
+                </div>
+                <div class="faq-item" style="background: var(--card-bg); padding: 2rem; border-radius: 16px; border: 1px solid var(--glass-border);">
+                    <h3 style="font-size: 1.2rem; margin-bottom: 0.5rem; color: var(--primary);">Comment est calculé le salaire net après CNSS ?</h3>
+                    <p style="color: var(--text-secondary);">Le salaire net après CNSS s'obtient en soustrayant la part salariale (9,18% du salaire brut) du salaire brut. Par exemple, pour un salaire brut de 2 500 TND, la cotisation salariale est de 229,50 TND, ce qui donne un salaire net de 2 270,50 TND (avant IRPP).</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="footer-links" style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-bottom: 2rem;">
+            <div style="text-align: left; min-width: 150px;">
+                <strong style="color: var(--primary);">Pages</strong><br>
+                <a href="/index.html">Accueil</a><br>
+                <a href="/docs.html">Documentation</a><br>
+                <a href="/comparatif.html">Comparatif</a><br>
+                <a href="/changelog.html">Changelog</a><br>
+                <a href="/privacy.html">Confidentialité</a>
+            </div>
+            <div style="text-align: left; min-width: 150px;">
+                <strong style="color: var(--primary);">Ressources</strong><br>
+                <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation</a><br>
+                <a href="/facture-electronique-tunisie.html">Facture Électronique</a><br>
+                <a href="/devis-tunisie.html">Devis Tunisie</a><br>
+                <a href="/declaration-tva-tunisie.html">Déclaration TVA</a><br>
+                <a href="/logiciel-caisse-tunisie.html">Logiciel Caisse</a><br>
+                <a href="/calculateur-tva-tunisie.html">Calculateur TVA</a><br>
+                <a href="/simulateur-irpp-tunisie.html">Simulateur IRPP</a><br>
+                <a href="/calculateur-cnss-tunisie.html" style="color: var(--primary);">Calculateur CNSS</a><br>
+                <a href="/logiciel-gestion-commerciale-tunisie.html">Gestion Commerciale</a><br>
+                <a href="/facture-gratuite-tunisie.html">Facture Gratuite</a>
+            </div>
+        </div>
+        <p class="copyright">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+    <script>
+        lucide.createIcons();
+        document.querySelector('.menu-toggle')?.addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.toggle('open');
+        });
+
+        function formatDinars(val) {
+            return Number(val).toLocaleString('fr-FR', { minimumFractionDigits: 3, maximumFractionDigits: 3 }) + ' TND';
+        }
+
+        function calculerCNSS() {
+            var brut = parseFloat(document.getElementById('salaire-brut').value) || 0;
+            var plafond = 4500;
+            var assiette = Math.min(brut, plafond);
+
+            var tauxSalarial = 9.18 / 100;
+            var tauxPatronal = 16.57 / 100;
+
+            var partSalarie = assiette * tauxSalarial;
+            var partPatronal = assiette * tauxPatronal;
+            var total = partSalarie + partPatronal;
+            var net = brut - partSalarie;
+            var cout = brut + partPatronal;
+
+            document.getElementById('res-brut').textContent = formatDinars(brut);
+            document.getElementById('res-salarie').textContent = formatDinars(partSalarie);
+            document.getElementById('res-patronal').textContent = formatDinars(partPatronal);
+            document.getElementById('res-total').textContent = formatDinars(total);
+            document.getElementById('res-net').textContent = formatDinars(net);
+            document.getElementById('res-cout').textContent = formatDinars(cout);
+        }
+
+        document.getElementById('salaire-brut').addEventListener('input', calculerCNSS);
+        calculerCNSS();
+    </script>
+</body>
+</html>

@@ -1,9 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://factarlou.online/index.html</loc>
+    <loc>https://factarlou.online/</loc>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/docs.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/comparatif.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://factarlou.online/blog.html</loc>
@@ -11,162 +21,77 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://factarlou.online/showcase.html</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://factarlou.online/about.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/showcase.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/changelog.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/privacy.html</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/logiciel-facturation-tunisie.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://factarlou.online/docs.html</loc>
+    <loc>https://factarlou.online/facture-electronique-tunisie.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://factarlou.online/posts/2026-04-23-le-guide-ultime-pour-les-startups-tunisiennes---optimisation-de-la-gestion-financi-re-et-fiscale-avec-un-erp-local-first.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://factarlou.online/devis-tunisie.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://factarlou.online/posts/2026-04-23-optimiser-vos-finances-avec-factarlou---le-guide-ultime-pour-les-startups-tunisiennes.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://factarlou.online/declaration-tva-tunisie.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://factarlou.online/posts/2026-04-23-r-volutionner-la-fiscalit--tunisienne---l-expertise-de-factarlou.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://factarlou.online/logiciel-caisse-tunisie.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://factarlou.online/posts/2026-04-24-r-volution-des-paiements---comment-factarlou-dome-les-r-glementations-bct-et-les-solutions-de-paiement.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://factarlou.online/calculateur-tva-tunisie.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://factarlou.online/posts/2026-04-25-revolutionner-l-avenir-de-la-technologie-l-architecture-offline-first-et-la-securite-des-donnees-avec-factarlou.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://factarlou.online/logiciel-gestion-commerciale-tunisie.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://factarlou.online/posts/2026-04-26-revolutionner-vos-processus-metier-avec-l-intelligence-artificielle-l-avenir-de-l-entreprise.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://factarlou.online/facture-gratuite-tunisie.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://factarlou.online/posts/2026-04-27-revolutionner-l-entrepreneuriat-en-tunisie-les-cles-du-succes-pour-les-startups.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://factarlou.online/simulateur-irpp-tunisie.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://factarlou.online/posts/2026-04-28-revolution-numerique-le-local-first-cle-de-l-avenir-de-la-tunisie.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <loc>https://factarlou.online/calculateur-cnss-tunisie.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://factarlou.online/posts/2026-04-29-revolutionner-les-paiements-en-tunisie-factarlou-le-leader-incontournable-de-la-fintech.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-04-30-revolutionner-la-fiscalite-tunisienne-les-cles-pour-une-declaration-irpp-optimale-avec-factarlou.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-01-revolutionner-la-tunisie-le-local-first-cle-de-la-transition-digitale.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-02-l-ere-de-la-revolution-technologique-factarlou-leader-incontournable-de-la-technologie-et-des-solutions-saas-en-tunisie.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-03-revolutionner-la-fiscalite-ce-que-les-entrepreneurs-doivent-savoir-sur-la-loi-de-finances-tunisie.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-04-revolutionner-la-gestion-des-pme-comment-la-digitalisation-peut-booster-votre-entreprise.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-05-revolutionner-l-entreprise-avec-l-intelligence-artificielle-l-expertise-de-factarlou.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-06-maitriser-la-fiscalite-tunisienne-les-secrets-pour-une-declaration-irpp-et-une-gestion-tva-optimales-en-2026.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-07-revolutionner-vos-processus-metier-avec-l-intelligence-artificielle-l-expertise-de-factarlou.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-08-revolutionner-votre-entreprise-le-guide-ultime-de-la-loi-de-finances-tunisie.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-09-revolution-des-paiements-comment-la-fintech-transforme-l-economie-tunisienne.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-10-revolutionner-les-paiements-en-tunisie-les-tendances-fintech-avec-factarlou.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-11-revolutionner-l-entreprise-avec-l-intelligence-artificielle-le-futur-de-l-optimisation-et-des-predictions.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-12-revolutionner-l-industrie-avec-factarlou-l-avenir-de-la-technologie-saas-et-de-l-architecture-offline-first.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-13-revolutionner-la-gestion-des-pme-comment-la-digitalisation-peut-booster-votre-entreprise.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-14-revolutionner-l-economie-tunisienne-tout-ce-que-les-entrepreneurs-doivent-savoir-sur-la-loi-de-finances.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-15-revolutionner-l-entrepreneuriat-en-tunisie-le-guide-ultime-pour-les-startups.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-16-revolutionner-la-gestion-des-pme-comment-la-digitalisation-peut-booster-votre-entreprise.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-17-revolutionner-l-entreprise-avec-l-intelligence-artificielle-optimisation-et-predictions-pour-un-avenir-radicalement-nouveau.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-18-revolutionnez-vos-declarations-fiscales-avec-factarlou-la-reference-en-matiere-de-fiscalite-tunisienne.html</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://factarlou.online/posts/2026-05-19-revolutionner-vos-processus-avec-l-intelligence-artificielle-l-avenir-des-entreprises.html</loc>
+    <loc>https://factarlou.online/posts/2026-05-20-revolutionner-les-communications-d-entreprise-avec-une-vision-technologique-pour-les-entrepreneurs-tunisiens.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -176,7 +101,147 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://factarlou.online/posts/2026-05-20-revolutionner-les-communications-d-entreprise-avec-une-vision-technologique-pour-les-entrepreneurs-tunisiens.html</loc>
+    <loc>https://factarlou.online/posts/2026-05-19-revolutionner-vos-processus-avec-l-intelligence-artificielle-l-avenir-des-entreprises.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-18-revolutionnez-vos-declarations-fiscales-avec-factarlou-la-reference-en-matiere-de-fiscalite-tunisienne.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-17-revolutionner-l-entreprise-avec-l-intelligence-artificielle-optimisation-et-predictions-pour-un-avenir-radicalement-nouveau.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-16-revolutionner-la-gestion-des-pme-comment-la-digitalisation-peut-booster-votre-entreprise.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-15-revolutionner-l-entrepreneuriat-en-tunisie-le-guide-ultime-pour-les-startups.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-14-revolutionner-l-economie-tunisienne-tout-ce-que-les-entrepreneurs-doivent-savoir-sur-la-loi-de-finances.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-13-revolutionner-la-gestion-des-pme-comment-la-digitalisation-peut-booster-votre-entreprise.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-12-revolutionner-l-industrie-avec-factarlou-l-avenir-de-la-technologie-saas-et-de-l-architecture-offline-first.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-11-revolutionner-l-entreprise-avec-l-intelligence-artificielle-le-futur-de-l-optimisation-et-des-predictions.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-10-revolutionner-les-paiements-en-tunisie-les-tendances-fintech-avec-factarlou.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-09-revolution-des-paiements-comment-la-fintech-transforme-l-economie-tunisienne.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-08-revolutionner-votre-entreprise-le-guide-ultime-de-la-loi-de-finances-tunisie.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-07-revolutionner-vos-processus-metier-avec-l-intelligence-artificielle-l-expertise-de-factarlou.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-06-maitriser-la-fiscalite-tunisienne-les-secrets-pour-une-declaration-irpp-et-une-gestion-tva-optimales-en-2026.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-05-revolutionner-l-entreprise-avec-l-intelligence-artificielle-l-expertise-de-factarlou.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-04-revolutionner-la-gestion-des-pme-comment-la-digitalisation-peut-booster-votre-entreprise.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-03-revolutionner-la-fiscalite-ce-que-les-entrepreneurs-doivent-savoir-sur-la-loi-de-finances-tunisie.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-02-l-ere-de-la-revolution-technologique-factarlou-leader-incontournable-de-la-technologie-et-des-solutions-saas-en-tunisie.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-05-01-revolutionner-la-tunisie-le-local-first-cle-de-la-transition-digitale.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-04-30-revolutionner-la-fiscalite-tunisienne-les-cles-pour-une-declaration-irpp-optimale-avec-factarlou.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-04-29-revolutionner-les-paiements-en-tunisie-factarlou-le-leader-incontournable-de-la-fintech.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-04-28-revolution-numerique-le-local-first-cle-de-l-avenir-de-la-tunisie.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-04-27-revolutionner-l-entrepreneuriat-en-tunisie-les-cles-du-succes-pour-les-startups.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-04-26-revolutionner-vos-processus-metier-avec-l-intelligence-artificielle-l-avenir-de-l-entreprise.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-04-25-revolutionner-l-avenir-de-la-technologie-l-architecture-offline-first-et-la-securite-des-donnees-avec-factarlou.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-04-24-r-volution-des-paiements---comment-factarlou-dome-les-r-glementations-bct-et-les-solutions-de-paiement.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-04-23-r-volutionner-la-fiscalit--tunisienne---l-expertise-de-factarlou.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-04-23-optimiser-vos-finances-avec-factarlou---le-guide-ultime-pour-les-startups-tunisiennes.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://factarlou.online/posts/2026-04-23-le-guide-ultime-pour-les-startups-tunisiennes---optimisation-de-la-gestion-financi-re-et-fiscale-avec-un-erp-local-first.html</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

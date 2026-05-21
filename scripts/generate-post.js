@@ -72,14 +72,21 @@ async function generatePost(retryCount = 0, useFallback = false) {
   } else {
     // Fallback: pick from hardcoded topics
     const fallbackTopics = [
-      "Fiscalité Tunisienne (Déclaration IRPP, Portail TEJ, TVA 2026)",
-      "Entrepreneuriat et Innovation (Startups, Levée de fonds en Tunisie)",
-      "Technologie et SaaS (Architecture Offline-first, Sécurité des données)",
-      "Fintech et Paiements (Réglementations BCT, Solutions de paiement)",
-      "Digitalisation des PME (Gestion de stock, Automatisation des factures)",
-      "Intelligence Artificielle pour les Entreprises (Optimisation, Prédictions)",
-      "Loi de Finances Tunisie : Ce que les entrepreneurs doivent savoir",
-      "Transition Digitale : Pourquoi le Local-First est l'avenir de la Tunisie"
+      "Comment faire une facture avec TVA en Tunisie : guide pratique 2026 avec exemple détaillé",
+      "Déclaration TVA mensuelle Tunisie : procédure pas-à-pas et échéances 2026",
+      "Timbre fiscal 1.000 TND sur les factures : obligation, calcul et exonérations",
+      "Export XML TEJ obligatoire : comment transmettre ses factures au portail fiscal tunisien",
+      "Retenue à la source Tunisie 2026 : taux, calcul et certificat de retenue",
+      "Différence entre facture, note de crédit et avoir en comptabilité tunisienne",
+      "Comment choisir un logiciel de facturation en Tunisie : critères et comparatif 2026",
+      "FODEC Tunisie : calcul et déclaration de la cotisation sur les factures",
+      "IRPP Tunisie 2026 : barème, calcul et déclaration pour les entrepreneurs individuels",
+      "Loi de finances 2026 Tunisie : ce qui change pour les entreprises et les freelances",
+      "Facture électronique obligatoire Tunisie : calendrier et obligations TEJ",
+      "Gestion de stock pour PME tunisienne : méthode et outils gratuits",
+      "Caisse enregistreuse Tunisie : obligations légales et solution POS logicielle",
+      "Devis Tunisie : mentions obligatoires, TVA et validité juridique",
+      "Les erreurs fiscales courantes des startups tunisiennes et comment les éviter"
     ];
     selectedTopic = fallbackTopics[Math.floor(Math.random() * fallbackTopics.length)];
     console.log(`📋 Fallback topic: ${selectedTopic}`);
@@ -177,6 +184,7 @@ async function updateSearchIndex(data, fileName) {
     title: data.title_fr,
     title_ar: data.title_ar,
     excerpt: data.excerpt_fr,
+    category: data.category_fr,
     url: `/posts/${fileName}`,
     type: 'blog'
   });

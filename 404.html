@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="fr-TN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>404 — Page non trouvée | Factarlou</title>
+    <meta name="description" content="La page que vous cherchez n'existe pas ou a été déplacée. Retournez à l'accueil Factarlou.">
+    <link rel="canonical" href="https://factarlou.online/404.html">
+    <link rel="icon" type="image/png" href="/logo-icon.png">
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+    <style>
+        .error-section {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 5% 80px;
+        }
+        .error-container {
+            max-width: 640px;
+        }
+        .error-code {
+            font-size: 8rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--primary), #00bcd4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            margin-bottom: 0.5rem;
+        }
+        .error-title {
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        .error-text {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+        .error-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .error-actions a {
+            padding: 0.9rem 2rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .btn-home {
+            background: var(--primary);
+            color: #000;
+        }
+        .btn-home:hover {
+            box-shadow: 0 0 30px var(--primary-glow);
+            transform: translateY(-2px);
+        }
+        .btn-docs {
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+        }
+        .btn-docs:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .error-404-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30rem;
+            font-weight: 800;
+            color: rgba(255,255,255,0.02);
+            pointer-events: none;
+            z-index: -1;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="mesh-bg"></div>
+    <div class="error-404-bg">404</div>
+
+    <nav>
+        <a href="index.html" class="logo">
+            <img src="/logo-icon.png" alt="Factarlou Logo">
+            Factarlou
+        </a>
+        <div class="nav-links">
+            <a href="index.html">Accueil</a>
+            <a href="docs.html">Docs</a>
+            <a href="comparatif.html">Comparatif</a>
+            <div class="nav-dropdown">
+                <button class="nav-dropdown-toggle">Ressources ▾</button>
+                <div class="nav-dropdown-menu">
+                    <a href="/logiciel-facturation-tunisie.html">Logiciel Facturation</a>
+                    <a href="/facture-electronique-tunisie.html">Facture Électronique</a>
+                    <a href="/devis-tunisie.html">Devis Tunisie</a>
+                    <a href="/declaration-tva-tunisie.html">Déclaration TVA</a>
+                    <a href="/logiciel-caisse-tunisie.html">Logiciel Caisse</a>
+                    <a href="/calculateur-tva-tunisie.html">Calculateur TVA</a>
+                    <a href="/logiciel-gestion-commerciale-tunisie.html">Gestion Commerciale</a>
+                    <a href="/facture-gratuite-tunisie.html">Facture Gratuite</a>
+                </div>
+            </div>
+            <a href="about.html">À Propos</a>
+            <a href="showcase.html">Galerie</a>
+            <a href="blog.html">Blog</a>
+            <button class="search-trigger" id="search-btn">
+                <i data-lucide="search" style="width: 20px; height: 20px;"></i>
+            </button>
+        </div>
+        <div class="nav-right" style="display: flex; align-items: center; gap: 0.75rem;">
+            <a href="index.html#download" class="btn-download-nav">Télécharger</a>
+            <button class="menu-toggle" aria-label="Menu">
+                <i data-lucide="menu"></i>
+            </button>
+        </div>
+    </nav>
+
+    <section class="error-section">
+        <div class="error-container" data-reveal>
+            <div class="error-code">404</div>
+            <h1 class="error-title">Page introuvable</h1>
+            <p class="error-text">
+                Oups ! La page que vous cherchez n'existe pas, a été déplacée ou est temporairement indisponible.<br>
+                Vous pouvez retourner à l'accueil ou consulter notre documentation.
+            </p>
+            <div class="error-actions">
+                <a href="index.html" class="btn-home">
+                    <i data-lucide="home" style="width: 18px; height: 18px; vertical-align: middle; margin-right: 6px;"></i>
+                    Retour à l'accueil
+                </a>
+                <a href="docs.html" class="btn-docs">
+                    <i data-lucide="book-open" style="width: 18px; height: 18px; vertical-align: middle; margin-right: 6px;"></i>
+                    Documentation
+                </a>
+                <a href="blog.html" class="btn-docs">
+                    <i data-lucide="newspaper" style="width: 18px; height: 18px; vertical-align: middle; margin-right: 6px;"></i>
+                    Blog
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 80px 5% 0; border-top: 1px solid var(--glass-border); background: linear-gradient(180deg, transparent 0%, rgba(0, 151, 167, 0.03) 100%);">
+        <div style="max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.2fr; gap: 3rem; text-align: left;">
+            <div>
+                <a href="/index.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none; margin-bottom: 1.2rem;">
+                    <img src="/logo-icon.png" alt="Factarlou Logo" style="height: 38px; border-radius: 8px;">
+                    <span style="font-size: 1.4rem; font-weight: 800; color: white;">Factarlou</span>
+                </a>
+                <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 1.5rem; font-size: 0.9rem;">Le premier logiciel de facturation <strong style="color: var(--primary);">local-first</strong> conçu pour les entrepreneurs tunisiens. Gratuit, privé, puissant.</p>
+                <div style="display: flex; align-items: center; gap: 0.6rem; color: var(--text-secondary); font-size: 0.9rem;">
+                    <span style="display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="download" style="width: 16px; height: 16px;"></i> <span id="footer-download-count">—</span> téléchargements</span>
+                </div>
+            </div>
+            <div>
+                <strong style="color: white; display: block; margin-bottom: 1rem; font-size: 1rem;">Produit</strong>
+                <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                    <a href="/index.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Accueil</a>
+                    <a href="/docs.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Documentation</a>
+                    <a href="/comparatif.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Comparatif</a>
+                    <a href="/changelog.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Changelog</a>
+                    <a href="/privacy.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Confidentialité</a>
+                </div>
+            </div>
+            <div>
+                <strong style="color: white; display: block; margin-bottom: 1rem; font-size: 1rem;">Ressources</strong>
+                <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                    <a href="/logiciel-facturation-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Logiciel Facturation</a>
+                    <a href="/facture-electronique-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Facture Électronique</a>
+                    <a href="/devis-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Devis Tunisie</a>
+                    <a href="/declaration-tva-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Déclaration TVA</a>
+                    <a href="/logiciel-caisse-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Logiciel Caisse</a>
+                    <a href="/calculateur-tva-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Calculateur TVA</a>
+                    <a href="/logiciel-gestion-commerciale-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Gestion Commerciale</a>
+                    <a href="/facture-gratuite-tunisie.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem;">Facture Gratuite</a>
+                </div>
+            </div>
+            <div>
+                <strong style="color: white; display: block; margin-bottom: 1rem; font-size: 1rem;">Contact</strong>
+                <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+                    <a href="mailto:a32116150@gmail.com" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="mail" style="width: 16px; height: 16px;"></i> Email</a>
+
+                    <a href="/blog.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="newspaper" style="width: 16px; height: 16px;"></i> Blog</a>
+                    <a href="/showcase.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem;"><i data-lucide="image" style="width: 16px; height: 16px;"></i> Galerie</a>
+                </div>
+                <div style="margin-top: 1.5rem; padding: 0.75rem 1rem; background: var(--glass); border: 1px solid var(--glass-border); border-radius: 12px; font-size: 0.8rem; color: var(--text-secondary);">
+                    <i data-lucide="shield-check" style="width: 16px; height: 16px; vertical-align: middle; margin-right: 6px;"></i>
+                    Données 100% locales — aucun cloud
+                </div>
+            </div>
+        </div>
+        <div style="max-width: 1200px; margin: 3rem auto 0; padding: 1.5rem 0; border-top: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+            <p style="font-size: 0.85rem; color: var(--text-secondary);">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
+            <div style="display: flex; gap: 0.5rem; align-items: center;">
+
+                <a href="mailto:a32116150@gmail.com" style="color: var(--text-secondary); text-decoration: none; font-size: 0.85rem;">Contact</a>
+                <span style="color: var(--glass-border);">·</span>
+                <span style="color: var(--text-secondary); font-size: 0.85rem;">Version <span id="footer-version">v3.1.0</span></span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+        });
+    </script>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

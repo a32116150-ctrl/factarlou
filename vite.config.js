@@ -21,6 +21,7 @@ export default defineConfig({
         ctva:       resolve(__dirname, 'calculateur-tva-tunisie.html'),
         gc:         resolve(__dirname, 'logiciel-gestion-commerciale-tunisie.html'),
         fg:         resolve(__dirname, 'facture-gratuite-tunisie.html'),
+        notfound:   resolve(__dirname, '404.html'),
       }
     }
   }

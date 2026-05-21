@@ -124,10 +124,20 @@
         <div class="nav-right"><a href="/index.html#download" class="btn-download-nav" style="margin-right: 0.75rem;">Essayer Gratuitement</a><button class="menu-toggle" aria-label="Menu"><i data-lucide="menu"></i></button></div>
     </nav>
 
+    <nav class="breadcrumb" style="padding: 100px 5% 0; max-width: 1300px; margin: 0 auto; display: flex; gap: 0.5rem; align-items: center; font-size: 0.85rem; color: var(--text-secondary);">
+        <a href="/index.html" style="color: var(--text-secondary); text-decoration: none;">Accueil</a>
+        <span>/</span>
+        <span style="color: var(--primary);">Blog</span>
+    </nav>
+
     <header class="blog-hero">
         <div data-reveal>
             <h1>L'actualité financière décryptée pour <span>vous</span>.</h1>
             <p>Entrepreneuriat, Fiscalité, et Innovation en Tunisie.</p>
+            <a href="/rss.xml" target="_blank" rel="noopener" style="display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem; padding: 0.6rem 1.2rem; border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: 0.3s;" onmouseover="this.style.borderColor='var(--primary)'; this.style.color='var(--primary)';" onmouseout="this.style.borderColor='var(--glass-border)'; this.style.color='var(--text-secondary)';">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11a9 9 0 0 1 9 9"/><path d="M4 4a16 16 0 0 1 16 16"/><circle cx="5" cy="19" r="1"/></svg>
+                Abonnez-vous au RSS
+            </a>
         </div>
     </header>
 
@@ -743,9 +753,7 @@
                     <a href="mailto:a32116150@gmail.com" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition); display: flex; align-items: center; gap: 0.5rem;">
                         <i data-lucide="mail" style="width: 14px; height: 14px; color: var(--primary);"></i> Email
                     </a>
-                    <a href="https://github.com/a32116150-ctrl/tuninvoice" target="_blank" rel="noopener" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition); display: flex; align-items: center; gap: 0.5rem;">
-                        <i data-lucide="github" style="width: 14px; height: 14px; color: var(--primary);"></i> GitHub
-                    </a>
+
                     <a href="/blog.html" style="color: var(--text-secondary); text-decoration: none; font-size: 0.9rem; transition: var(--transition); display: flex; align-items: center; gap: 0.5rem;">
                         <i data-lucide="newspaper" style="width: 14px; height: 14px; color: var(--primary);"></i> Blog
                     </a>
@@ -763,8 +771,7 @@
         <div style="max-width: 1200px; margin: 3rem auto 0; padding: 1.5rem 0; border-top: 1px solid var(--glass-border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
             <p class="copyright" style="font-size: 0.85rem;">© 2026 Factarlou. Anoir Cherif. Tous droits réservés.</p>
             <div style="display: flex; gap: 0.5rem;">
-                <a href="https://github.com/a32116150-ctrl/tuninvoice" target="_blank" rel="noopener" style="color: var(--text-secondary); font-size: 0.85rem; text-decoration: none; transition: var(--transition);">GitHub</a>
-                <span style="color: var(--glass-border);">·</span>
+
                 <a href="mailto:a32116150@gmail.com" style="color: var(--text-secondary); font-size: 0.85rem; text-decoration: none; transition: var(--transition);">Contact</a>
                 <span style="color: var(--glass-border);">·</span>
                 <span style="color: var(--text-secondary); font-size: 0.85rem;">Version <span id="footer-version">v3.1.0</span></span>
