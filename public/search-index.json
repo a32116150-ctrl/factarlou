@@ -1,5 +1,13 @@
 [
   {
+    "title": "Révolutionner la gestion d'entreprise en Tunisie : Comment 'yan diomandé' peut inspirer les entrepreneurs",
+    "title_ar": "ثورة في إدارة الشركات في تونس: كيف يمكن ل 'يان ديوماندي' أن يلهم رواد الأعمال",
+    "excerpt": "Découvrez comment le phénomène 'yan diomandé' peut être un catalyseur pour l'innovation dans la gestion des PME et des freelances en Tunisie. Apprenez à intégrer des solutions technologiques pour améliorer votre productivité et votre competitivité sur le marché.",
+    "category": "Fintech et Stratégie",
+    "url": "/posts/2026-07-26-revolutionner-la-gestion-d-entreprise-en-tunisie-comment-yan-diomande-peut-inspirer-les-entrepreneurs.html",
+    "type": "blog"
+  },
+  {
     "title": "Révolutionner la gestion d'entreprise avec Factarlou : comment les entrepreneurs tunisiens peuvent tirer parti de la tendance سيف الدين الجزيري",
     "title_ar": "ثورة في إدارة الأعمال مع فكتورالو : كيف يمكن لمستفسي الأعمال التونسية الاستفادة من الاتجاه سيف الدين الجزيري",
     "excerpt": "Découvrez comment les tendances actuelles en Tunisie, notamment سيف الدين الجزيري, influencent la vie des entrepreneurs et des PME. Factarlou révolutionne la gestion d'entreprise avec des solutions innovantes et technologiques. Apprenez comment vous pouvez améliorer votre gestion financière et votre facturation avec nos conseils pratiques et notre analyse de marché.",
@@ -751,12 +759,6 @@
     "title": "À Propos — La mission de Factarlou",
     "excerpt": "Découvrez pourquoi nous avons créé Factarlou et notre engagement pour la souveraineté numérique en Tunisie.",
     "url": "/about.html",
-    "type": "page"
-  },
-  {
-    "title": "Galerie — Interface Factarlou",
-    "excerpt": "Découvrez l'expérience Factarlou à travers des captures d'écran de notre interface épurée.",
-    "url": "/showcase.html",
     "type": "page"
   }
 ]
