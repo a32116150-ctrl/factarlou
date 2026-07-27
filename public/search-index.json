@@ -1,5 +1,13 @@
 [
   {
+    "title": "L'Impact de حمدي العبيدي sur l'Écosystème Entrepreneurial Tunisien : Une Analyse de la Fiscalité et de la Gestion d'Entreprise",
+    "title_ar": "تأثير حمدي العبيدي على النظام الإجتماعي التونسي: تحليل للضريبة وإدارة الأعمال",
+    "excerpt": "Dans cet article, nous allons explorer comment l'actualité autour de حمدي العبيدي peut influencer la vie des entrepreneurs et des PME tunisiens, notamment en matière de fiscalité et de gestion d'entreprise. Factarlou, en tant que leader technologique en Tunisie, vous présente une analyse approfondie et des conseils pratiques pour naviguer dans ce paysage en constante évolution.",
+    "category": "Fiscalité et Stratégie d'Entreprise",
+    "url": "/posts/2026-07-27-l-impact-de-sur-l-ecosysteme-entrepreneurial-tunisien-une-analyse-de-la-fiscalite-et-de-la-gestion-d-entreprise.html",
+    "type": "blog"
+  },
+  {
     "title": "Révolutionner la gestion d'entreprise en Tunisie : Comment 'yan diomandé' peut inspirer les entrepreneurs",
     "title_ar": "ثورة في إدارة الشركات في تونس: كيف يمكن ل 'يان ديوماندي' أن يلهم رواد الأعمال",
     "excerpt": "Découvrez comment le phénomène 'yan diomandé' peut être un catalyseur pour l'innovation dans la gestion des PME et des freelances en Tunisie. Apprenez à intégrer des solutions technologiques pour améliorer votre productivité et votre competitivité sur le marché.",
@@ -753,12 +761,6 @@
     "title": "Documentation — Guide de démarrage",
     "excerpt": "Apprenez à configurer Factarlou, gérer votre fiscalité et exporter vos fichiers TEJ XML.",
     "url": "/docs.html",
-    "type": "page"
-  },
-  {
-    "title": "À Propos — La mission de Factarlou",
-    "excerpt": "Découvrez pourquoi nous avons créé Factarlou et notre engagement pour la souveraineté numérique en Tunisie.",
-    "url": "/about.html",
     "type": "page"
   }
 ]
