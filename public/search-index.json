@@ -1,5 +1,13 @@
 [
   {
+    "title": "Tottenham - Sydney FC : Les Leçons de Gestion pour les Entrepreneurs Tunisiens",
+    "title_ar": "توتنهام - سيدني إف سي: دروس إدارة للرياديين التونسيين",
+    "excerpt": "L'affiche Tottenham - Sydney FC nous enseigne des stratégies gagnantes pour gérer nos entreprises. Découvrez comment appliquer ces principes pour stimuler votre croissance en tant qu'entrepreneur ou freelance en Tunisie. Factarlou vous offre des solutions innovantes pour une gestion proactive de votre business.",
+    "category": "Stratégie et Gestion d'Entreprise",
+    "url": "/posts/2026-07-29-tottenham-sydney-fc-les-lecons-de-gestion-pour-les-entrepreneurs-tunisiens.html",
+    "type": "blog"
+  },
+  {
     "title": "Révolution numérique de la gestion d'entreprise : Comment la ministère de l'Intérieur影响e la fiscalité des entrepreneurs tunisiens",
     "title_ar": "الثورة الرقمية لإدارة المشاريع : كيف تؤثر وزارة الداخلية على الضرائب للمستثمرين التونسيين",
     "excerpt": "Découvrez comment la ministère de l'Intérieur influence la fiscalité des entrepreneurs tunisiens et comment utiliser les technologies pour optimiser la gestion de votre entreprise. Factarlou, le leader technologique incontournable en Tunisie, vous présente les conseils pratiques et les analyses de marché pour réussir dans un contexte économique en constante évolution.",
@@ -758,11 +766,5 @@
     "excerpt": "Découvrez comment les startups tunisiennes peuvent optimiser leur gestion financière et fiscale grâce à un système de gestion d'entreprise local-first. Apprenez-en davantage sur les avantages de l'utilisation d'un ERP conçu spécifiquement pour les besoins des entreprises tunisiennes.",
     "url": "/posts/2026-04-23-le-guide-ultime-pour-les-startups-tunisiennes---optimisation-de-la-gestion-financi-re-et-fiscale-avec-un-erp-local-first.html",
     "type": "blog"
-  },
-  {
-    "title": "Accueil — Facturation Intelligente Tunisie",
-    "excerpt": "Factarlou est la solution de facturation locale-first conçue spécifiquement pour les entrepreneurs tunisiens.",
-    "url": "/index.html",
-    "type": "page"
   }
 ]
