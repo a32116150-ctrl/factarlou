@@ -6,24 +6,36 @@ const BASE_PATH = '/app'
 export async function middleware(request: NextRequest) {
   const supabaseResponse = NextResponse.next({ request })
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll()
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          )
-        },
-      },
-    }
-  )
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
-  const { data: { user } } = await supabase.auth.getUser()
+  if (!supabaseUrl || !supabaseAnonKey) {
+    return supabaseResponse
+  }
+
+  let user = null
+  try {
+    const supabase = createServerClient(
+      supabaseUrl,
+      supabaseAnonKey,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll()
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value, options }) =>
+              supabaseResponse.cookies.set(name, value, options)
+            )
+          },
+        },
+      }
+    )
+    const { data } = await supabase.auth.getUser()
+    user = data.user
+  } catch (e) {
+    console.error('Supabase middleware error:', e)
+  }
 
   const path = request.nextUrl.pathname
   const isAuthPage =
