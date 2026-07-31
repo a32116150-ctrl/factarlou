@@ -26,6 +26,37 @@ export async function GET(
   return NextResponse.json({ data })
 }
 
+export async function PATCH(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const { id } = await params
+  const supabase = await createClient()
+  const { user, error: authError } = await requireUser(supabase)
+  if (authError || !user) {
+    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  }
+
+  const body = await request.json()
+  const { payment_status } = body
+
+  if (!['paid', 'unpaid', 'partial'].includes(payment_status)) {
+    return NextResponse.json({ error: 'Statut invalide' }, { status: 400 })
+  }
+
+  const { data, error } = await supabase
+    .from('documents')
+    .update({ payment_status })
+    .eq('id', id)
+    .eq('user_id', user.id)
+    .select()
+    .maybeSingle()
+
+  if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+  if (!data) return NextResponse.json({ error: 'Not found' }, { status: 404 })
+  return NextResponse.json({ data })
+}
+
 export async function PUT(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -56,6 +87,7 @@ export async function PUT(
     due_date: body.dueDate || body.due_date || null,
     currency: body.currency || 'TND',
     payment_mode: body.paymentMode || body.payment_mode || null,
+    payment_status: body.paymentStatus || body.payment_status || undefined,
     client_id: body.clientId || body.client_id || null,
     client_name: body.clientName || body.client_name || '',
     client_mf: body.clientMF || body.client_mf || null,

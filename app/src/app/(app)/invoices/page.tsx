@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import Link from 'next/link'
-import { Plus, Search, Eye, Printer, Pencil, Copy, Trash2, ArrowLeftRight } from 'lucide-react'
+import { Plus, Search, Eye, Printer, Pencil, Copy, Trash2, ArrowLeftRight, CreditCard, CheckCircle2, AlertCircle, Clock } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
@@ -10,7 +10,7 @@ import { Badge, getDocTypeColor, getPaymentStatusColor } from '@/components/ui/B
 import { Modal } from '@/components/ui/Modal'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { useToast } from '@/components/ui/Toast'
-import type { Document } from '@/types'
+import type { Document, PaymentStatus } from '@/types'
 import { formatDate, formatCurrency, DOC_TYPE_LABELS, PAYMENT_STATUS_LABELS } from '@/lib/formatters'
 
 export default function DocumentsPage() {
@@ -22,6 +22,10 @@ export default function DocumentsPage() {
   const [statusFilter, setStatusFilter] = useState<string>('')
   const [deleteTarget, setDeleteTarget] = useState<Document | null>(null)
   const [deleting, setDeleting] = useState(false)
+
+  // Status Change State
+  const [statusTarget, setStatusTarget] = useState<Document | null>(null)
+  const [updatingStatus, setUpdatingStatus] = useState(false)
 
   const fetchDocs = useCallback(async () => {
     setLoading(true)
@@ -54,6 +58,24 @@ export default function DocumentsPage() {
       fetchDocs()
     } else {
       toast('Erreur lors de la suppression', 'error')
+    }
+  }
+
+  const handleUpdateStatus = async (newStatus: PaymentStatus) => {
+    if (!statusTarget) return
+    setUpdatingStatus(true)
+    const res = await fetch(`/app/api/documents/${statusTarget.id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ payment_status: newStatus }),
+    })
+    setUpdatingStatus(false)
+    if (res.ok) {
+      toast(`Statut mis à jour : ${PAYMENT_STATUS_LABELS[newStatus] || newStatus}`)
+      setStatusTarget(null)
+      fetchDocs()
+    } else {
+      toast('Erreur lors de la mise à jour du statut', 'error')
     }
   }
 
@@ -107,7 +129,7 @@ export default function DocumentsPage() {
           {/* Desktop Table View (≥ md) */}
           <div className="hidden md:block bg-white border border-border-color rounded-xl overflow-hidden shadow-sm">
             <div className="overflow-x-auto">
-              <table className="w-full text-sm min-w-[750px]">
+              <table className="w-full text-sm min-w-[800px]">
                 <thead>
                   <tr className="border-b border-border-light bg-slate-50">
                     <th className="text-left px-4 py-3 text-xs font-semibold text-text-muted uppercase">N°</th>
@@ -145,12 +167,25 @@ export default function DocumentsPage() {
                         {formatCurrency(doc.total_ttc, doc.currency)}
                       </td>
                       <td className="px-3 py-3">
-                        <Badge color={getPaymentStatusColor(doc.payment_status)}>
-                          {PAYMENT_STATUS_LABELS[doc.payment_status] || doc.payment_status}
-                        </Badge>
+                        <button
+                          onClick={() => setStatusTarget(doc)}
+                          className="cursor-pointer hover:opacity-80 transition-opacity"
+                          title="Changer le statut"
+                        >
+                          <Badge color={getPaymentStatusColor(doc.payment_status)}>
+                            {PAYMENT_STATUS_LABELS[doc.payment_status] || doc.payment_status}
+                          </Badge>
+                        </button>
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex justify-end items-center gap-1">
+                          <button
+                            onClick={() => setStatusTarget(doc)}
+                            className="p-1.5 rounded-lg text-emerald-700 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 transition-colors cursor-pointer"
+                            title="Marquer comme payé / modifier statut"
+                          >
+                            <CreditCard className="h-4 w-4" />
+                          </button>
                           <Link
                             href={`/invoices/${doc.id}`}
                             className="p-1.5 rounded-lg text-text-muted hover:bg-slate-100 hover:text-primary transition-colors"
@@ -213,9 +248,11 @@ export default function DocumentsPage() {
                   </div>
                   <div className="flex flex-col items-end gap-1 shrink-0">
                     <Badge color={getDocTypeColor(doc.type)}>{DOC_TYPE_LABELS[doc.type] || doc.type}</Badge>
-                    <Badge color={getPaymentStatusColor(doc.payment_status)}>
-                      {PAYMENT_STATUS_LABELS[doc.payment_status] || doc.payment_status}
-                    </Badge>
+                    <button onClick={() => setStatusTarget(doc)} className="cursor-pointer">
+                      <Badge color={getPaymentStatusColor(doc.payment_status)}>
+                        {PAYMENT_STATUS_LABELS[doc.payment_status] || doc.payment_status} ✏️
+                      </Badge>
+                    </button>
                   </div>
                 </div>
 
@@ -225,6 +262,14 @@ export default function DocumentsPage() {
                 </div>
 
                 <div className="flex items-center justify-between pt-2 border-t border-slate-100 gap-1 bg-slate-50 -mx-4 -mb-4 p-3 rounded-b-xl">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => setStatusTarget(doc)}
+                    className="flex-1 flex items-center justify-center gap-1 text-xs py-1 text-emerald-800 bg-emerald-50 border-emerald-200"
+                  >
+                    <CreditCard className="h-3.5 w-3.5" /> Statut
+                  </Button>
                   <Link href={`/invoices/${doc.id}`} className="flex-1">
                     <Button size="sm" variant="outline" className="w-full flex items-center justify-center gap-1 text-xs py-1">
                       <Eye className="h-3.5 w-3.5" /> Voir
@@ -250,6 +295,7 @@ export default function DocumentsPage() {
         </div>
       )}
 
+      {/* Delete Confirmation Modal */}
       <Modal
         open={deleteTarget !== null}
         onClose={() => setDeleteTarget(null)}
@@ -265,6 +311,87 @@ export default function DocumentsPage() {
           Voulez-vous vraiment supprimer le document <strong className="text-text">{deleteTarget?.number}</strong> ?
           Cette action est irréversible.
         </p>
+      </Modal>
+
+      {/* Quick Payment Status Modal */}
+      <Modal
+        open={statusTarget !== null}
+        onClose={() => setStatusTarget(null)}
+        title={`Modifier le statut de paiement (${statusTarget?.number || ''})`}
+      >
+        <div className="space-y-4 pt-2">
+          <p className="text-xs text-text-muted">
+            Sélectionnez le nouveau statut pour la facture de <strong className="text-text">{statusTarget?.client_name}</strong> ({formatCurrency(statusTarget?.total_ttc || 0, statusTarget?.currency || 'TND')}) :
+          </p>
+
+          <div className="grid grid-cols-1 gap-2.5">
+            <button
+              type="button"
+              disabled={updatingStatus}
+              onClick={() => handleUpdateStatus('paid')}
+              className={`p-3 rounded-xl border flex items-center justify-between text-left transition-all cursor-pointer ${
+                statusTarget?.payment_status === 'paid'
+                  ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 font-bold'
+                  : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-emerald-300'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-emerald-100 text-emerald-700">
+                  <CheckCircle2 className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-emerald-800 dark:text-emerald-300">🟢 Payée</div>
+                  <div className="text-xs text-slate-500">Le règlement a été reçu en totalité</div>
+                </div>
+              </div>
+              {statusTarget?.payment_status === 'paid' && <span className="text-emerald-600 font-extrabold text-sm">Actuel</span>}
+            </button>
+
+            <button
+              type="button"
+              disabled={updatingStatus}
+              onClick={() => handleUpdateStatus('partial')}
+              className={`p-3 rounded-xl border flex items-center justify-between text-left transition-all cursor-pointer ${
+                statusTarget?.payment_status === 'partial'
+                  ? 'border-amber-500 bg-amber-50 dark:bg-amber-950/40 text-amber-900 font-bold'
+                  : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-amber-300'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-amber-100 text-amber-700">
+                  <Clock className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-amber-800 dark:text-amber-300">🟡 Paiement Partiel</div>
+                  <div className="text-xs text-slate-500">Une partie de la somme a été versée</div>
+                </div>
+              </div>
+              {statusTarget?.payment_status === 'partial' && <span className="text-amber-600 font-extrabold text-sm">Actuel</span>}
+            </button>
+
+            <button
+              type="button"
+              disabled={updatingStatus}
+              onClick={() => handleUpdateStatus('unpaid')}
+              className={`p-3 rounded-xl border flex items-center justify-between text-left transition-all cursor-pointer ${
+                statusTarget?.payment_status === 'unpaid'
+                  ? 'border-red-500 bg-red-50 dark:bg-red-950/40 text-red-900 font-bold'
+                  : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-red-300'
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-lg bg-red-100 text-red-700">
+                  <AlertCircle className="h-5 w-5" />
+                </div>
+                <div>
+                  <div className="text-sm font-bold text-red-800 dark:text-red-300">🔴 Non payée (Impayée)</div>
+                  <div className="text-xs text-slate-500">Aucun règlement n&apos;a été effectué</div>
+                </div>
+              </div>
+              {statusTarget?.payment_status === 'unpaid' && <span className="text-red-600 font-extrabold text-sm">Actuel</span>}
+            </button>
+          </div>
+        </div>
       </Modal>
     </div>
   )
