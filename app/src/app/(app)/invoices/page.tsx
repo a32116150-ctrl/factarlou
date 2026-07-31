@@ -6,30 +6,12 @@ import { Plus, Search, Eye, Printer, Pencil, Copy, Trash2, ArrowLeftRight } from
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
-import { Badge } from '@/components/ui/Badge'
+import { Badge, getDocTypeColor, getPaymentStatusColor } from '@/components/ui/Badge'
 import { Modal } from '@/components/ui/Modal'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { useToast } from '@/components/ui/Toast'
-import type { Document, DocType, PaymentStatus } from '@/types'
+import type { Document } from '@/types'
 import { formatDate, formatCurrency, DOC_TYPE_LABELS, PAYMENT_STATUS_LABELS } from '@/lib/formatters'
-
-function getDocTypeColor(type: DocType): 'primary' | 'secondary' | 'success' | 'warning' | 'info' {
-  switch (type) {
-    case 'facture': return 'primary'
-    case 'devis': return 'info'
-    case 'proforma': return 'secondary'
-    case 'avoir': return 'warning'
-    default: return 'secondary'
-  }
-}
-
-function getPaymentStatusColor(status: PaymentStatus): 'success' | 'danger' | 'warning' {
-  switch (status) {
-    case 'paid': return 'success'
-    case 'unpaid': return 'danger'
-    case 'partial': return 'warning'
-  }
-}
 
 export default function DocumentsPage() {
   const { toast } = useToast()
