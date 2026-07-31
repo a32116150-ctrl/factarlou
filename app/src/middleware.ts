@@ -27,18 +27,18 @@ export async function middleware(request: NextRequest) {
 
   const path = request.nextUrl.pathname
   const isAuthPage =
-    path.startsWith('/login') ||
-    path.startsWith('/register') ||
-    path.startsWith('/forgot-password') ||
-    path.startsWith('/confirm-email') ||
-    path.startsWith('/auth-code-error')
+    path.includes('/login') ||
+    path.includes('/register') ||
+    path.includes('/forgot-password') ||
+    path.includes('/confirm-email') ||
+    path.includes('/auth-code-error')
 
   if (!user && !isAuthPage) {
-    return NextResponse.redirect(new URL(`${BASE_PATH}/login`, request.url))
+    return NextResponse.redirect(new URL('/app/login', request.url))
   }
 
   if (user && isAuthPage) {
-    return NextResponse.redirect(new URL(`${BASE_PATH}/dashboard`, request.url))
+    return NextResponse.redirect(new URL('/app/dashboard', request.url))
   }
 
   return supabaseResponse
