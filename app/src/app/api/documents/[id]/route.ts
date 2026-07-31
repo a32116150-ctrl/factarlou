@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { requireUser } from '@/lib/api-helpers'
+import { calculateTotals } from '@/lib/math-utils'
 
 export async function GET(
   request: NextRequest,
@@ -38,21 +39,54 @@ export async function PUT(
 
   const body = await request.json()
 
-  const allowed = [
-    'type', 'date', 'due_date', 'currency', 'payment_mode', 'payment_status',
-    'paid_amount', 'paid_date', 'client_id', 'client_name', 'client_mf',
-    'client_address', 'client_phone', 'client_email', 'items_json', 'items',
-    'apply_timbre', 'timbre_amount', 'rounding_adjustment', 'discount_percent',
-    'discount_amount', 'total_ht', 'total_tva', 'total_ttc', 'notes', 'internal_notes',
-  ]
+  const rawItems = body.items || body.items_json
+  const validItems = Array.isArray(rawItems)
+    ? rawItems.map((it: any) => ({
+        description: String(it.description || ''),
+        quantity: Number(it.quantity) || 1,
+        price: Number(it.price) || 0,
+        tva: Number(it.tva) || 0,
+        unit: String(it.unit || 'unité'),
+      }))
+    : []
 
-  const update: Record<string, unknown> = {}
-  for (const key of allowed) {
-    if (key in body) update[key] = body[key]
+  const update: Record<string, unknown> = {
+    type: body.type,
+    date: body.date,
+    due_date: body.dueDate || body.due_date || null,
+    currency: body.currency || 'TND',
+    payment_mode: body.paymentMode || body.payment_mode || null,
+    client_id: body.clientId || body.client_id || null,
+    client_name: body.clientName || body.client_name || '',
+    client_mf: body.clientMF || body.client_mf || null,
+    client_address: body.clientAddress || body.client_address || null,
+    client_phone: body.clientPhone || body.client_phone || null,
+    client_email: body.clientEmail || body.client_email || null,
+    items_json: validItems,
+    apply_timbre: Boolean(body.applyTimbre ?? body.apply_timbre),
+    discount_percent: Number(body.discountPercent || body.discount_percent || 0),
+    discount_amount: Number(body.discountAmount || body.discount_amount || 0),
+    notes: body.notes || null,
+    internal_notes: body.internalNotes || body.internal_notes || null,
   }
 
-  if (body.items) {
-    update.items_json = body.items
+  // Remove undefined properties
+  Object.keys(update).forEach((key) => {
+    if (update[key] === undefined) delete update[key]
+  })
+
+  // Recalculate document totals if items exist
+  if (validItems.length > 0) {
+    const totals = calculateTotals(validItems, {
+      applyTimbre: Boolean(update.apply_timbre),
+      discountPercent: Number(update.discount_percent || 0),
+      discountAmount: Number(update.discount_amount || 0),
+    })
+    update.total_ht = totals.totalHT
+    update.total_tva = totals.totalTVA
+    update.total_ttc = totals.totalTTC
+    update.timbre_amount = totals.timbreAmount
+    update.rounding_adjustment = totals.roundingAdjustment
   }
 
   const { data, error } = await supabase
