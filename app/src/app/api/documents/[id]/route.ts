@@ -77,7 +77,7 @@ export async function PUT(
 
   // Recalculate document totals if items exist
   if (validItems.length > 0) {
-    const totals = calculateTotals(validItems, {
+    const totals = calculateTotals(validItems as any, {
       applyTimbre: Boolean(update.apply_timbre),
       discountPercent: Number(update.discount_percent || 0),
       discountAmount: Number(update.discount_amount || 0),
