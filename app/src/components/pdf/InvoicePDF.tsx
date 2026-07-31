@@ -157,7 +157,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
   const titleText = DOC_TYPE_LABELS[docType] || docType
 
   return (
-    <div style={{ backgroundColor: '#f1f5f9', padding: '24px', borderRadius: '12px' }}>
+    <div className="p-2 sm:p-6 bg-slate-100 rounded-xl overflow-x-auto">
       {/* Top Action Toolbar */}
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end', gap: '8px', marginBottom: '16px' }}>
         <Button variant="secondary" size="sm" onClick={() => setEmailModal(true)}>
