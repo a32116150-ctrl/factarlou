@@ -10,9 +10,18 @@ interface InvoicePDFProps {
   doc: Document
 }
 
+function tryParseJSON(jsonString: string) {
+  try {
+    return JSON.parse(jsonString)
+  } catch {
+    return []
+  }
+}
+
 export function InvoicePDF({ doc }: InvoicePDFProps) {
   const contentRef = useRef<HTMLDivElement>(null)
-  const items = doc.items_json || []
+  const rawItems = typeof doc.items_json === 'string' ? (tryParseJSON(doc.items_json) || []) : (doc.items_json || [])
+  const items = Array.isArray(rawItems) ? rawItems : []
   const decimals = 3
 
   const print = () => {

@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Plus, Search, Trash2, Eye } from 'lucide-react'
+import { Plus, Search, Trash2, Eye, Pencil, Printer } from 'lucide-react'
 import type { Document } from '@/types'
 import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
@@ -150,9 +150,16 @@ export default function InvoicesPage() {
                         <Link
                           href={`/invoices/${doc.id}`}
                           className="p-1.5 rounded-lg text-text-muted hover:bg-gray-100 hover:text-primary"
-                          title="Voir"
+                          title="Voir / Imprimer PDF"
                         >
                           <Eye className="h-4 w-4" />
+                        </Link>
+                        <Link
+                          href={`/invoices/${doc.id}/edit`}
+                          className="p-1.5 rounded-lg text-text-muted hover:bg-gray-100 hover:text-primary"
+                          title="Modifier"
+                        >
+                          <Pencil className="h-4 w-4" />
                         </Link>
                         <button
                           onClick={() => setDeleteTarget(doc)}
