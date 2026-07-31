@@ -108,7 +108,7 @@ export default function InvoiceForm({ initialData }: InvoiceFormProps = {}) {
     }
 
     setSaving(true)
-    const url = isEdit ? `/app/api/documents/${initialData.id}` : '/app/api/documents'
+    const url = isEdit && initialData ? `/app/api/documents/${initialData.id}` : '/app/api/documents'
     const method = isEdit ? 'PUT' : 'POST'
 
     const res = await fetch(url, {
