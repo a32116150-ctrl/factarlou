@@ -44,8 +44,8 @@ export default async function DashboardPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-xl font-extrabold text-slate-100">Tableau de bord</h1>
-          <p className="text-sm text-slate-500">
+          <h1 className="text-2xl font-bold text-text">Tableau de bord</h1>
+          <p className="text-sm text-text-muted">
             {overdueCount > 0 ? `${overdueCount} facture(s) en retard de paiement` : 'Aucune facture en retard'}
           </p>
         </div>
@@ -62,7 +62,7 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         <StatCard title="Chiffre d'affaires (mois)" value={formatCurrency(revenue, 'TND', 0)} icon={<TrendingUp className="h-4 w-4" />} color="blue" />
         <StatCard title="Factures émises" value={totalInvoices} icon={<FileText className="h-4 w-4" />} color="purple" />
         <StatCard title="Clients actifs" value={totalClients} icon={<Users className="h-4 w-4" />} color="green" />

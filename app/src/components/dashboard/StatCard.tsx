@@ -10,28 +10,30 @@ export interface StatCardProps {
   color: 'blue' | 'purple' | 'green' | 'red' | 'orange' | 'teal'
 }
 
-const colorMap: Record<StatCardProps['color'], { bg: string; text: string }> = {
-  blue: { bg: 'bg-blue-500/10', text: 'text-blue-400' },
-  purple: { bg: 'bg-purple-500/10', text: 'text-purple-400' },
-  green: { bg: 'bg-green-500/10', text: 'text-green-400' },
-  red: { bg: 'bg-red-500/10', text: 'text-red-400' },
-  orange: { bg: 'bg-orange-500/10', text: 'text-orange-400' },
-  teal: { bg: 'bg-teal-500/10', text: 'text-teal-400' },
+const colorMap: Record<StatCardProps['color'], string> = {
+  blue: 'bg-blue-100 text-blue-600',
+  purple: 'bg-purple-100 text-purple-600',
+  green: 'bg-green-100 text-green-600',
+  red: 'bg-red-100 text-red-600',
+  orange: 'bg-amber-100 text-amber-600',
+  teal: 'bg-teal-100 text-teal-600',
 }
 
 export function StatCard({ title, value, suffix, icon, color }: StatCardProps) {
-  const c = colorMap[color]
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl p-4">
-      <div className="flex items-start justify-between">
-        <div>
-          <p className="text-xs font-medium text-slate-500">{title}</p>
-          <p className="mt-1.5 text-2xl font-extrabold text-slate-100">
+    <div className="bg-white border border-border-color rounded-[14px] p-5 shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all relative overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-primary to-primary-light opacity-0 hover:opacity-100 transition-opacity" />
+      <div className="flex items-start justify-between gap-2">
+        <div className="min-w-0">
+          <p className="text-[13px] font-medium text-text-secondary truncate">{title}</p>
+          <p className="mt-1 text-2xl font-extrabold text-text tracking-tight truncate">
             {value}
-            {suffix && <span className="text-sm font-medium text-slate-500 ml-1">{suffix}</span>}
+            {suffix && <span className="text-sm font-medium text-text-muted ml-1">{suffix}</span>}
           </p>
         </div>
-        <div className={`p-2.5 rounded-lg ${c.bg} ${c.text}`}>{icon}</div>
+        <div className={`h-10 w-10 rounded-[10px] flex items-center justify-center shrink-0 ${colorMap[color]}`}>
+          {icon}
+        </div>
       </div>
     </div>
   )
