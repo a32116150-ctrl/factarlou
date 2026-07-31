@@ -92,7 +92,6 @@ export default function DocumentsPage() {
           placeholder="Rechercher (n°, client)..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          leftIcon={<Search className="h-4 w-4 text-text-muted" />}
         />
         <Select value={typeFilter} onChange={(e) => setTypeFilter(e.target.value)}>
           <option value="">Tous les types</option>
