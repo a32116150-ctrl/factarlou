@@ -87,7 +87,8 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
   })
   tvaLines.sort((a, b) => b.rate - a.rate)
 
-  const titleText = DOC_TYPE_LABELS[doc.type] || doc.type
+  const docType = doc?.type || 'facture'
+  const titleText = DOC_TYPE_LABELS[docType] || docType
 
   return (
     <div className="bg-white border border-border-color rounded-xl overflow-hidden">
@@ -98,7 +99,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
         <div ref={contentRef} className="max-w-[210mm] mx-auto text-black">
           <div className="invoice-header">
             <div>
-              <h1 style={{ fontSize: 28, color: '#1e3a8a', fontWeight: 800 }}>{titleText.toUpperCase()}</h1>
+              <h1 style={{ fontSize: 28, color: '#1e3a8a', fontWeight: 800 }}>{(titleText || 'DOCUMENT').toUpperCase()}</h1>
               <p>N° {doc.number}</p>
               <p>Date : {formatDate(doc.date)}</p>
               {doc.due_date && <p>Échéance : {formatDate(doc.due_date)}</p>}
