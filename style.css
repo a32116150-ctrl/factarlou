@@ -129,6 +129,29 @@ nav {
   box-shadow: 0 8px 30px var(--primary-glow);
 }
 
+.btn-app-nav {
+  background: linear-gradient(135deg, #10b981, #059669);
+  color: white;
+  padding: 0.55rem 1.25rem;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 700;
+  transition: var(--transition);
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+  border: 1px solid rgba(255,255,255,0.2);
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.btn-app-nav:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+  color: white;
+}
+
 /* Nav Dropdown */
 .nav-dropdown {
   position: relative;
@@ -860,11 +883,17 @@ footer { padding: 60px 5% 30px; border-top: 1px solid var(--glass-border); text-
   .nav-right {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
   }
 
   .btn-download-nav {
     display: none; /* Hide on mobile to save space */
+  }
+
+  .btn-app-nav {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.8rem;
+    gap: 0.3rem;
   }
 
   .nav-links {
