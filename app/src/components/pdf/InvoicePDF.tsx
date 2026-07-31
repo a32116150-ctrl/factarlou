@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { Printer, Download, Mail } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Modal } from '@/components/ui/Modal'
@@ -25,14 +25,36 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
   const contentRef = useRef<HTMLDivElement>(null)
   const { toast } = useToast()
 
+  const [company, setCompany] = useState<any>(null)
   const [downloading, setDownloading] = useState(false)
   const [emailModal, setEmailModal] = useState(false)
   const [emailTo, setEmailTo] = useState(doc.client_email || '')
   const [emailSubject, setEmailSubject] = useState(`${DOC_TYPE_LABELS[doc.type] || doc.type} ${doc.number}`)
   const [emailBody, setEmailBody] = useState(
-    `Bonjour ${doc.client_name || 'Client'},\n\nVeuillez trouver ci-joint votre document ${doc.number} du ${formatDate(doc.date)} d'un montant de ${formatCurrency(doc.total_ttc, doc.currency)}.\n\nCordialement,\n${doc.company_name || 'Factarlou'}`
+    `Bonjour ${doc.client_name || 'Client'},\n\nVeuillez trouver ci-joint votre document ${doc.number} du ${formatDate(doc.date)} d'un montant de ${formatCurrency(doc.total_ttc, doc.currency)}.\n\nCordialement,\n${doc.company_name || 'Votre Entreprise'}`
   )
   const [sendingEmail, setSendingEmail] = useState(false)
+
+  useEffect(() => {
+    if (!doc.company_name || !doc.company_mf) {
+      fetch('/app/api/companies')
+        .then((res) => res.json())
+        .then((json) => {
+          if (json.data) setCompany(json.data)
+        })
+        .catch(() => {})
+    }
+  }, [doc.company_name, doc.company_mf])
+
+  const companyName = doc.company_name || company?.name || ''
+  const companyMF = doc.company_mf || company?.mf || ''
+  const companyAddress = doc.company_address || company?.address || ''
+  const companyPhone = doc.company_phone || company?.phone || ''
+  const companyEmail = doc.company_email || company?.email || ''
+  const companyRC = doc.company_rc || company?.rc || ''
+  const logoImage = doc.logo_image || company?.logo_image || null
+  const stampImage = doc.stamp_image || company?.stamp_image || null
+  const signatureImage = doc.signature_image || company?.signature_image || null
 
   const rawItems = typeof doc.items_json === 'string' ? (tryParseJSON(doc.items_json) || []) : (doc.items_json || [])
   const items = Array.isArray(rawItems) ? rawItems : []
@@ -156,28 +178,28 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
           {/* Header Block */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid #1e3a8a', paddingBottom: '20px', marginBottom: '24px' }}>
             <div style={{ flex: 1 }}>
-              {doc.logo_image ? (
-                <img src={doc.logo_image} alt="Logo" style={{ maxHeight: '60px', maxWidth: '200px', marginBottom: '12px', objectFit: 'contain' }} />
-              ) : (
+              {logoImage ? (
+                <img src={logoImage} alt="Logo" style={{ maxHeight: '60px', maxWidth: '200px', marginBottom: '12px', objectFit: 'contain' }} />
+              ) : companyName ? (
                 <div style={{ fontSize: '22px', fontWeight: 800, color: '#1e3a8a', letterSpacing: '-0.5px', marginBottom: '6px' }}>
-                  {doc.company_name || 'MON ENTREPRISE'}
+                  {companyName}
                 </div>
-              )}
+              ) : null}
               <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.6' }}>
-                {doc.company_address && <div>{doc.company_address}</div>}
+                {companyAddress && <div>{companyAddress}</div>}
                 <div style={{ display: 'flex', gap: '12px', marginTop: '2px' }}>
-                  {doc.company_mf && <span><strong>MF :</strong> {doc.company_mf}</span>}
-                  {doc.company_rc && <span><strong>RC :</strong> {doc.company_rc}</span>}
+                  {companyMF && <span><strong>MF :</strong> {companyMF}</span>}
+                  {companyRC && <span><strong>RC :</strong> {companyRC}</span>}
                 </div>
                 <div style={{ display: 'flex', gap: '12px', marginTop: '2px' }}>
-                  {doc.company_phone && <span><strong>Tél :</strong> {doc.company_phone}</span>}
-                  {doc.company_email && <span><strong>Email :</strong> {doc.company_email}</span>}
+                  {companyPhone && <span><strong>Tél :</strong> {companyPhone}</span>}
+                  {companyEmail && <span><strong>Email :</strong> {companyEmail}</span>}
                 </div>
               </div>
             </div>
 
             <div style={{ textAlign: 'right' }}>
-              <div style={{ display: 'inline-block', backgroundColor: '#e0e7ff', color: '#3730a3', padding: '4px 14px', borderRadius: '20px', fontWeight: 700, fontSize: '13px', textTransform: uppercaseText(titleText), letterSpacing: '0.5px', marginBottom: '8px' }}>
+              <div style={{ display: 'inline-block', backgroundColor: '#e0e7ff', color: '#3730a3', padding: '4px 14px', borderRadius: '20px', fontWeight: 700, fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
                 {titleText}
               </div>
               <div style={{ fontSize: '24px', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.5px' }}>
@@ -196,13 +218,16 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
               <div style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>
                 Émetteur / Vendeur
               </div>
-              <div style={{ fontSize: '14px', fontWeight: 700, color: '#0f172a' }}>
-                {doc.company_name || 'Vendeur'}
-              </div>
+              {companyName && (
+                <div style={{ fontSize: '14px', fontWeight: 700, color: '#0f172a' }}>
+                  {companyName}
+                </div>
+              )}
               <div style={{ fontSize: '12px', color: '#475569', marginTop: '4px', lineHeight: '1.5' }}>
-                {doc.company_mf && <div>MF : {doc.company_mf}</div>}
-                {doc.company_address && <div>{doc.company_address}</div>}
-                {doc.company_phone && <div>Tél : {doc.company_phone}</div>}
+                {companyMF && <div>MF : {companyMF}</div>}
+                {companyAddress && <div>{companyAddress}</div>}
+                {companyPhone && <div>Tél : {companyPhone}</div>}
+                {companyEmail && <div>Email : {companyEmail}</div>}
               </div>
             </div>
 
@@ -344,16 +369,16 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
             </div>
 
             <div style={{ display: 'flex', gap: '20px', textAlign: 'center' }}>
-              {doc.stamp_image && (
+              {stampImage && (
                 <div>
                   <div style={{ fontSize: '10px', color: '#64748b', textTransform: 'uppercase', marginBottom: '4px' }}>Cachet</div>
-                  <img src={doc.stamp_image} alt="Cachet" style={{ maxHeight: '80px', maxWidth: '140px', objectFit: 'contain' }} />
+                  <img src={stampImage} alt="Cachet" style={{ maxHeight: '80px', maxWidth: '140px', objectFit: 'contain' }} />
                 </div>
               )}
-              {doc.signature_image && (
+              {signatureImage && (
                 <div>
                   <div style={{ fontSize: '10px', color: '#64748b', textTransform: 'uppercase', marginBottom: '4px' }}>Signature</div>
-                  <img src={doc.signature_image} alt="Signature" style={{ maxHeight: '80px', maxWidth: '140px', objectFit: 'contain' }} />
+                  <img src={signatureImage} alt="Signature" style={{ maxHeight: '80px', maxWidth: '140px', objectFit: 'contain' }} />
                 </div>
               )}
             </div>
@@ -397,8 +422,4 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
       </Modal>
     </div>
   )
-}
-
-function uppercaseText(str: string): string {
-  return String(str || '').toUpperCase()
 }
