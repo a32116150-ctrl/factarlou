@@ -68,7 +68,7 @@ Light theme, indigo accent, Inter font. Exact tokens from desktop `styles.css` `
 - **Charts**: lightweight custom SVG/canvas components matching desktop's vanilla-chart look (no heavy chart lib) — dashboard + POS-deferred.
 - **State**: Zustand for auth + settings; forms as controlled components.
 - **Background jobs**: Vercel Cron (daily) → internal API route → generate overdue recurring invoices + send relance/reminder emails via stored SMTP settings.
-- **PDFs**: print-based A4 templates upgraded to desktop parity (all 11 doc types + proforma, retenue attestation, 10 contract types, payslip, relance letter, PV, fiscal summary). Theme support from `document_themes`, QR code when `show_qr`, logo/stamp/signature toggles.
+- **PDFs**: print-based A4 templates upgraded to desktop parity (8 doc types + proforma, retenue attestation, 10 contract types, payslip, relance letter, PV, fiscal summary). Theme support from `document_themes`, QR code when `show_qr`, logo/stamp/signature toggles.
 - **Deployment**: unchanged — two Vercel projects (root marketing site + `app` Root Directory), `basePath: '/app'`, root `vercel.json` rewrite.
 
 ## 5. Data Model
@@ -81,6 +81,8 @@ Supabase schema already covers desktop tables. Notes:
 ## 6. Modules by Phase (Section 3 — approved)
 
 Built in desktop sidebar order. Each module = full parity (screens, modals, calculations, PDFs).
+This master spec is decomposed for implementation: **each phase (P0–P6) gets its own implementation
+plan**, executed and verified before the next phase starts.
 
 ### P0 — Fondation
 1. Light indigo design system (Section 3 tokens) in Tailwind v4 `@theme` + component restyle (Button, Input, Select, Textarea, Badge, Card, Modal, Table, Toast).
@@ -90,8 +92,9 @@ Built in desktop sidebar order. Each module = full parity (screens, modals, calc
 5. `npm run lint` + `npm run build` green; manual walkthrough of all existing screens.
 
 ### P1 — Documents
+- **Document type set = desktop's**: `facture`, `devis`, `bon`, `bl`, `ba`, `bs`, `be`, `avoir` (8 types, from desktop editor `doc-type-grid`) + `proforma` as a PDF builder variant (invoice-builder.js). `ticket` exists only via POS (deferred). **Align the web's current 11-type list (facture|devis|bon|avoir|bl|ba|bs|be|ticket|proforma|forfaitaire) to the desktop set during P1** — drop `forfaitaire`, keep `ticket` for POS, keep `proforma` only as a builder variant.
 - **Dashboard**: desktop stats grid (6 cards), revenue chart, recent docs compact table, quick actions (Nouveau facture/devis, client, retenue).
-- **Nouveau Document**: full editor — 11 doc types + proforma, client selector, line items (qty/unit/price/TVA/line total), discount % or amount, timbre, FODEC, payment mode, currency (TND/EUR/USD + exchange rate), custom fields, internal notes, save as template, recurring-invoice setup.
+- **Nouveau Document**: full desktop editor — `doc-type-grid` cards (8 types), client selector, line items (qty/unit/price/TVA/line total), discount % or amount, timbre, FODEC, payment mode, currency (TND/EUR/USD + exchange rate), custom fields, internal notes, save as template, recurring-invoice setup.
 - **Mes Documents**: list w/ filters + pagination, edit document (full editor re-open), duplicate, convert (devis→facture, etc.), mark paid / record payment, relances, tags, delete. Document detail = PDF preview + actions.
 - **Encaissements / payments**: payments table per document, partial payments, `payment_status/paid_amount/paid_date` maintenance.
 - **Relances**: per-invoice relance log (attempt, method, recipient, sent_at), email + PDF relance letter via SMTP.
