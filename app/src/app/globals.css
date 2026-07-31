@@ -26,6 +26,11 @@
   --border: #e2e8f0;
   --border-light: #f1f5f9;
 
+  --radius-6: 6px;
+  --radius-10: 10px;
+  --radius-14: 14px;
+  --radius-20: 20px;
+
   --sidebar-w: 260px;
   --topbar-h: 64px;
 }
@@ -52,6 +57,10 @@
   --color-text-light: var(--text-light);
   --color-border-color: var(--border);
   --color-border-light: var(--border-light);
+  --radius-6: 6px;
+  --radius-10: 10px;
+  --radius-14: 14px;
+  --radius-20: 20px;
   --font-sans: var(--font-inter);
 }
 
