@@ -45,7 +45,7 @@ Light theme, indigo accent, Inter font. Exact tokens from desktop `styles.css` `
 - **Buttons** `.btn` (+`-primary/-secondary/-success/-danger/-warning/-small/-icon`); icon variants colored borders: view=sky `#bae6fd`, edit=amber `#fde68a`, delete=red `#fecaca`, pdf=violet `#ddd6fe`, convert=green `#bbf7d0`
 - **Forms** `.form-group`: 0.8rem semibold slate-600 label, white input, `--border`, indigo focus ring `0 0 0 3px rgba(37,99,235,0.1)`, password-toggle, `.btn-random`, `.input-group`
 - **Cards** `.card`: white, `--radius-lg` 14px, `--border`, header with bottom `--border-light`; hover shadow
-- **Stat cards** `.stat-card`: 3-col grid, icon boxes (blue/green/orange/red pastels), hover gradient top-bar `primary→primary-light`, `.stat-badge.up/down`
+- **Stat cards** `.stat-card`: 3-col grid, icon boxes (5 pastels: blue/green/orange/red/purple per index.html), hover gradient top-bar `primary→primary-light`, `.stat-badge.up/down`
 - **Tables**: thead gradient `gray-50→#f8fafc`, 0.78rem slate-600 headers, hover row `gray-50` + 3px indigo-left inset on first cell; `.actions-cell`; pagination `.page-btn.active` indigo
 - **Badges**: pastel pills — `facture` `#dbeafe/#1d4ed8`, `ticket` `#f0fdf4/#059669`, `devis` `#fef3c7/#92400e`, `bon` `#d1fae5/#065f46`, `active/paid` green, `pending` amber
 - **Auth screen**: gradient `135deg #1e3a5f → #4f46e5 → #0ea5e9`, white 440px card (radius 20px, heavy shadow), tabbed Login / Register, logo block
@@ -73,10 +73,10 @@ Light theme, indigo accent, Inter font. Exact tokens from desktop `styles.css` `
 
 ## 5. Data Model
 
-Supabase schema already covers desktop tables. Notes:
-- Skip POS tables (`pos_sessions`, `pos_loyalty`) — POS deferred.
-- Add `login_attempts`-style hardening only if rate-limiting needed (currently Supabase-managed).
-- Keep amounts as REAL (desktop uses REAL too — parity over precision).
+Supabase schema already covers desktop tables. Reference: desktop `src/database/db.js` has **27 real
+tables** (28 `CREATE TABLE` minus 1 migration temp table). The web covers the 25 non-POS ones except
+`login_attempts` (Supabase-managed, correctly omitted). POS tables (`pos_sessions`, `pos_loyalty`)
+are skipped — POS deferred. Keep amounts as REAL (desktop uses REAL too — parity over precision).
 
 ## 6. Modules by Phase (Section 3 — approved)
 
@@ -88,7 +88,7 @@ plan**, executed and verified before the next phase starts.
 1. Light indigo design system (Section 3 tokens) in Tailwind v4 `@theme` + component restyle (Button, Input, Select, Textarea, Badge, Card, Modal, Table, Toast).
 2. AppShell: sidebar 260px collapsible (desktop sections + icons + user card + version footer), topbar 64px (breadcrumb, search, date, user).
 3. Auth screens restyled to desktop gradient card (login/register); confirm-email notice screen.
-4. Fix known bugs: expense delete (missing `api/expenses/[id]`), `/forgot-password` page, `/auth-code-error` page.
+4. Fix known bugs (expense delete — missing `api/expenses/[id]` route) and create the two missing pages the app already links to: `/forgot-password` and `/auth-code-error`.
 5. `npm run lint` + `npm run build` green; manual walkthrough of all existing screens.
 
 ### P1 — Documents
@@ -119,7 +119,7 @@ plan**, executed and verified before the next phase starts.
 - **TEJ Export**: generate XML per RS + TEIF schemas (downloadable), fiscal summary.
 
 ### P5 — Productivité
-- **Outils** (17 tool cards, `.tools-grid`): MF validator, IRPP calculator, CNSS calculator, TVA calculator, calendar, currency converter (uses `exchange_rates`), PV generator, penalty calculator, scenario simulator, graphe relationnel (Apriori), finance directory, etc. — port each from `app-features.js`.
+- **Outils** (17 tool cards, `.tools-grid`): fiscal calculator, relance letter, fiscal summary, MF validator, IRPP projector, fiscal calendar, penalties, TVA deductible/declaration/annual, PV, finance directory, currency converter (uses `exchange_rates`), P&L, balance sheet, graphe relationnel (Apriori), scenario simulator — port each from `app-features.js`. (CNSS math lives in the HR/payslip module, not Outils.)
 - **Notes**: sticky notes (title, content, color, pinned).
 - **Journal d'Activité**: read `activity_log` (already written), filters by action/entity/date.
 
