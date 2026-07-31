@@ -5,19 +5,26 @@ import { createClient } from '@/lib/supabase/server'
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
-  let next = searchParams.get('next') ?? '/app/dashboard'
+  let next = searchParams.get('next') ?? '/dashboard'
 
-  if (!next.startsWith('/app')) {
-    next = `/app${next}`
+  // Clean up next parameter formatting
+  if (next.startsWith('/app/')) {
+    next = next.substring(4)
   }
+  if (!next.startsWith('/')) {
+    next = `/${next}`
+  }
+
+  const targetUrl = `${origin}/app${next}`
 
   if (code) {
     const supabase = await createClient()
     const { error } = await supabase.auth.exchangeCodeForSession(code)
     if (!error) {
-      return NextResponse.redirect(`${origin}${next}`)
+      return NextResponse.redirect(targetUrl)
     }
+    console.error('exchangeCodeForSession error:', error)
   }
 
-  return NextResponse.redirect(`${origin}/app/auth-code-error`)
+  return NextResponse.redirect(targetUrl)
 }
