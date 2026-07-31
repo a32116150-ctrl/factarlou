@@ -137,7 +137,6 @@ export function RetenuePDF({ retenue }: RetenuePDFProps) {
           </div>
 
           <div className="footer">
-            Document généré par Factarlou — Logiciel de facturation pour entreprises tunisiennes.
             Base légale : {r.base_legale || "Art. 52 du Code de l'IRPP et de l'IS"}.
           </div>
         </div>

@@ -339,7 +339,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
                 {formatNumber(doc.total_ttc, decimals)} {doc.currency || 'TND'}
               </div>
               <div style={{ marginTop: '8px', fontStyle: 'italic' }}>
-                Merci de votre confiance. Document généré par Factarlou.
+                Merci de votre confiance.
               </div>
             </div>
 
