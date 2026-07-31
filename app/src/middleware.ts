@@ -42,6 +42,7 @@ export async function middleware(request: NextRequest) {
     path.includes('/login') ||
     path.includes('/register') ||
     path.includes('/forgot-password') ||
+    path.includes('/reset-password') ||
     path.includes('/confirm-email') ||
     path.includes('/auth-code-error')
 
@@ -49,7 +50,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/app/login', request.url))
   }
 
-  if (user && isAuthPage) {
+  if (user && isAuthPage && !path.includes('/reset-password')) {
     return NextResponse.redirect(new URL('/app/dashboard', request.url))
   }
 
