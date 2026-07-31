@@ -1,70 +1,84 @@
+'use client'
+
+import { useEffect, useState } from 'react'
+import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
 import { ArrowLeft, Pencil, AlertCircle } from 'lucide-react'
-import { createClient } from '@/lib/supabase/server'
 import { InvoicePDF } from '@/components/pdf/InvoicePDF'
 import { Badge, getPaymentStatusColor, getDocTypeColor } from '@/components/ui/Badge'
 import { Button } from '@/components/ui/Button'
+import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { formatDate, formatCurrency, DOC_TYPE_LABELS, PAYMENT_STATUS_LABELS } from '@/lib/formatters'
+import type { Document } from '@/types'
 
-export default async function InvoiceDetailPage({ params }: { params: Promise<{ id: string }> | { id: string } }) {
-  const resolvedParams = await Promise.resolve(params)
-  const id = resolvedParams?.id
+export default function InvoiceDetailPage() {
+  const params = useParams()
+  const id = typeof params?.id === 'string' ? params.id : Array.isArray(params?.id) ? params.id[0] : ''
 
-  if (!id) {
+  const [doc, setDoc] = useState<Document | null>(null)
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(false)
+
+  useEffect(() => {
+    if (!id) {
+      setLoading(false)
+      setError(true)
+      return
+    }
+
+    let active = true
+    fetch(`/app/api/documents/${id}`)
+      .then((res) => {
+        if (!res.ok) throw new Error('Not found')
+        return res.json()
+      })
+      .then((json) => {
+        if (active) {
+          const documentData = json.data || json
+          if (documentData && typeof documentData.items_json === 'string') {
+            try {
+              documentData.items_json = JSON.parse(documentData.items_json)
+            } catch {
+              documentData.items_json = []
+            }
+          }
+          setDoc(documentData)
+          setLoading(false)
+        }
+      })
+      .catch(() => {
+        if (active) {
+          setError(true)
+          setLoading(false)
+        }
+      })
+
+    return () => {
+      active = false
+    }
+  }, [id])
+
+  if (loading) {
     return (
-      <div className="bg-white border border-border-color rounded-xl p-12 text-center space-y-4">
-        <AlertCircle className="h-12 w-12 text-danger mx-auto" />
-        <h2 className="text-xl font-bold text-text">Document non spécifié</h2>
-        <Link href="/invoices">
-          <Button variant="secondary"><ArrowLeft className="h-4 w-4" /> Retour aux documents</Button>
-        </Link>
+      <div className="py-20 flex justify-center items-center">
+        <LoadingSpinner />
       </div>
     )
   }
 
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect('/login')
-  }
-
-  let doc = null
-  try {
-    const { data } = await supabase
-      .from('documents')
-      .select('*')
-      .eq('id', id)
-      .eq('user_id', user.id)
-      .maybeSingle()
-    doc = data
-  } catch (e) {
-    console.error('Error fetching document:', e)
-  }
-
-  if (!doc) {
+  if (error || !doc) {
     return (
       <div className="bg-white border border-border-color rounded-xl p-12 text-center space-y-4">
         <AlertCircle className="h-12 w-12 text-warning mx-auto" />
         <h2 className="text-xl font-bold text-text">Document introuvable</h2>
         <p className="text-sm text-text-muted max-w-md mx-auto">
-          Le document demandé n&apos;existe pas ou a été supprimé.
+          Le document demandé n&apos;existe pas ou vous n&apos;avez pas l&apos;autorisation d&apos;y accéder.
         </p>
         <Link href="/invoices">
           <Button variant="secondary"><ArrowLeft className="h-4 w-4" /> Retour aux documents</Button>
         </Link>
       </div>
     )
-  }
-
-  // Parse items_json safely
-  if (typeof doc.items_json === 'string') {
-    try {
-      doc.items_json = JSON.parse(doc.items_json)
-    } catch {
-      doc.items_json = []
-    }
   }
 
   const docType = doc.type || 'facture'

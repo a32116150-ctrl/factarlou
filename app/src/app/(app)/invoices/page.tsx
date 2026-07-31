@@ -3,7 +3,7 @@
 import { useEffect, useState, useCallback } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { Plus, Search, Trash2, Eye, Pencil, Printer } from 'lucide-react'
+import { Plus, Search, Trash2, Eye, Pencil, Printer, Copy } from 'lucide-react'
 import type { Document } from '@/types'
 import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
@@ -13,7 +13,6 @@ import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { useToast } from '@/components/ui/Toast'
 import { Modal } from '@/components/ui/Modal'
 import { formatDate, formatCurrency, DOC_TYPE_LABELS, PAYMENT_STATUS_LABELS } from '@/lib/formatters'
-import { createClient } from '@/lib/supabase/client'
 
 const DOC_TYPES = ['facture', 'devis', 'bon', 'avoir', 'bl', 'ba', 'bs', 'be', 'ticket', 'proforma', 'forfaitaire']
 
@@ -130,14 +129,18 @@ export default function InvoicesPage() {
                 )}
                 {docs.map((doc) => (
                   <tr key={doc.id} className="hover:bg-gray-50 transition-colors">
-                    <td className="px-4 py-3 font-medium text-primary">{doc.number}</td>
+                    <td className="px-4 py-3 font-medium text-primary">
+                      <Link href={`/invoices/${doc.id}`} className="hover:underline">
+                        {doc.number}
+                      </Link>
+                    </td>
                     <td className="px-3 py-3">
                       <Badge color={getDocTypeColor(doc.type)}>{DOC_TYPE_LABELS[doc.type] || doc.type}</Badge>
                     </td>
                     <td className="px-3 py-3 text-text-secondary">{doc.client_name}</td>
                     <td className="px-3 py-3 text-text-muted">{formatDate(doc.date)}</td>
                     <td className="px-3 py-3 text-text-muted">{formatDate(doc.due_date)}</td>
-                    <td className="px-3 py-3 text-right font-medium text-text">
+                    <td className="px-3 py-3 text-text-right font-medium text-text">
                       {formatCurrency(doc.total_ttc, doc.currency)}
                     </td>
                     <td className="px-3 py-3">
@@ -146,24 +149,38 @@ export default function InvoicesPage() {
                       </Badge>
                     </td>
                     <td className="px-4 py-3">
-                      <div className="flex justify-end gap-1">
+                      <div className="flex justify-end items-center gap-1">
                         <Link
                           href={`/invoices/${doc.id}`}
-                          className="p-1.5 rounded-lg text-text-muted hover:bg-gray-100 hover:text-primary"
-                          title="Voir / Imprimer PDF"
+                          className="p-1.5 rounded-lg text-text-muted hover:bg-gray-100 hover:text-primary transition-colors"
+                          title="Aperçu / Voir document"
                         >
                           <Eye className="h-4 w-4" />
                         </Link>
                         <Link
+                          href={`/invoices/${doc.id}`}
+                          className="p-1.5 rounded-lg text-text-muted hover:bg-gray-100 hover:text-primary transition-colors"
+                          title="Imprimer / Exporter PDF"
+                        >
+                          <Printer className="h-4 w-4" />
+                        </Link>
+                        <Link
                           href={`/invoices/${doc.id}/edit`}
-                          className="p-1.5 rounded-lg text-text-muted hover:bg-gray-100 hover:text-primary"
+                          className="p-1.5 rounded-lg text-text-muted hover:bg-gray-100 hover:text-primary transition-colors"
                           title="Modifier"
                         >
                           <Pencil className="h-4 w-4" />
                         </Link>
+                        <Link
+                          href={`/invoices/new?type=${doc.type}`}
+                          className="p-1.5 rounded-lg text-text-muted hover:bg-gray-100 hover:text-primary transition-colors"
+                          title="Dupliquer"
+                        >
+                          <Copy className="h-4 w-4" />
+                        </Link>
                         <button
                           onClick={() => setDeleteTarget(doc)}
-                          className="p-1.5 rounded-lg text-text-muted hover:bg-gray-100 hover:text-danger cursor-pointer"
+                          className="p-1.5 rounded-lg text-text-muted hover:bg-gray-100 hover:text-danger cursor-pointer transition-colors"
                           title="Supprimer"
                         >
                           <Trash2 className="h-4 w-4" />
