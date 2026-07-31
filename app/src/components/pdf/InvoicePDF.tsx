@@ -346,13 +346,13 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
             <div style={{ display: 'flex', gap: '20px', textAlign: 'center' }}>
               {doc.stamp_image && (
                 <div>
-                  <div style={{ fontSize: '10px', color: '#64748b', uppercaseText: 'uppercase', marginBottom: '4px' }}>Cachet</div>
+                  <div style={{ fontSize: '10px', color: '#64748b', textTransform: 'uppercase', marginBottom: '4px' }}>Cachet</div>
                   <img src={doc.stamp_image} alt="Cachet" style={{ maxHeight: '80px', maxWidth: '140px', objectFit: 'contain' }} />
                 </div>
               )}
               {doc.signature_image && (
                 <div>
-                  <div style={{ fontSize: '10px', color: '#64748b', uppercaseText: 'uppercase', marginBottom: '4px' }}>Signature</div>
+                  <div style={{ fontSize: '10px', color: '#64748b', textTransform: 'uppercase', marginBottom: '4px' }}>Signature</div>
                   <img src={doc.signature_image} alt="Signature" style={{ maxHeight: '80px', maxWidth: '140px', objectFit: 'contain' }} />
                 </div>
               )}
