@@ -140,14 +140,16 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
   }
 
   const tvaLines: Array<{ rate: number; base: number; amount: number }> = []
-  items.forEach((it) => {
-    const existing = tvaLines.find((l) => l.rate === it.tva)
-    const ht = (it.quantity || 0) * (it.price || 0)
+  items.forEach((it: any) => {
+    if (!it) return
+    const rate = Number(it.tva) || 0
+    const existing = tvaLines.find((l) => l.rate === rate)
+    const ht = (Number(it.quantity) || 0) * (Number(it.price) || 0)
     if (existing) {
       existing.base += ht
-      existing.amount += (ht * it.tva) / 100
+      existing.amount += (ht * rate) / 100
     } else {
-      tvaLines.push({ rate: it.tva, base: ht, amount: (ht * it.tva) / 100 })
+      tvaLines.push({ rate, base: ht, amount: (ht * rate) / 100 })
     }
   })
   tvaLines.sort((a, b) => b.rate - a.rate)
@@ -174,7 +176,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
           <div className="invoice-header">
             <div>
               <h1 style={{ fontSize: 28, color: '#1e3a8a', fontWeight: 800 }}>{(titleText || 'DOCUMENT').toUpperCase()}</h1>
-              <p>N° {doc.number}</p>
+              <p>N° {doc.number || '—'}</p>
               <p>Date : {formatDate(doc.date)}</p>
               {doc.due_date && <p>Échéance : {formatDate(doc.due_date)}</p>}
             </div>
@@ -191,7 +193,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
           <div className="parties">
             <div className="party">
               <h3>Facturé à</h3>
-              <p><strong>{doc.client_name}</strong></p>
+              <p><strong>{doc.client_name || 'Client'}</strong></p>
               {doc.client_mf && <p>MF : {doc.client_mf}</p>}
               {doc.client_address && <p>{doc.client_address}</p>}
               {doc.client_phone && <p>{doc.client_phone}</p>}
@@ -200,7 +202,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
             <div className="party" style={{ textAlign: 'right' }}>
               <h3>Informations</h3>
               <p>Mode de paiement : {doc.payment_mode || '—'}</p>
-              <p>Devise : {doc.currency}</p>
+              <p>Devise : {doc.currency || 'TND'}</p>
               {doc.payment_status && <p>Statut : {doc.payment_status}</p>}
             </div>
           </div>
@@ -217,16 +219,22 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
               </tr>
             </thead>
             <tbody>
-              {items.map((it, i: number) => (
-                <tr key={i}>
-                  <td>{it.description}</td>
-                  <td>{it.unit || '—'}</td>
-                  <td className="text-right">{it.quantity}</td>
-                  <td className="text-right">{formatNumber(it.price, decimals)}</td>
-                  <td className="text-right">{it.tva}%</td>
-                  <td className="text-right">{formatNumber((it.quantity || 0) * (it.price || 0), decimals)}</td>
-                </tr>
-              ))}
+              {items.map((it: any, i: number) => {
+                if (!it) return null
+                const qty = Number(it.quantity) || 0
+                const price = Number(it.price) || 0
+                const tva = Number(it.tva) || 0
+                return (
+                  <tr key={i}>
+                    <td>{it.description || '—'}</td>
+                    <td>{it.unit || '—'}</td>
+                    <td className="text-right">{qty}</td>
+                    <td className="text-right">{formatNumber(price, decimals)}</td>
+                    <td className="text-right">{tva}%</td>
+                    <td className="text-right">{formatNumber(qty * price, decimals)}</td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
 
