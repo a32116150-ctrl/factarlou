@@ -313,82 +313,106 @@ export default function DocumentsPage() {
         </p>
       </Modal>
 
-      {/* Quick Payment Status Modal */}
+      {/* Quick Payment Status Modal - Clean App Theme */}
       <Modal
         open={statusTarget !== null}
         onClose={() => setStatusTarget(null)}
         title={`Modifier le statut de paiement (${statusTarget?.number || ''})`}
       >
-        <div className="space-y-4 pt-2">
-          <p className="text-xs text-text-muted">
-            Sélectionnez le nouveau statut pour la facture de <strong className="text-text">{statusTarget?.client_name}</strong> ({formatCurrency(statusTarget?.total_ttc || 0, statusTarget?.currency || 'TND')}) :
+        <div className="space-y-4 pt-1">
+          <p className="text-xs text-slate-600">
+            Sélectionnez le statut de paiement pour la facture de <strong className="text-slate-900 font-bold">{statusTarget?.client_name || 'Client'}</strong> ({formatCurrency(statusTarget?.total_ttc || 0, statusTarget?.currency || 'TND')}) :
           </p>
 
-          <div className="grid grid-cols-1 gap-2.5">
+          <div className="grid grid-cols-1 gap-3">
+            {/* Option: Payée */}
             <button
               type="button"
               disabled={updatingStatus}
               onClick={() => handleUpdateStatus('paid')}
-              className={`p-3 rounded-xl border flex items-center justify-between text-left transition-all cursor-pointer ${
+              className={`p-3.5 rounded-xl border flex items-center justify-between text-left transition-all cursor-pointer ${
                 statusTarget?.payment_status === 'paid'
-                  ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-900 font-bold'
-                  : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-emerald-300'
+                  ? 'border-emerald-500 bg-emerald-50/80 ring-2 ring-emerald-500/20 shadow-sm'
+                  : 'border-slate-200 bg-white hover:border-emerald-300 hover:bg-emerald-50/30'
               }`}
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-emerald-100 text-emerald-700">
+                <div className="p-2 rounded-lg bg-emerald-100 text-emerald-700 shrink-0">
                   <CheckCircle2 className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-emerald-800 dark:text-emerald-300">🟢 Payée</div>
-                  <div className="text-xs text-slate-500">Le règlement a été reçu en totalité</div>
+                  <div className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block"></span>
+                    Payée
+                  </div>
+                  <div className="text-xs text-slate-500 mt-0.5">Le règlement a été reçu en totalité</div>
                 </div>
               </div>
-              {statusTarget?.payment_status === 'paid' && <span className="text-emerald-600 font-extrabold text-sm">Actuel</span>}
+              {statusTarget?.payment_status === 'paid' && (
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
+                  Statut actuel
+                </span>
+              )}
             </button>
 
+            {/* Option: Paiement Partiel */}
             <button
               type="button"
               disabled={updatingStatus}
               onClick={() => handleUpdateStatus('partial')}
-              className={`p-3 rounded-xl border flex items-center justify-between text-left transition-all cursor-pointer ${
+              className={`p-3.5 rounded-xl border flex items-center justify-between text-left transition-all cursor-pointer ${
                 statusTarget?.payment_status === 'partial'
-                  ? 'border-amber-500 bg-amber-50 dark:bg-amber-950/40 text-amber-900 font-bold'
-                  : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-amber-300'
+                  ? 'border-amber-500 bg-amber-50/80 ring-2 ring-amber-500/20 shadow-sm'
+                  : 'border-slate-200 bg-white hover:border-amber-300 hover:bg-amber-50/30'
               }`}
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-amber-100 text-amber-700">
+                <div className="p-2 rounded-lg bg-amber-100 text-amber-700 shrink-0">
                   <Clock className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-amber-800 dark:text-amber-300">🟡 Paiement Partiel</div>
-                  <div className="text-xs text-slate-500">Une partie de la somme a été versée</div>
+                  <div className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-amber-500 inline-block"></span>
+                    Paiement Partiel
+                  </div>
+                  <div className="text-xs text-slate-500 mt-0.5">Une partie de la somme a été versée</div>
                 </div>
               </div>
-              {statusTarget?.payment_status === 'partial' && <span className="text-amber-600 font-extrabold text-sm">Actuel</span>}
+              {statusTarget?.payment_status === 'partial' && (
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-200">
+                  Statut actuel
+                </span>
+              )}
             </button>
 
+            {/* Option: Non payée (Impayée) */}
             <button
               type="button"
               disabled={updatingStatus}
               onClick={() => handleUpdateStatus('unpaid')}
-              className={`p-3 rounded-xl border flex items-center justify-between text-left transition-all cursor-pointer ${
+              className={`p-3.5 rounded-xl border flex items-center justify-between text-left transition-all cursor-pointer ${
                 statusTarget?.payment_status === 'unpaid'
-                  ? 'border-red-500 bg-red-50 dark:bg-red-950/40 text-red-900 font-bold'
-                  : 'border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 hover:border-red-300'
+                  ? 'border-red-500 bg-red-50/80 ring-2 ring-red-500/20 shadow-sm'
+                  : 'border-slate-200 bg-white hover:border-red-300 hover:bg-red-50/30'
               }`}
             >
               <div className="flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-red-100 text-red-700">
+                <div className="p-2 rounded-lg bg-red-100 text-red-700 shrink-0">
                   <AlertCircle className="h-5 w-5" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-red-800 dark:text-red-300">🔴 Non payée (Impayée)</div>
-                  <div className="text-xs text-slate-500">Aucun règlement n&apos;a été effectué</div>
+                  <div className="text-sm font-bold text-slate-900 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-red-500 inline-block"></span>
+                    Non payée (Impayée)
+                  </div>
+                  <div className="text-xs text-slate-500 mt-0.5">Aucun règlement n&apos;a été effectué</div>
                 </div>
               </div>
-              {statusTarget?.payment_status === 'unpaid' && <span className="text-red-600 font-extrabold text-sm">Actuel</span>}
+              {statusTarget?.payment_status === 'unpaid' && (
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-800 border border-red-200">
+                  Statut actuel
+                </span>
+              )}
             </button>
           </div>
         </div>

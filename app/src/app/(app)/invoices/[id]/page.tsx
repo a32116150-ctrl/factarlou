@@ -132,7 +132,7 @@ export default function InvoiceDetailPage() {
 
         <div className="flex flex-wrap items-center justify-end gap-2 pt-2 sm:pt-0 border-t sm:border-t-0 border-border-light shrink-0">
           {/* Quick Status Control Buttons */}
-          <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl gap-1 border border-slate-200 dark:border-slate-700">
+          <div className="flex items-center bg-slate-100 p-1 rounded-xl gap-1 border border-slate-200">
             <button
               type="button"
               disabled={updatingStatus}
@@ -140,7 +140,7 @@ export default function InvoiceDetailPage() {
               className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all flex items-center gap-1 cursor-pointer ${
                 paymentStatus === 'paid'
                   ? 'bg-emerald-600 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-emerald-700 hover:bg-white dark:hover:bg-slate-700'
+                  : 'text-slate-600 hover:text-emerald-700 hover:bg-white'
               }`}
               title="Marquer comme Payée"
             >
@@ -153,7 +153,7 @@ export default function InvoiceDetailPage() {
               className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all flex items-center gap-1 cursor-pointer ${
                 paymentStatus === 'partial'
                   ? 'bg-amber-500 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-amber-700 hover:bg-white dark:hover:bg-slate-700'
+                  : 'text-slate-600 hover:text-amber-700 hover:bg-white'
               }`}
               title="Marquer comme Paiement Partiel"
             >
@@ -166,7 +166,7 @@ export default function InvoiceDetailPage() {
               className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all flex items-center gap-1 cursor-pointer ${
                 paymentStatus === 'unpaid'
                   ? 'bg-red-600 text-white shadow-sm'
-                  : 'text-slate-600 hover:text-red-700 hover:bg-white dark:hover:bg-slate-700'
+                  : 'text-slate-600 hover:text-red-700 hover:bg-white'
               }`}
               title="Marquer comme Impayée"
             >
