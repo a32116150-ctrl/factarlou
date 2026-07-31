@@ -157,55 +157,55 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
   const titleText = DOC_TYPE_LABELS[docType] || docType
 
   return (
-    <div className="p-2 sm:p-6 bg-slate-100 rounded-xl overflow-x-auto">
+    <div className="p-2 sm:p-6 bg-slate-100 rounded-xl space-y-4">
       {/* Top Action Toolbar */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'flex-end', gap: '8px', marginBottom: '16px' }}>
-        <Button variant="secondary" size="sm" onClick={() => setEmailModal(true)}>
-          <Mail className="h-4 w-4" /> Envoyer par Email
+      <div className="flex flex-wrap items-center justify-stretch sm:justify-end gap-2">
+        <Button variant="secondary" size="sm" onClick={() => setEmailModal(true)} className="flex-1 sm:flex-none justify-center">
+          <Mail className="h-4 w-4" /> <span className="hidden sm:inline">Envoyer par Email</span><span className="sm:hidden">Email</span>
         </Button>
-        <Button variant="secondary" size="sm" onClick={downloadPDF} loading={downloading}>
-          <Download className="h-4 w-4" /> Télécharger PDF
+        <Button variant="secondary" size="sm" onClick={downloadPDF} loading={downloading} className="flex-1 sm:flex-none justify-center">
+          <Download className="h-4 w-4" /> <span className="hidden sm:inline">Télécharger PDF</span><span className="sm:hidden">PDF</span>
         </Button>
-        <Button size="sm" onClick={print}>
-          <Printer className="h-4 w-4" /> Imprimer
+        <Button size="sm" onClick={print} className="flex-1 sm:flex-none justify-center">
+          <Printer className="h-4 w-4" /> <span className="hidden sm:inline">Imprimer</span><span className="sm:hidden">Imprimer</span>
         </Button>
       </div>
 
       {/* Printable Invoice Container */}
       <div style={{ backgroundColor: '#ffffff', borderRadius: '12px', boxShadow: '0 4px 20px rgba(0,0,0,0.06)', overflow: 'hidden' }}>
-        <div ref={contentRef} style={{ width: '100%', maxWidth: '210mm', margin: '0 auto', padding: '32px', backgroundColor: '#ffffff', color: '#0f172a', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif', boxSizing: 'border-box' }}>
+        <div ref={contentRef} className="w-full max-w-[210mm] mx-auto p-4 sm:p-8 bg-white text-slate-900 font-sans box-border">
           
           {/* Header Block */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', borderBottom: '2px solid #1e3a8a', paddingBottom: '20px', marginBottom: '24px' }}>
-            <div style={{ flex: 1 }}>
+          <div className="flex flex-col sm:flex-row justify-between items-start gap-4 border-b-2 border-blue-900 pb-5 mb-6">
+            <div className="flex-1">
               {logoImage ? (
-                <img src={logoImage} alt="Logo" style={{ maxHeight: '60px', maxWidth: '200px', marginBottom: '12px', objectFit: 'contain' }} />
+                <img src={logoImage} alt="Logo" className="max-h-14 sm:max-h-16 max-w-[200px] mb-3 object-contain" />
               ) : companyName ? (
-                <div style={{ fontSize: '22px', fontWeight: 800, color: '#1e3a8a', letterSpacing: '-0.5px', marginBottom: '6px' }}>
+                <div className="text-xl sm:text-2xl font-extrabold text-blue-900 tracking-tight mb-1">
                   {companyName}
                 </div>
               ) : null}
-              <div style={{ fontSize: '12px', color: '#475569', lineHeight: '1.6' }}>
+              <div className="text-xs text-slate-600 space-y-0.5 leading-relaxed">
                 {companyAddress && <div>{companyAddress}</div>}
-                <div style={{ display: 'flex', gap: '12px', marginTop: '2px' }}>
+                <div className="flex flex-wrap gap-x-3 gap-y-0.5">
                   {companyMF && <span><strong>MF :</strong> {companyMF}</span>}
                   {companyRC && <span><strong>RC :</strong> {companyRC}</span>}
                 </div>
-                <div style={{ display: 'flex', gap: '12px', marginTop: '2px' }}>
+                <div className="flex flex-wrap gap-x-3 gap-y-0.5">
                   {companyPhone && <span><strong>Tél :</strong> {companyPhone}</span>}
                   {companyEmail && <span><strong>Email :</strong> {companyEmail}</span>}
                 </div>
               </div>
             </div>
 
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ display: 'inline-block', backgroundColor: '#e0e7ff', color: '#3730a3', padding: '4px 14px', borderRadius: '20px', fontWeight: 700, fontSize: '13px', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
+            <div className="sm:text-right border-t sm:border-t-0 pt-3 sm:pt-0 w-full sm:w-auto border-slate-200">
+              <div className="inline-block bg-indigo-100 text-indigo-900 px-3 py-1 rounded-full font-bold text-xs uppercase tracking-wider mb-2">
                 {titleText}
               </div>
-              <div style={{ fontSize: '24px', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.5px' }}>
+              <div className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight whitespace-nowrap">
                 N° {doc.number || '—'}
               </div>
-              <div style={{ fontSize: '13px', color: '#64748b', marginTop: '6px', lineHeight: '1.5' }}>
+              <div className="text-xs sm:text-sm text-slate-500 mt-1 space-y-0.5">
                 <div><strong>Date :</strong> {formatDate(doc.date)}</div>
                 {doc.due_date && <div><strong>Échéance :</strong> {formatDate(doc.due_date)}</div>}
               </div>
@@ -213,17 +213,17 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
           </div>
 
           {/* Parties Grid (Émetteur vs Client) */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '24px' }}>
-            <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '16px' }}>
-              <div style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
+              <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                 Émetteur / Vendeur
               </div>
               {companyName && (
-                <div style={{ fontSize: '14px', fontWeight: 700, color: '#0f172a' }}>
+                <div className="text-sm font-bold text-slate-900">
                   {companyName}
                 </div>
               )}
-              <div style={{ fontSize: '12px', color: '#475569', marginTop: '4px', lineHeight: '1.5' }}>
+              <div className="text-xs text-slate-600 mt-1 space-y-0.5 leading-relaxed">
                 {companyMF && <div>MF : {companyMF}</div>}
                 {companyAddress && <div>{companyAddress}</div>}
                 {companyPhone && <div>Tél : {companyPhone}</div>}
@@ -231,14 +231,14 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
               </div>
             </div>
 
-            <div style={{ backgroundColor: '#f8fafc', border: '1px solid #cbd5e1', borderRadius: '10px', padding: '16px' }}>
-              <div style={{ fontSize: '11px', fontWeight: 700, color: '#1e3a8a', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>
+            <div className="bg-slate-50 border border-slate-300 rounded-xl p-4">
+              <div className="text-[11px] font-bold text-blue-900 uppercase tracking-wider mb-1.5">
                 Client / Facturé à
               </div>
-              <div style={{ fontSize: '15px', fontWeight: 700, color: '#0f172a' }}>
+              <div className="text-sm sm:text-base font-bold text-slate-900">
                 {doc.client_name || 'Client Non Spécifié'}
               </div>
-              <div style={{ fontSize: '12px', color: '#334155', marginTop: '4px', lineHeight: '1.5' }}>
+              <div className="text-xs text-slate-700 mt-1 space-y-0.5 leading-relaxed">
                 {doc.client_mf && <div><strong>Matricule Fiscal :</strong> {doc.client_mf}</div>}
                 {doc.client_address && <div><strong>Adresse :</strong> {doc.client_address}</div>}
                 {doc.client_phone && <div><strong>Tél :</strong> {doc.client_phone}</div>}
@@ -249,101 +249,105 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
           </div>
 
           {/* Line Items Table */}
-          <table style={{ width: '100%', borderCollapse: 'collapse', marginBottom: '24px', borderRadius: '8px', overflow: 'hidden', border: '1px solid #e2e8f0' }}>
-            <thead>
-              <tr style={{ backgroundColor: '#1e3a8a', color: '#ffffff' }}>
-                <th style={{ padding: '10px 12px', textAlign: 'center', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', width: '35px' }}>#</th>
-                <th style={{ padding: '10px 12px', textAlign: 'left', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase' }}>Désignation / Service</th>
-                <th style={{ padding: '10px 12px', textAlign: 'center', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', width: '75px' }}>Unité</th>
-                <th style={{ padding: '10px 12px', textAlign: 'right', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', width: '65px' }}>Qté</th>
-                <th style={{ padding: '10px 12px', textAlign: 'right', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', width: '110px' }}>Prix HT</th>
-                <th style={{ padding: '10px 12px', textAlign: 'right', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', width: '65px' }}>TVA</th>
-                <th style={{ padding: '10px 12px', textAlign: 'right', fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', width: '110px' }}>Total HT</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((it: any, i: number) => {
-                if (!it) return null
-                const qty = Number(it.quantity) || 0
-                const price = Number(it.price) || 0
-                const tva = Number(it.tva) || 0
-                const isEven = i % 2 === 0
-                return (
-                  <tr key={i} style={{ backgroundColor: isEven ? '#ffffff' : '#f8fafc', borderBottom: '1px solid #e2e8f0' }}>
-                    <td style={{ padding: '10px 12px', textAlign: 'center', fontSize: '12px', color: '#64748b' }}>{i + 1}</td>
-                    <td style={{ padding: '10px 12px', textAlign: 'left', fontSize: '13px', fontWeight: 500, color: '#0f172a' }}>{it.description || '—'}</td>
-                    <td style={{ padding: '10px 12px', textAlign: 'center', fontSize: '12px', color: '#64748b' }}>{it.unit || 'unité'}</td>
-                    <td style={{ padding: '10px 12px', textAlign: 'right', fontSize: '13px', fontWeight: 600, color: '#0f172a' }}>{qty}</td>
-                    <td style={{ padding: '10px 12px', textAlign: 'right', fontSize: '13px', color: '#334155' }}>{formatNumber(price, decimals)}</td>
-                    <td style={{ padding: '10px 12px', textAlign: 'right', fontSize: '12px', color: '#64748b' }}>{tva}%</td>
-                    <td style={{ padding: '10px 12px', textAlign: 'right', fontSize: '13px', fontWeight: 700, color: '#0f172a' }}>{formatNumber(qty * price, decimals)}</td>
-                  </tr>
-                )
-              })}
-            </tbody>
-          </table>
+          <div className="overflow-x-auto border border-slate-200 rounded-xl mb-6">
+            <table className="w-full text-xs sm:text-sm border-collapse min-w-[550px]">
+              <thead>
+                <tr className="bg-blue-900 text-white">
+                  <th className="p-2.5 text-center font-bold uppercase w-8">#</th>
+                  <th className="p-2.5 text-left font-bold uppercase">Désignation / Service</th>
+                  <th className="p-2.5 text-center font-bold uppercase w-16">Unité</th>
+                  <th className="p-2.5 text-right font-bold uppercase w-14">Qté</th>
+                  <th className="p-2.5 text-right font-bold uppercase w-24">Prix HT</th>
+                  <th className="p-2.5 text-right font-bold uppercase w-14">TVA</th>
+                  <th className="p-2.5 text-right font-bold uppercase w-24">Total HT</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200 bg-white">
+                {items.map((it: any, i: number) => {
+                  if (!it) return null
+                  const qty = Number(it.quantity) || 0
+                  const price = Number(it.price) || 0
+                  const tva = Number(it.tva) || 0
+                  const isEven = i % 2 === 0
+                  return (
+                    <tr key={i} className={isEven ? 'bg-white' : 'bg-slate-50'}>
+                      <td className="p-2.5 text-center text-slate-500">{i + 1}</td>
+                      <td className="p-2.5 text-left font-medium text-slate-900">{it.description || '—'}</td>
+                      <td className="p-2.5 text-center text-slate-500">{it.unit || 'unité'}</td>
+                      <td className="p-2.5 text-right font-semibold text-slate-900">{qty}</td>
+                      <td className="p-2.5 text-right text-slate-700">{formatNumber(price, decimals)}</td>
+                      <td className="p-2.5 text-right text-slate-500">{tva}%</td>
+                      <td className="p-2.5 text-right font-bold text-slate-900">{formatNumber(qty * price, decimals)}</td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
 
           {/* Totals & TVA Breakdown Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 320px', gap: '24px', alignItems: 'flex-start', marginBottom: '28px' }}>
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6 items-start mb-7">
             {/* Left: TVA Summary Table */}
             <div>
-              <div style={{ fontSize: '11px', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
+              <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
                 Ventilation de la TVA
               </div>
-              <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #e2e8f0', borderRadius: '6px', overflow: 'hidden', fontSize: '12px' }}>
-                <thead>
-                  <tr style={{ backgroundColor: '#f1f5f9', color: '#475569' }}>
-                    <th style={{ padding: '6px 10px', textAlign: 'left', fontWeight: 600 }}>Taux TVA</th>
-                    <th style={{ padding: '6px 10px', textAlign: 'right', fontWeight: 600 }}>Base HT</th>
-                    <th style={{ padding: '6px 10px', textAlign: 'right', fontWeight: 600 }}>Montant TVA</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {tvaLines.map((l) => (
-                    <tr key={l.rate} style={{ borderBottom: '1px solid #f1f5f9' }}>
-                      <td style={{ padding: '6px 10px', color: '#334155' }}>{l.rate}%</td>
-                      <td style={{ padding: '6px 10px', textAlign: 'right', color: '#334155' }}>{formatNumber(l.base, decimals)}</td>
-                      <td style={{ padding: '6px 10px', textAlign: 'right', fontWeight: 600, color: '#0f172a' }}>{formatNumber(l.amount, decimals)}</td>
+              <div className="overflow-x-auto border border-slate-200 rounded-lg">
+                <table className="w-full text-xs border-collapse">
+                  <thead>
+                    <tr className="bg-slate-100 text-slate-600">
+                      <th className="p-2 text-left font-semibold">Taux TVA</th>
+                      <th className="p-2 text-right font-semibold">Base HT</th>
+                      <th className="p-2 text-right font-semibold">Montant TVA</th>
                     </tr>
-                  ))}
-                  {tvaLines.length === 0 && (
-                    <tr>
-                      <td colSpan={3} style={{ padding: '8px 10px', textAlign: 'center', color: '#94a3b8' }}>Aucune TVA applicable</td>
-                    </tr>
-                  )}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 bg-white">
+                    {tvaLines.map((l) => (
+                      <tr key={l.rate}>
+                        <td className="p-2 text-slate-700">{l.rate}%</td>
+                        <td className="p-2 text-right text-slate-700">{formatNumber(l.base, decimals)}</td>
+                        <td className="p-2 text-right font-semibold text-slate-900">{formatNumber(l.amount, decimals)}</td>
+                      </tr>
+                    ))}
+                    {tvaLines.length === 0 && (
+                      <tr>
+                        <td colSpan={3} className="p-2.5 text-center text-slate-400">Aucune TVA applicable</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
             {/* Right: Totals Card */}
-            <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '10px', padding: '16px' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#475569', marginBottom: '6px' }}>
+            <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-2">
+              <div className="flex justify-between text-xs sm:text-sm text-slate-600">
                 <span>Total Hors Taxe (HT) :</span>
-                <span style={{ fontWeight: 600, color: '#0f172a' }}>{formatNumber(doc.total_ht, decimals)} {doc.currency || 'TND'}</span>
+                <span className="font-semibold text-slate-900">{formatNumber(doc.total_ht, decimals)} {doc.currency || 'TND'}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#475569', marginBottom: '6px' }}>
+              <div className="flex justify-between text-xs sm:text-sm text-slate-600">
                 <span>Total TVA :</span>
-                <span style={{ fontWeight: 600, color: '#0f172a' }}>{formatNumber(doc.total_tva, decimals)} {doc.currency || 'TND'}</span>
+                <span className="font-semibold text-slate-900">{formatNumber(doc.total_tva, decimals)} {doc.currency || 'TND'}</span>
               </div>
 
               {Number(doc.timbre_amount) > 0 && (
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#475569', marginBottom: '6px' }}>
+                <div className="flex justify-between text-xs sm:text-sm text-slate-600">
                   <span>Droit de Timbre Fiscal :</span>
-                  <span style={{ fontWeight: 600, color: '#0f172a' }}>{formatNumber(doc.timbre_amount, decimals)} {doc.currency || 'TND'}</span>
+                  <span className="font-semibold text-slate-900">{formatNumber(doc.timbre_amount, decimals)} {doc.currency || 'TND'}</span>
                 </div>
               )}
 
               {Number(doc.discount_amount) > 0 && (
-                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '13px', color: '#dc2626', marginBottom: '6px' }}>
+                <div className="flex justify-between text-xs sm:text-sm text-red-600">
                   <span>Remise Accordée :</span>
-                  <span style={{ fontWeight: 600 }}>-{formatNumber(doc.discount_amount, decimals)} {doc.currency || 'TND'}</span>
+                  <span className="font-semibold">-{formatNumber(doc.discount_amount, decimals)} {doc.currency || 'TND'}</span>
                 </div>
               )}
 
-              <div style={{ borderTop: '2px solid #cbd5e1', marginTop: '10px', paddingTop: '10px' }}>
-                <div style={{ backgroundColor: '#1e3a8a', color: '#ffffff', padding: '12px 14px', borderRadius: '8px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '13px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px' }}>Net à Payer (TTC)</span>
-                  <span style={{ fontSize: '18px', fontWeight: 800 }}>{formatNumber(doc.total_ttc, decimals)} {doc.currency || 'TND'}</span>
+              <div className="border-t-2 border-slate-300 pt-3.5 mt-2">
+                <div className="bg-blue-900 text-white p-3 rounded-lg flex justify-between items-center">
+                  <span className="text-xs font-bold uppercase tracking-wider">Net à Payer (TTC)</span>
+                  <span className="text-base sm:text-lg font-extrabold">{formatNumber(doc.total_ttc, decimals)} {doc.currency || 'TND'}</span>
                 </div>
               </div>
             </div>
@@ -351,34 +355,34 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
 
           {/* Legal Notes & Signatures */}
           {doc.notes && (
-            <div style={{ backgroundColor: '#fffbe3', borderLeft: '4px solid #f59e0b', padding: '10px 14px', borderRadius: '4px', marginBottom: '20px', fontSize: '12px', color: '#78350f' }}>
+            <div className="bg-amber-50 border-l-4 border-amber-500 p-3 rounded text-xs text-amber-900 mb-6">
               <strong>Notes / Conditions :</strong>
-              <div style={{ whiteSpace: 'pre-wrap', marginTop: '4px' }}>{doc.notes}</div>
+              <div className="whitespace-pre-wrap mt-1">{doc.notes}</div>
             </div>
           )}
 
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginTop: '32px', borderTop: '1px solid #e2e8f0', paddingTop: '20px' }}>
-            <div style={{ fontSize: '11px', color: '#64748b', maxWidth: '340px', lineHeight: '1.5' }}>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 pt-5 border-t border-slate-200 mt-6">
+            <div className="text-xs text-slate-500 max-w-sm space-y-1">
               <div><strong>Arrêté le présent document à la somme de :</strong></div>
-              <div style={{ fontSize: '12px', fontWeight: 700, color: '#0f172a', marginTop: '2px' }}>
+              <div className="text-sm font-bold text-slate-900">
                 {formatNumber(doc.total_ttc, decimals)} {doc.currency || 'TND'}
               </div>
-              <div style={{ marginTop: '8px', fontStyle: 'italic' }}>
+              <div className="italic text-slate-400 mt-2">
                 Merci de votre confiance.
               </div>
             </div>
 
-            <div style={{ display: 'flex', gap: '20px', textAlign: 'center' }}>
+            <div className="flex gap-4 items-center">
               {stampImage && (
-                <div>
-                  <div style={{ fontSize: '10px', color: '#64748b', textTransform: 'uppercase', marginBottom: '4px' }}>Cachet</div>
-                  <img src={stampImage} alt="Cachet" style={{ maxHeight: '80px', maxWidth: '140px', objectFit: 'contain' }} />
+                <div className="text-center">
+                  <div className="text-[10px] text-slate-400 uppercase mb-1">Cachet</div>
+                  <img src={stampImage} alt="Cachet" className="max-h-20 max-w-[140px] object-contain" />
                 </div>
               )}
               {signatureImage && (
-                <div>
-                  <div style={{ fontSize: '10px', color: '#64748b', textTransform: 'uppercase', marginBottom: '4px' }}>Signature</div>
-                  <img src={signatureImage} alt="Signature" style={{ maxHeight: '80px', maxWidth: '140px', objectFit: 'contain' }} />
+                <div className="text-center">
+                  <div className="text-[10px] text-slate-400 uppercase mb-1">Signature</div>
+                  <img src={signatureImage} alt="Signature" className="max-h-20 max-w-[140px] object-contain" />
                 </div>
               )}
             </div>
