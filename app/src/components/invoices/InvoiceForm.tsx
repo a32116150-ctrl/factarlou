@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import type { Client } from '@/types'
+import type { Client, Document } from '@/types'
 import { LineItems, type LineItemDraft } from './LineItems'
 import { TotalsPanel } from './TotalsPanel'
 import { ClientSelector } from './ClientSelector'
@@ -19,24 +19,55 @@ const CURRENCIES = ['TND', 'EUR', 'USD']
 
 const TIMBRE_TYPES = ['facture', 'bon']
 
-export default function InvoiceForm() {
+interface InvoiceFormProps {
+  initialData?: Document
+}
+
+export default function InvoiceForm({ initialData }: InvoiceFormProps = {}) {
   const router = useRouter()
   const searchParams = useSearchParams()
   const { toast } = useToast()
 
-  const [type, setType] = useState(searchParams.get('type') || 'facture')
-  const [date, setDate] = useState(todayISO())
-  const [client, setClient] = useState<Client | null>(null)
-  const [items, setItems] = useState<LineItemDraft[]>([
-    { description: '', quantity: 1, price: 0, tva: 19, unit: 'unité' },
-  ])
-  const [applyTimbre, setApplyTimbre] = useState(false)
-  const [discountPercent, setDiscountPercent] = useState(0)
-  const [discountAmount, setDiscountAmount] = useState(0)
-  const [currency, setCurrency] = useState('TND')
-  const [paymentMode, setPaymentMode] = useState('Virement bancaire')
-  const [notes, setNotes] = useState('')
-  const [internalNotes, setInternalNotes] = useState('')
+  const isEdit = Boolean(initialData?.id)
+
+  const [type, setType] = useState(initialData?.type || searchParams.get('type') || 'facture')
+  const [date, setDate] = useState(initialData?.date || todayISO())
+  const [client, setClient] = useState<Client | null>(
+    initialData
+      ? {
+          id: initialData.client_id || '',
+          name: initialData.client_name || '',
+          mf: initialData.client_mf || undefined,
+          address: initialData.client_address || undefined,
+          phone: initialData.client_phone || undefined,
+          email: initialData.client_email || undefined,
+          category: 'standard',
+          creditLimit: 0,
+        }
+      : null
+  )
+
+  let parsedItems: LineItemDraft[] = []
+  if (initialData?.items_json) {
+    try {
+      parsedItems = typeof initialData.items_json === 'string'
+        ? JSON.parse(initialData.items_json)
+        : (initialData.items_json as any)
+    } catch {}
+  }
+
+  const [items, setItems] = useState<LineItemDraft[]>(
+    parsedItems.length > 0
+      ? parsedItems
+      : [{ description: '', quantity: 1, price: 0, tva: 19, unit: 'unité' }]
+  )
+  const [applyTimbre, setApplyTimbre] = useState(initialData?.apply_timbre ?? false)
+  const [discountPercent, setDiscountPercent] = useState(initialData?.discount_percent || 0)
+  const [discountAmount, setDiscountAmount] = useState(initialData?.discount_amount || 0)
+  const [currency, setCurrency] = useState(initialData?.currency || 'TND')
+  const [paymentMode, setPaymentMode] = useState(initialData?.payment_mode || 'Virement bancaire')
+  const [notes, setNotes] = useState(initialData?.notes || '')
+  const [internalNotes, setInternalNotes] = useState(initialData?.internal_notes || '')
   const [saving, setSaving] = useState(false)
 
   const isForfaitaire = type === 'forfaitaire'
@@ -76,8 +107,11 @@ export default function InvoiceForm() {
     }
 
     setSaving(true)
-    const res = await fetch('/app/api/documents', {
-      method: 'POST',
+    const url = isEdit ? `/app/api/documents/${initialData.id}` : '/app/api/documents'
+    const method = isEdit ? 'PUT' : 'POST'
+
+    const res = await fetch(url, {
+      method,
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         type,
@@ -101,12 +135,12 @@ export default function InvoiceForm() {
     setSaving(false)
 
     if (res.ok) {
-      toast('Document créé avec succès')
+      toast(isEdit ? 'Document modifié avec succès' : 'Document créé avec succès')
       router.push('/invoices')
       router.refresh()
     } else {
       const json = await res.json().catch(() => ({}))
-      toast(json.error || 'Erreur lors de la création', 'error')
+      toast(json.error || 'Erreur lors de l\'enregistrement', 'error')
     }
   }
 

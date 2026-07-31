@@ -39,13 +39,20 @@ export async function PUT(
   const body = await request.json()
 
   const allowed = [
-    'payment_status', 'paid_amount', 'paid_date', 'notes', 'client_name', 'client_mf',
-    'client_address', 'client_phone', 'client_email', 'due_date', 'payment_mode',
+    'type', 'date', 'due_date', 'currency', 'payment_mode', 'payment_status',
+    'paid_amount', 'paid_date', 'client_id', 'client_name', 'client_mf',
+    'client_address', 'client_phone', 'client_email', 'items_json', 'items',
+    'apply_timbre', 'timbre_amount', 'rounding_adjustment', 'discount_percent',
+    'discount_amount', 'total_ht', 'total_tva', 'total_ttc', 'notes', 'internal_notes',
   ]
 
   const update: Record<string, unknown> = {}
   for (const key of allowed) {
     if (key in body) update[key] = body[key]
+  }
+
+  if (body.items) {
+    update.items_json = body.items
   }
 
   const { data, error } = await supabase

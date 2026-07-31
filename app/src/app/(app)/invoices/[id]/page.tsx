@@ -7,8 +7,10 @@ import { Badge, getPaymentStatusColor, getDocTypeColor } from '@/components/ui/B
 import { Button } from '@/components/ui/Button'
 import { formatDate, formatCurrency, DOC_TYPE_LABELS, PAYMENT_STATUS_LABELS } from '@/lib/formatters'
 
-export default async function InvoiceDetailPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
+export default async function InvoiceDetailPage({ params }: { params: Promise<{ id: string }> | { id: string } }) {
+  const resolvedParams = await Promise.resolve(params)
+  const id = resolvedParams.id
+
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
@@ -16,14 +18,20 @@ export default async function InvoiceDetailPage({ params }: { params: Promise<{ 
     redirect('/login')
   }
 
-  const { data: doc, error } = await supabase
-    .from('documents')
-    .select('*')
-    .eq('id', id)
-    .eq('user_id', user.id)
-    .maybeSingle()
+  let doc = null
+  try {
+    const { data } = await supabase
+      .from('documents')
+      .select('*')
+      .eq('id', id)
+      .eq('user_id', user.id)
+      .maybeSingle()
+    doc = data
+  } catch (e) {
+    console.error('Error fetching document:', e)
+  }
 
-  if (error || !doc) {
+  if (!doc) {
     notFound()
   }
 
