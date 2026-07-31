@@ -8,8 +8,6 @@ import { Input, Textarea } from '@/components/ui/Input'
 import { useToast } from '@/components/ui/Toast'
 import type { Document } from '@/types'
 import { formatDate, formatNumber, formatCurrency, DOC_TYPE_LABELS } from '@/lib/formatters'
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
 
 interface InvoicePDFProps {
   doc: Document
@@ -91,10 +89,13 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
   }
 
   const downloadPDF = async () => {
+    if (typeof window === 'undefined') return
     const content = contentRef.current
     if (!content) return
     setDownloading(true)
     try {
+      const html2canvas = (await import('html2canvas')).default
+      const { jsPDF } = await import('jspdf')
       const canvas = await html2canvas(content, { scale: 2, useCORS: true })
       const imgData = canvas.toDataURL('image/png')
       const pdf = new jsPDF('p', 'mm', 'a4')
@@ -104,7 +105,8 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
       pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, Math.min(imgHeight, pageHeight))
       pdf.save(`${doc.number || 'document'}.pdf`)
       toast('PDF téléchargé avec succès')
-    } catch {
+    } catch (e) {
+      console.error('PDF download error:', e)
       print()
     } finally {
       setDownloading(false)
