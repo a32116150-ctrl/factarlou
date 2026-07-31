@@ -22,19 +22,30 @@ export default function ResetPasswordPage() {
   useEffect(() => {
     const supabase = createClient()
 
-    // Listen for recovery session or auth state change
+    // 1. Check if URL contains PKCE ?code=...
+    const searchParams = new URLSearchParams(window.location.search)
+    const code = searchParams.get('code')
+
+    if (code) {
+      supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
+        if (!error) {
+          setValidSession(true)
+        }
+      })
+    }
+
+    // 2. Listen for recovery session or auth state change
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (event === 'PASSWORD_RECOVERY' || session) {
         setValidSession(true)
       }
     })
 
-    // Also check current session
+    // 3. Also check current session
     supabase.auth.getSession().then(({ data: { session } }) => {
       if (session) {
         setValidSession(true)
-      } else {
-        // Wait a brief moment in case hash parameters are being processed
+      } else if (!code) {
         setTimeout(() => {
           supabase.auth.getSession().then(({ data: { session: s } }) => {
             setValidSession(Boolean(s))

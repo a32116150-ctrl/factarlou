@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { useToast } from '@/components/ui/Toast'
 import { createClient } from '@/lib/supabase/client'
-import { CheckCircle2, ArrowLeft, Mail } from 'lucide-react'
+import { Mail, ArrowLeft } from 'lucide-react'
 
 export default function ForgotPasswordPage() {
   const { toast } = useToast()
@@ -24,8 +24,8 @@ export default function ForgotPasswordPage() {
     setLoading(true)
     const supabase = createClient()
     
-    // Construct clean callback URL for password reset
-    const redirectTo = `${window.location.origin}/app/api/auth/callback?next=/reset-password`
+    // Direct redirect to reset-password page for recovery flow
+    const redirectTo = `${window.location.origin}/app/reset-password`
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo,
