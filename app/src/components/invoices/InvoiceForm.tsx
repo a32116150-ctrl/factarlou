@@ -36,13 +36,14 @@ export default function InvoiceForm({ initialData }: InvoiceFormProps = {}) {
     initialData
       ? {
           id: initialData.client_id || '',
+          user_id: initialData.user_id || '',
           name: initialData.client_name || '',
           mf: initialData.client_mf || undefined,
           address: initialData.client_address || undefined,
           phone: initialData.client_phone || undefined,
           email: initialData.client_email || undefined,
           category: 'standard',
-          creditLimit: 0,
+          credit_limit: 0,
         }
       : null
   )
