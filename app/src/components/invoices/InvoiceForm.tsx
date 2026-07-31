@@ -171,7 +171,7 @@ export default function InvoiceForm({ initialData }: InvoiceFormProps = {}) {
                 ))}
               </Select>
               <Input label="Date" type="date" value={date} onChange={(e) => setDate(e.target.value)} />
-              <Select label="Devise" value={currency} onChange={(e) => setCurrency(e.target.value)}>
+              <Select label="Devise" value={currency} onChange={(e) => setCurrency(e.target.value as any)}>
                 {CURRENCIES.map((c) => (
                   <option key={c} value={c}>{c}</option>
                 ))}
