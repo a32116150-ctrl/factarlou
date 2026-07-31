@@ -33,7 +33,12 @@ export default function ForgotPasswordPage() {
     setLoading(false)
 
     if (error) {
-      toast(error.message, 'error')
+      const msg = error.message.toLowerCase()
+      if (msg.includes('rate limit') || msg.includes('security purposes') || msg.includes('429')) {
+        toast('Pour des raisons de sécurité, veuillez patienter 60 secondes avant de demander un nouvel email.', 'warning')
+      } else {
+        toast(error.message, 'error')
+      }
       return
     }
     setSent(true)
