@@ -1,0 +1,5 @@
+{
+  "rewrites": [
+    { "source": "/app/:path*", "destination": "https://factarlou-app.vercel.app/app/:path*" }
+  ]
+}
