@@ -35,7 +35,7 @@ export default function ForgotPasswordPage() {
     if (error) {
       const msg = error.message.toLowerCase()
       if (msg.includes('rate limit') || msg.includes('security purposes') || msg.includes('429')) {
-        toast('Pour des raisons de sécurité, veuillez patienter 60 secondes avant de demander un nouvel email.', 'warning')
+        toast('Pour des raisons de sécurité, veuillez patienter 60 secondes avant de demander un nouvel email.', 'info')
       } else {
         toast(error.message, 'error')
       }
