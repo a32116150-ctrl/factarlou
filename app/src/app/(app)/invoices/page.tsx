@@ -226,21 +226,21 @@ export default function DocumentsPage() {
 
                 <div className="flex items-center justify-between pt-2 border-t border-slate-100 gap-1 bg-slate-50 -mx-4 -mb-4 p-3 rounded-b-xl">
                   <Link href={`/invoices/${doc.id}`} className="flex-1">
-                    <Button size="xs" variant="outline" className="w-full flex items-center justify-center gap-1">
+                    <Button size="sm" variant="outline" className="w-full flex items-center justify-center gap-1 text-xs py-1">
                       <Eye className="h-3.5 w-3.5" /> Voir
                     </Button>
                   </Link>
                   <Link href={`/invoices/${doc.id}`} className="flex-1">
-                    <Button size="xs" variant="outline" className="w-full flex items-center justify-center gap-1">
+                    <Button size="sm" variant="outline" className="w-full flex items-center justify-center gap-1 text-xs py-1">
                       <Printer className="h-3.5 w-3.5" /> PDF
                     </Button>
                   </Link>
                   <Link href={`/invoices/${doc.id}/edit`} className="flex-1">
-                    <Button size="xs" variant="outline" className="w-full flex items-center justify-center gap-1">
+                    <Button size="sm" variant="outline" className="w-full flex items-center justify-center gap-1 text-xs py-1">
                       <Pencil className="h-3.5 w-3.5" /> Éditer
                     </Button>
                   </Link>
-                  <Button size="xs" variant="ghost" onClick={() => setDeleteTarget(doc)} className="text-red-600">
+                  <Button size="sm" variant="ghost" onClick={() => setDeleteTarget(doc)} className="text-red-600 px-2 py-1">
                     <Trash2 className="h-3.5 w-3.5" />
                   </Button>
                 </div>

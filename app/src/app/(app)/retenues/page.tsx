@@ -161,11 +161,11 @@ export default function RetenuesPage() {
 
                 <div className="flex items-center justify-between pt-2 border-t border-slate-100 gap-2 bg-slate-50 -mx-4 -mb-4 p-3 rounded-b-xl">
                   <Link href={`/retenues/${r.id}`} className="flex-1">
-                    <Button size="xs" variant="outline" className="w-full flex items-center justify-center gap-1">
+                    <Button size="sm" variant="outline" className="w-full flex items-center justify-center gap-1 text-xs py-1">
                       <Eye className="h-3.5 w-3.5" /> Aperçu Retenue
                     </Button>
                   </Link>
-                  <Button size="xs" variant="danger" onClick={() => setDeleteTarget(r)} className="shrink-0">
+                  <Button size="sm" variant="danger" onClick={() => setDeleteTarget(r)} className="shrink-0 text-xs py-1">
                     <Trash2 className="h-3.5 w-3.5" />
                   </Button>
                 </div>
