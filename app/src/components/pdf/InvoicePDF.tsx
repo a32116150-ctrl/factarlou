@@ -26,6 +26,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
   const { toast } = useToast()
 
   const [company, setCompany] = useState<any>(null)
+  const [settings, setSettings] = useState<any>(null)
   const [downloading, setDownloading] = useState(false)
   const [emailModal, setEmailModal] = useState(false)
   const [emailTo, setEmailTo] = useState(doc.client_email || '')
@@ -44,7 +45,29 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
         })
         .catch(() => {})
     }
+    fetch('/app/api/settings')
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.data) setSettings(json.data)
+      })
+      .catch(() => {})
   }, [doc.company_name, doc.company_mf])
+
+  let primaryColor = '#1e3a8a'
+  let customFooterText = ''
+  let showSignatureBox = true
+  if (settings?.document_theme) {
+    try {
+      const parsed = JSON.parse(settings.document_theme)
+      if (parsed.primaryColor) primaryColor = parsed.primaryColor
+      if (parsed.customFooterText) customFooterText = parsed.customFooterText
+      if (parsed.showSignatureBox !== undefined) showSignatureBox = parsed.showSignatureBox
+    } catch {
+      if (typeof settings.document_theme === 'string' && settings.document_theme.startsWith('#')) {
+        primaryColor = settings.document_theme
+      }
+    }
+  }
 
   const companyName = doc.company_name || company?.name || ''
   const companyMF = doc.company_mf || company?.mf || ''
@@ -252,7 +275,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
           <div className="overflow-x-auto border border-slate-200 rounded-xl mb-6">
             <table className="w-full text-xs sm:text-sm border-collapse min-w-[550px]">
               <thead>
-                <tr className="bg-blue-900 text-white">
+                <tr className="text-white font-bold" style={{ backgroundColor: primaryColor }}>
                   <th className="p-2.5 text-center font-bold uppercase w-8">#</th>
                   <th className="p-2.5 text-left font-bold uppercase">Désignation / Service</th>
                   <th className="p-2.5 text-center font-bold uppercase w-16">Unité</th>
@@ -345,7 +368,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
               )}
 
               <div className="border-t-2 border-slate-300 pt-3.5 mt-2">
-                <div className="bg-blue-900 text-white p-3 rounded-lg flex justify-between items-center">
+                <div className="text-white p-3 rounded-lg flex justify-between items-center" style={{ backgroundColor: primaryColor }}>
                   <span className="text-xs font-bold uppercase tracking-wider">Net à Payer (TTC)</span>
                   <span className="text-base sm:text-lg font-extrabold">{formatNumber(doc.total_ttc, decimals)} {doc.currency || 'TND'}</span>
                 </div>
@@ -367,8 +390,8 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
               <div className="text-sm font-bold text-slate-900">
                 {formatNumber(doc.total_ttc, decimals)} {doc.currency || 'TND'}
               </div>
-              <div className="italic text-slate-400 mt-2">
-                Merci de votre confiance.
+              <div className="italic text-slate-500 mt-2 font-medium">
+                {customFooterText || 'Merci de votre confiance.'}
               </div>
             </div>
 

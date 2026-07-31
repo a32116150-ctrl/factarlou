@@ -6,6 +6,11 @@ import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
 import { useToast } from '@/components/ui/Toast'
 import type { UserSettings } from '@/types'
+import {
+  DocumentThemeEditor,
+  DocumentDesignSettings,
+  DEFAULT_DOCUMENT_DESIGN,
+} from '@/components/settings/DocumentThemeEditor'
 
 const PREFIX_FIELDS: Array<{ key: keyof UserSettings; label: string }> = [
   { key: 'prefix_facture', label: 'Factures' },
@@ -21,17 +26,38 @@ const PREFIX_FIELDS: Array<{ key: keyof UserSettings; label: string }> = [
   { key: 'prefix_ticket', label: 'Tickets' },
 ]
 
+function parseDesignTheme(rawTheme?: string | null): DocumentDesignSettings {
+  if (!rawTheme) return DEFAULT_DOCUMENT_DESIGN
+  try {
+    const parsed = JSON.parse(rawTheme)
+    if (typeof parsed === 'object' && parsed !== null) {
+      return { ...DEFAULT_DOCUMENT_DESIGN, ...parsed }
+    }
+  } catch {
+    // fallback if rawTheme is a plain color string
+    if (typeof rawTheme === 'string' && rawTheme.startsWith('#')) {
+      return { ...DEFAULT_DOCUMENT_DESIGN, primaryColor: rawTheme }
+    }
+  }
+  return DEFAULT_DOCUMENT_DESIGN
+}
+
 export default function DocumentSettingsPage() {
   const { toast } = useToast()
   const [settings, setSettings] = useState<UserSettings | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [designSettings, setDesignSettings] = useState<DocumentDesignSettings>(DEFAULT_DOCUMENT_DESIGN)
 
   const load = useCallback(async () => {
     const res = await fetch('/app/api/settings')
     if (res.ok) {
       const json = await res.json()
-      setSettings(json.data)
+      const s = json.data as UserSettings
+      setSettings(s)
+      if (s) {
+        setDesignSettings(parseDesignTheme(s.document_theme))
+      }
     }
     setLoading(false)
   }, [])
@@ -45,20 +71,29 @@ export default function DocumentSettingsPage() {
     setSettings((prev) => (prev ? { ...prev, ...patch } : prev))
   }
 
+  const handleDesignChange = (updated: DocumentDesignSettings) => {
+    setDesignSettings(updated)
+    update({ document_theme: JSON.stringify(updated) })
+  }
+
   const handleSave = async () => {
     if (!settings) return
     setSaving(true)
+    const payload = {
+      ...settings,
+      document_theme: JSON.stringify(designSettings),
+    }
     const res = await fetch('/app/api/settings', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(settings),
+      body: JSON.stringify(payload),
     })
     setSaving(false)
     if (res.ok) {
-      toast('Paramètres enregistrés')
+      toast('Paramètres et design des documents enregistrés avec succès')
     } else {
       const json = await res.json().catch(() => ({}))
-      toast(json.error || 'Erreur', 'error')
+      toast(json.error || 'Erreur lors de la sauvegarde', 'error')
     }
   }
 
@@ -67,10 +102,23 @@ export default function DocumentSettingsPage() {
   }
 
   return (
-    <div className="max-w-2xl space-y-4">
-      <div className="bg-white border border-border-color rounded-xl p-5 space-y-4">
-        <h2 className="text-sm font-semibold text-text">Préfixes de numérotation</h2>
-        <div className="grid grid-cols-2 gap-3">
+    <div className="max-w-5xl space-y-6">
+      {/* Design Customization Section */}
+      <div className="bg-white border border-border-color rounded-xl p-5 sm:p-6 space-y-5 shadow-sm">
+        <div>
+          <h2 className="text-base font-bold text-text">Personnalisation & Design des Documents (Factures, Devis...)</h2>
+          <p className="text-xs text-text-muted mt-0.5">
+            Personnalisez les couleurs, polices, en-têtes et mentions avant d&apos;exporter vos documents en PDF
+          </p>
+        </div>
+
+        <DocumentThemeEditor value={designSettings} onChange={handleDesignChange} />
+      </div>
+
+      {/* Prefix numbering section */}
+      <div className="bg-white border border-border-color rounded-xl p-5 space-y-4 shadow-sm">
+        <h2 className="text-sm font-bold uppercase tracking-wider text-text">Préfixes de numérotation</h2>
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           {PREFIX_FIELDS.map((f) => (
             <Input
               key={f.key}
@@ -82,8 +130,9 @@ export default function DocumentSettingsPage() {
         </div>
       </div>
 
-      <div className="bg-white border border-border-color rounded-xl p-5 space-y-4">
-        <h2 className="text-sm font-semibold text-text">Calculs</h2>
+      {/* Calculations section */}
+      <div className="bg-white border border-border-color rounded-xl p-5 space-y-4 shadow-sm">
+        <h2 className="text-sm font-bold uppercase tracking-wider text-text">Calculs & Arrondis</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           <Select
             label="Décimales"
@@ -99,7 +148,7 @@ export default function DocumentSettingsPage() {
             value={settings.rounding_method}
             onChange={(e) => update({ rounding_method: e.target.value as UserSettings['rounding_method'] })}
           >
-            <option value="half_up">Demi-arondi (standard)</option>
+            <option value="half_up">Demi-arrondi (standard)</option>
             <option value="ceil">Arrondi supérieur</option>
             <option value="floor">Arrondi inférieur</option>
           </Select>
@@ -115,8 +164,10 @@ export default function DocumentSettingsPage() {
         </div>
       </div>
 
-      <div className="flex justify-end">
-        <Button onClick={handleSave} loading={saving}>Enregistrer</Button>
+      <div className="flex justify-end pt-2">
+        <Button onClick={handleSave} loading={saving} size="lg" className="px-8 font-semibold">
+          Enregistrer tous les paramètres
+        </Button>
       </div>
     </div>
   )

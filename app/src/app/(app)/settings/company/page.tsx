@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { useToast } from '@/components/ui/Toast'
 import { createClient } from '@/lib/supabase/client'
+import { ImageUploadField } from '@/components/company/ImageUploadField'
 
 interface CompanyForm {
   name: string
@@ -69,8 +70,10 @@ export default function CompanySettingsPage() {
       return
     }
     const { data: urlData } = supabase.storage.from('company-assets').getPublicUrl(path)
-    update({ [field]: urlData.publicUrl })
-    toast('Image téléchargée')
+    // Append timestamp to bust browser cache
+    const publicUrl = `${urlData.publicUrl}?t=${Date.now()}`
+    update({ [field]: publicUrl })
+    toast('Image mise à jour avec succès')
   }
 
   const handleSave = async () => {
@@ -85,7 +88,7 @@ export default function CompanySettingsPage() {
       toast('Entreprise enregistrée')
     } else {
       const json = await res.json().catch(() => ({}))
-      toast(json.error || 'Erreur', 'error')
+      toast(json.error || 'Erreur lors de l\'enregistrement', 'error')
     }
   }
 
@@ -94,62 +97,59 @@ export default function CompanySettingsPage() {
   }
 
   return (
-    <div className="max-w-2xl space-y-4">
-      <div className="bg-white border border-border-color rounded-xl p-5 space-y-4">
-        <h2 className="text-sm font-semibold text-text">Informations légales</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <Input label="Nom de l'entreprise" value={form.name} onChange={(e) => update({ name: e.target.value })} />
+    <div className="max-w-3xl space-y-6">
+      <div className="bg-white border border-border-color rounded-xl p-5 space-y-4 shadow-sm">
+        <h2 className="text-sm font-bold uppercase tracking-wider text-text">Informations légales de l&apos;entreprise</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <Input label="Nom / Raison Sociale" value={form.name} onChange={(e) => update({ name: e.target.value })} />
           <Input label="Matricule Fiscal" value={form.mf} onChange={(e) => update({ mf: e.target.value })} />
-          <Input label="Adresse" value={form.address} onChange={(e) => update({ address: e.target.value })} />
+          <Input label="Adresse physique" value={form.address} onChange={(e) => update({ address: e.target.value })} />
           <Input label="Téléphone" value={form.phone} onChange={(e) => update({ phone: e.target.value })} />
-          <Input label="Email" value={form.email} onChange={(e) => update({ email: e.target.value })} />
-          <Input label="Registre de Commerce" value={form.rc} onChange={(e) => update({ rc: e.target.value })} />
+          <Input label="Email de contact" value={form.email} onChange={(e) => update({ email: e.target.value })} />
+          <Input label="Registre de Commerce (RC)" value={form.rc} onChange={(e) => update({ rc: e.target.value })} />
           <Input label="Site web" value={form.website} onChange={(e) => update({ website: e.target.value })} />
-          <Input label="Banque" value={form.bank} onChange={(e) => update({ bank: e.target.value })} />
+          <Input label="Nom de la Banque" value={form.bank} onChange={(e) => update({ bank: e.target.value })} />
           <div className="sm:col-span-2">
-            <Input label="IBAN / RIB" value={form.rib} onChange={(e) => update({ rib: e.target.value })} />
+            <Input label="IBAN / RIB bancaire" value={form.rib} onChange={(e) => update({ rib: e.target.value })} />
           </div>
         </div>
       </div>
 
-      <div className="bg-white border border-border-color rounded-xl p-5 space-y-4">
-        <h2 className="text-sm font-semibold text-text">Logo, cachet et signature</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {([
-            { field: 'logo_image', label: 'Logo', show: 'show_logo' as const },
-            { field: 'stamp_image', label: 'Cachet', show: 'show_stamp' as const },
-            { field: 'signature_image', label: 'Signature', show: 'show_signature' as const },
-          ] as const).map(({ field, label, show }) => (
-            <div key={field} className="space-y-2">
-              {form[field] && (
-                <img src={form[field]} alt={label} className="h-20 object-contain bg-white rounded-lg p-1" />
-              )}
-              <label className="block text-xs font-medium text-text-secondary">{label}</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => {
-                  const f = e.target.files?.[0]
-                  if (f) uploadImage(field, f)
-                }}
-                className="text-xs text-text-muted"
-              />
-              <label className="flex items-center gap-2 text-xs text-text-muted cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={form[show]}
-                  onChange={(e) => update({ [show]: e.target.checked })}
-                  className="h-3.5 w-3.5 accent-indigo-600"
-                />
-                Afficher sur les documents
-              </label>
-            </div>
-          ))}
+      <div className="bg-white border border-border-color rounded-xl p-5 space-y-4 shadow-sm">
+        <div>
+          <h2 className="text-sm font-bold uppercase tracking-wider text-text">Logo, Cachet et Signature</h2>
+          <p className="text-xs text-text-muted mt-0.5">Ces visuels apparaîtront sur vos factures, devis et attestations de retenue</p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <ImageUploadField
+            label="Logo"
+            imageUrl={form.logo_image}
+            showOnDocs={form.show_logo}
+            onImageChange={(f) => uploadImage('logo_image', f)}
+            onImageRemove={() => update({ logo_image: '' })}
+            onToggleShowOnDocs={(val) => update({ show_logo: val })}
+          />
+          <ImageUploadField
+            label="Cachet"
+            imageUrl={form.stamp_image}
+            showOnDocs={form.show_stamp}
+            onImageChange={(f) => uploadImage('stamp_image', f)}
+            onImageRemove={() => update({ stamp_image: '' })}
+            onToggleShowOnDocs={(val) => update({ show_stamp: val })}
+          />
+          <ImageUploadField
+            label="Signature"
+            imageUrl={form.signature_image}
+            showOnDocs={form.show_signature}
+            onImageChange={(f) => uploadImage('signature_image', f)}
+            onImageRemove={() => update({ signature_image: '' })}
+            onToggleShowOnDocs={(val) => update({ show_signature: val })}
+          />
         </div>
       </div>
 
-      <div className="flex justify-end">
-        <Button onClick={handleSave} loading={saving}>Enregistrer</Button>
+      <div className="flex justify-end pt-2">
+        <Button onClick={handleSave} loading={saving} size="lg" className="px-8 font-semibold">Enregistrer les modifications</Button>
       </div>
     </div>
   )
