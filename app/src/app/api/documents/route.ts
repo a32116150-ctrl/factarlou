@@ -182,15 +182,37 @@ async function generateNumberWithRetry(
   userId: string,
   type: string,
   prefix: string
-): Promise<string | null> {
+): Promise<string> {
   const year = new Date().getFullYear()
-  const { data, error } = await supabase.rpc('increment_doc_counter', {
-    p_user_id: userId,
-    p_type: type,
-    p_year: year,
-  })
-  if (error || typeof data !== 'number') return null
-  return `${prefix}-${year}-${String(data).padStart(4, '0')}`
+
+  try {
+    const { data } = await supabase.rpc('increment_doc_counter', {
+      p_user_id: userId,
+      p_type: type,
+      p_year: year,
+    })
+    if (typeof data === 'number') {
+      return `${prefix}-${year}-${String(data).padStart(4, '0')}`
+    }
+  } catch {}
+
+  const prefixYear = `${prefix}-${year}-`
+  const { data: existing } = await supabase
+    .from('documents')
+    .select('number')
+    .eq('user_id', userId)
+    .eq('type', type)
+    .like('number', `${prefixYear}%`)
+    .order('created_at', { ascending: false })
+    .limit(1)
+
+  let nextNum = 1
+  if (existing && existing.length > 0 && existing[0].number) {
+    const lastNum = parseInt(existing[0].number.replace(prefixYear, ''), 10)
+    if (!isNaN(lastNum)) nextNum = lastNum + 1
+  }
+
+  return `${prefixYear}${String(nextNum).padStart(4, '0')}`
 }
 
 function add30Days(dateISO: string): string {

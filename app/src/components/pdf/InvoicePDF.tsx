@@ -1,10 +1,15 @@
 'use client'
 
-import { useRef } from 'react'
-import { Printer } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { Printer, Download, Mail } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { Modal } from '@/components/ui/Modal'
+import { Input, Textarea } from '@/components/ui/Input'
+import { useToast } from '@/components/ui/Toast'
 import type { Document } from '@/types'
-import { formatDate, formatNumber, DOC_TYPE_LABELS } from '@/lib/formatters'
+import { formatDate, formatNumber, formatCurrency, DOC_TYPE_LABELS } from '@/lib/formatters'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 
 interface InvoicePDFProps {
   doc: Document
@@ -20,6 +25,17 @@ function tryParseJSON(jsonString: string) {
 
 export function InvoicePDF({ doc }: InvoicePDFProps) {
   const contentRef = useRef<HTMLDivElement>(null)
+  const { toast } = useToast()
+
+  const [downloading, setDownloading] = useState(false)
+  const [emailModal, setEmailModal] = useState(false)
+  const [emailTo, setEmailTo] = useState(doc.client_email || '')
+  const [emailSubject, setEmailSubject] = useState(`${DOC_TYPE_LABELS[doc.type] || doc.type} ${doc.number}`)
+  const [emailBody, setEmailBody] = useState(
+    `Bonjour ${doc.client_name || 'Client'},\n\nVeuillez trouver ci-joint votre document ${doc.number} du ${formatDate(doc.date)} d'un montant de ${formatCurrency(doc.total_ttc, doc.currency)}.\n\nCordialement,\n${doc.company_name || 'Factarlou'}`
+  )
+  const [sendingEmail, setSendingEmail] = useState(false)
+
   const rawItems = typeof doc.items_json === 'string' ? (tryParseJSON(doc.items_json) || []) : (doc.items_json || [])
   const items = Array.isArray(rawItems) ? rawItems : []
   const decimals = 3
@@ -35,7 +51,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
       <html>
         <head>
           <meta charset="UTF-8">
-          <title>${doc.type.toUpperCase()} ${doc.number}</title>
+          <title>${(doc.type || 'document').toUpperCase()} ${doc.number || ''}</title>
           <style>
             @page { size: A4; margin: 15mm 15mm 20mm 15mm; }
             body { font-family: 'Arial', 'Helvetica', sans-serif; font-size: 12px; color: #000; margin: 0; }
@@ -74,6 +90,53 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
     setTimeout(() => printWindow.print(), 250)
   }
 
+  const downloadPDF = async () => {
+    const content = contentRef.current
+    if (!content) return
+    setDownloading(true)
+    try {
+      const canvas = await html2canvas(content, { scale: 2, useCORS: true })
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF('p', 'mm', 'a4')
+      const imgWidth = 210
+      const pageHeight = 297
+      const imgHeight = (canvas.height * imgWidth) / canvas.width
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, Math.min(imgHeight, pageHeight))
+      pdf.save(`${doc.number || 'document'}.pdf`)
+      toast('PDF téléchargé avec succès')
+    } catch {
+      print()
+    } finally {
+      setDownloading(false)
+    }
+  }
+
+  const handleSendEmail = async () => {
+    if (!emailTo) {
+      toast('Veuillez entrer une adresse email', 'error')
+      return
+    }
+    setSendingEmail(true)
+    const res = await fetch('/app/api/email/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        to: emailTo,
+        subject: emailSubject,
+        body: emailBody.replace(/\n/g, '<br>'),
+      }),
+    })
+    setSendingEmail(false)
+
+    if (res.ok) {
+      toast('Email envoyé avec succès')
+      setEmailModal(false)
+    } else {
+      const json = await res.json().catch(() => ({}))
+      toast(json.error || 'Erreur lors de l\'envoi (vérifiez la configuration SMTP)', 'error')
+    }
+  }
+
   const tvaLines: Array<{ rate: number; base: number; amount: number }> = []
   items.forEach((it) => {
     const existing = tvaLines.find((l) => l.rate === it.tva)
@@ -92,9 +155,18 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
 
   return (
     <div className="bg-white border border-border-color rounded-xl overflow-hidden">
-      <div className="flex justify-end px-4 py-3 border-b border-border-light">
-        <Button size="sm" onClick={print}><Printer className="h-4 w-4" /> Imprimer / PDF</Button>
+      <div className="flex flex-wrap items-center justify-end gap-2 px-4 py-3 border-b border-border-light bg-gray-50">
+        <Button variant="secondary" size="sm" onClick={() => setEmailModal(true)}>
+          <Mail className="h-4 w-4" /> Envoyer par Email
+        </Button>
+        <Button variant="secondary" size="sm" onClick={downloadPDF} loading={downloading}>
+          <Download className="h-4 w-4" /> Télécharger PDF
+        </Button>
+        <Button size="sm" onClick={print}>
+          <Printer className="h-4 w-4" /> Imprimer
+        </Button>
       </div>
+
       <div className="p-6 bg-white">
         <div ref={contentRef} className="max-w-[210mm] mx-auto text-black">
           <div className="invoice-header">
@@ -213,6 +285,39 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
           </div>
         </div>
       </div>
+
+      <Modal
+        open={emailModal}
+        onClose={() => setEmailModal(false)}
+        title={`Envoyer le document ${doc.number}`}
+        footer={
+          <>
+            <Button variant="ghost" onClick={() => setEmailModal(false)}>Annuler</Button>
+            <Button onClick={handleSendEmail} loading={sendingEmail}>Envoyer</Button>
+          </>
+        }
+      >
+        <div className="space-y-4">
+          <Input
+            label="Email du destinataire"
+            type="email"
+            placeholder="client@entreprise.tn"
+            value={emailTo}
+            onChange={(e) => setEmailTo(e.target.value)}
+          />
+          <Input
+            label="Objet de l'email"
+            value={emailSubject}
+            onChange={(e) => setEmailSubject(e.target.value)}
+          />
+          <Textarea
+            label="Message"
+            rows={5}
+            value={emailBody}
+            onChange={(e) => setEmailBody(e.target.value)}
+          />
+        </div>
+      </Modal>
     </div>
   )
 }
