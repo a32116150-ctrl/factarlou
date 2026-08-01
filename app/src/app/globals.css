@@ -65,14 +65,33 @@
   --font-sans: var(--font-inter);
 }
 
-/* Force light color scheme for all form controls & inputs across all browsers and devices */
+/* Force light color scheme for all form controls & inputs across iOS, WebKit, and Android */
 input, textarea, select {
   color-scheme: light !important;
   background-color: #ffffff !important;
   color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
+  -webkit-opacity: 1 !important;
+  opacity: 1 !important;
 }
 
-/* Fix browser autofill dark navy backgrounds */
+/* Overriding OS Dark Mode Media Queries specifically for iOS WebKit */
+@media (prefers-color-scheme: dark) {
+  :root, html, body {
+    color-scheme: light !important;
+    background-color: #f0f4f8 !important;
+    color: #0f172a !important;
+  }
+
+  input, textarea, select {
+    color-scheme: light !important;
+    background-color: #ffffff !important;
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+  }
+}
+
+/* Fix iOS & WebKit browser autofill dark navy backgrounds */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
