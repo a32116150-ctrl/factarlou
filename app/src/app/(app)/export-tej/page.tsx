@@ -218,11 +218,9 @@ export default function ExportTEJPage() {
             })
           })
         } else {
-          // CSV / TXT / Standard File Parsing
           const lines = text.split(/\r?\n/).filter((l) => l.trim().length > 0)
           lines.forEach((line, idx) => {
             if (idx === 0 && (line.toLowerCase().includes('date') || line.toLowerCase().includes('brut') || line.includes(';'))) {
-              // Skip header row if present
               if (lines.length > 1) return
             }
 
@@ -254,7 +252,6 @@ export default function ExportTEJPage() {
         }
 
         if (newRecords.length === 0) {
-          // Fallback example record if file structure was minimal
           newRecords.push({
             id: `import-${Date.now()}-0`,
             date: new Date().toISOString().split('T')[0],
@@ -292,7 +289,6 @@ export default function ExportTEJPage() {
     }
   }
 
-  // Save Parsed Records to Database Account & Offer XML Download
   const handleSaveAndGenerateTEJ = async () => {
     if (parsedRecords.length === 0) return
 
@@ -320,7 +316,6 @@ export default function ExportTEJPage() {
         if (res.ok) savedCount++
       }
 
-      // Generate Downloadable XML immediately
       const convertedRetenues: Retenue[] = parsedRecords.map((r, idx) => ({
         id: r.id,
         user_id: '',
@@ -363,14 +358,14 @@ export default function ExportTEJPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 border border-emerald-200 dark:border-emerald-800 text-emerald-600 dark:text-emerald-400 shadow-sm">
+            <div className="p-2.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-600 shadow-sm">
               <FileOutput className="h-6 w-6" />
             </div>
             <div>
-              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
                 Export & Conversion Télé-déclaration TEJ (DGI)
               </h1>
-              <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+              <p className="text-xs sm:text-sm text-slate-500">
                 Génération et conversion automatique des fichiers officiels de Retenue à la Source pour TEJ.tn
               </p>
             </div>
@@ -379,7 +374,7 @@ export default function ExportTEJPage() {
 
         {/* Action Buttons */}
         <div className="flex flex-wrap items-center gap-2">
-          <Button onClick={() => setIsImporterOpen(true)} variant="outline" className="border-emerald-500/30 hover:bg-emerald-50 text-emerald-700 dark:text-emerald-300">
+          <Button onClick={() => setIsImporterOpen(true)} variant="outline" className="border-emerald-500/30 hover:bg-emerald-50 text-emerald-700">
             <Upload className="h-4 w-4 mr-1.5 text-emerald-600" /> Convertir / Importer un fichier
           </Button>
 
@@ -398,13 +393,13 @@ export default function ExportTEJPage() {
       </div>
 
       {/* Filter Card - Theme Harmonized */}
-      <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 shadow-sm space-y-4">
+      <div className="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
+          <span className="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
             <Filter className="h-3.5 w-3.5 text-emerald-600" /> Filtres de Sélection
           </span>
           {company?.mf && (
-            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center gap-1.5 border border-slate-200 dark:border-slate-700">
+            <span className="text-xs font-semibold px-3 py-1 rounded-full bg-slate-100 text-slate-700 flex items-center gap-1.5 border border-slate-200">
               <Building2 className="h-3.5 w-3.5 text-emerald-600" /> Émetteur : {company.mf}
             </span>
           )}
@@ -413,13 +408,13 @@ export default function ExportTEJPage() {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {/* Year Selector */}
           <div>
-            <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1 flex items-center gap-1">
+            <label className="block text-xs font-medium text-slate-600 mb-1 flex items-center gap-1">
               <Calendar className="h-3.5 w-3.5 text-emerald-600" /> Année Fiscale
             </label>
             <select
               value={selectedYear}
               onChange={(e) => setSelectedYear(Number(e.target.value))}
-              className="w-full text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2.5 text-slate-900 dark:text-slate-100 font-medium focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-colors"
+              className="w-full text-xs sm:text-sm rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-slate-900 font-medium focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-colors"
             >
               <option value={0}>Toutes les années</option>
               {availableYears.map((y) => (
@@ -430,13 +425,13 @@ export default function ExportTEJPage() {
 
           {/* Period Selector */}
           <div>
-            <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1 flex items-center gap-1">
+            <label className="block text-xs font-medium text-slate-600 mb-1 flex items-center gap-1">
               <Layers className="h-3.5 w-3.5 text-emerald-600" /> Période / Trimestre
             </label>
             <select
               value={selectedPeriod}
               onChange={(e) => setSelectedPeriod(e.target.value)}
-              className="w-full text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2.5 text-slate-900 dark:text-slate-100 font-medium focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-colors"
+              className="w-full text-xs sm:text-sm rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-slate-900 font-medium focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-colors"
             >
               <option value="ALL">Année Entière (Jan — Déc)</option>
               <optgroup label="Trimestres">
@@ -464,7 +459,7 @@ export default function ExportTEJPage() {
 
           {/* Search Input */}
           <div>
-            <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1 flex items-center gap-1">
+            <label className="block text-xs font-medium text-slate-600 mb-1 flex items-center gap-1">
               <Search className="h-3.5 w-3.5 text-emerald-600" /> Recherche Bénéficiaire
             </label>
             <input
@@ -472,7 +467,7 @@ export default function ExportTEJPage() {
               placeholder="Nom ou Matricule Fiscal..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full text-xs sm:text-sm rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 px-3.5 py-2.5 text-slate-900 dark:text-slate-100 font-medium focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-colors"
+              className="w-full text-xs sm:text-sm rounded-xl border border-slate-200 bg-white px-3.5 py-2.5 text-slate-900 font-medium focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none transition-colors"
             />
           </div>
         </div>
@@ -480,31 +475,31 @@ export default function ExportTEJPage() {
 
       {/* Summary KPI Cards - Light & Clean Theme */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
-          <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Nombre de Retenues</div>
-          <div className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100">{totals.count}</div>
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+          <div className="text-xs font-semibold text-slate-500 mb-1">Nombre de Retenues</div>
+          <div className="text-xl sm:text-2xl font-extrabold text-slate-900">{totals.count}</div>
           <div className="text-[11px] text-slate-400 mt-1">Certificats sélectionnés</div>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
-          <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Total Montant Brut</div>
-          <div className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-slate-100">
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+          <div className="text-xs font-semibold text-slate-500 mb-1">Total Montant Brut</div>
+          <div className="text-xl sm:text-2xl font-extrabold text-slate-900">
             {formatNumber(totals.brut)} <span className="text-xs font-normal text-slate-400">TND</span>
           </div>
           <div className="text-[11px] text-slate-400 mt-1">Assiette de calcul</div>
         </div>
 
-        <div className="bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-200/80 dark:border-emerald-800/60 rounded-2xl p-4 shadow-sm">
-          <div className="text-xs font-semibold text-emerald-800 dark:text-emerald-300 mb-1">Total Retenues à la Source</div>
-          <div className="text-xl sm:text-2xl font-extrabold text-emerald-600 dark:text-emerald-400">
-            {formatNumber(totals.retenue)} <span className="text-xs font-normal text-emerald-700 dark:text-emerald-500">TND</span>
+        <div className="bg-emerald-50/80 border border-emerald-200/80 rounded-2xl p-4 shadow-sm">
+          <div className="text-xs font-semibold text-emerald-800 mb-1">Total Retenues à la Source</div>
+          <div className="text-xl sm:text-2xl font-extrabold text-emerald-600">
+            {formatNumber(totals.retenue)} <span className="text-xs font-normal text-emerald-700">TND</span>
           </div>
-          <div className="text-[11px] text-emerald-700 dark:text-emerald-400 mt-1">À télé-déclarer (TEJ)</div>
+          <div className="text-[11px] text-emerald-700 mt-1">À télé-déclarer (TEJ)</div>
         </div>
 
-        <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 shadow-sm">
-          <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">Total Montant Net Versé</div>
-          <div className="text-xl sm:text-2xl font-extrabold text-indigo-600 dark:text-indigo-400">
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+          <div className="text-xs font-semibold text-slate-500 mb-1">Total Montant Net Versé</div>
+          <div className="text-xl sm:text-2xl font-extrabold text-indigo-600">
             {formatNumber(totals.net)} <span className="text-xs font-normal text-slate-400">TND</span>
           </div>
           <div className="text-[11px] text-slate-400 mt-1">Net versé au bénéficiaire</div>
@@ -513,7 +508,7 @@ export default function ExportTEJPage() {
 
       {/* Missing MF Warning Banner */}
       {missingMFCount > 0 && (
-        <div className="p-3.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-200 flex items-start gap-2.5">
+        <div className="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 flex items-start gap-2.5">
           <AlertTriangle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
           <div>
             <strong>Attention Conformité DGI :</strong> {missingMFCount} certificat(s) ne possèdent pas de Matricule Fiscal ou CIN du bénéficiaire renseigné. 
@@ -527,11 +522,11 @@ export default function ExportTEJPage() {
         <LoadingSpinner />
       ) : (
         <div className="space-y-3">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+          <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
             <div className="overflow-x-auto">
               <table className="w-full text-xs sm:text-sm min-w-[800px]">
                 <thead>
-                  <tr className="border-b border-slate-200 dark:border-slate-800 bg-slate-50/80 dark:bg-slate-800/80 text-slate-500 dark:text-slate-400">
+                  <tr className="border-b border-slate-200 bg-slate-50/80 text-slate-500">
                     <th className="text-left px-4 py-3 font-semibold uppercase tracking-wider text-[11px]">N° Certificat</th>
                     <th className="text-left px-3 py-3 font-semibold uppercase tracking-wider text-[11px]">Date</th>
                     <th className="text-left px-3 py-3 font-semibold uppercase tracking-wider text-[11px]">Bénéficiaire</th>
@@ -542,7 +537,7 @@ export default function ExportTEJPage() {
                     <th className="text-right px-4 py-3 font-semibold uppercase tracking-wider text-[11px]">Retenue (TND)</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                <tbody className="divide-y divide-slate-100">
                   {filteredRetenues.length === 0 ? (
                     <tr>
                       <td colSpan={8} className="px-4 py-12 text-center text-slate-400">
@@ -551,25 +546,25 @@ export default function ExportTEJPage() {
                     </tr>
                   ) : (
                     filteredRetenues.map((r) => (
-                      <tr key={r.id} className="hover:bg-slate-50/60 dark:hover:bg-slate-800/50 transition-colors">
-                        <td className="px-4 py-3 font-bold text-emerald-600 dark:text-emerald-400">
+                      <tr key={r.id} className="hover:bg-slate-50/60 transition-colors">
+                        <td className="px-4 py-3 font-bold text-emerald-600">
                           {r.number}
                         </td>
-                        <td className="px-3 py-3 text-slate-500 dark:text-slate-400">{formatDate(r.date)}</td>
-                        <td className="px-3 py-3 font-medium text-slate-900 dark:text-slate-100">{r.beneficiaire_name}</td>
+                        <td className="px-3 py-3 text-slate-500">{formatDate(r.date)}</td>
+                        <td className="px-3 py-3 font-medium text-slate-900">{r.beneficiaire_name}</td>
                         <td className="px-3 py-3 font-mono text-xs">
                           {r.beneficiaire_mf || r.beneficiaire_cin ? (
-                            <span className="text-slate-600 dark:text-slate-300">{r.beneficiaire_mf || r.beneficiaire_cin}</span>
+                            <span className="text-slate-600">{r.beneficiaire_mf || r.beneficiaire_cin}</span>
                           ) : (
                             <span className="text-amber-600 font-semibold flex items-center gap-1">
                               <AlertTriangle className="h-3 w-3" /> Manquant
                             </span>
                           )}
                         </td>
-                        <td className="px-3 py-3 text-slate-500 dark:text-slate-400 text-xs">{r.nature_revenu}</td>
-                        <td className="px-3 py-3 text-right font-medium text-slate-900 dark:text-slate-100">{formatNumber(r.montant_brut)}</td>
-                        <td className="px-3 py-3 text-right font-bold text-emerald-600 dark:text-emerald-400">{r.taux_retenue}%</td>
-                        <td className="px-4 py-3 text-right font-extrabold text-emerald-600 dark:text-emerald-400">
+                        <td className="px-3 py-3 text-slate-500 text-xs">{r.nature_revenu}</td>
+                        <td className="px-3 py-3 text-right font-medium text-slate-900">{formatNumber(r.montant_brut)}</td>
+                        <td className="px-3 py-3 text-right font-bold text-emerald-600">{r.taux_retenue}%</td>
+                        <td className="px-4 py-3 text-right font-extrabold text-emerald-600">
                           {formatNumber(r.montant_retenue)}
                         </td>
                       </tr>
@@ -585,24 +580,24 @@ export default function ExportTEJPage() {
       {/* In-Browser File Converter & Importer Modal */}
       {isImporterOpen && (
         <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-          <div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-3xl shadow-xl overflow-hidden my-8">
-            <div className="px-6 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-800/50">
+          <div className="bg-white border border-slate-200 rounded-2xl w-full max-w-3xl shadow-xl overflow-hidden my-8">
+            <div className="px-6 py-4 border-b border-slate-200 flex items-center justify-between bg-slate-50/50">
               <div className="flex items-center gap-2.5">
-                <div className="p-2 rounded-lg bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400">
+                <div className="p-2 rounded-lg bg-emerald-100 text-emerald-600">
                   <Sparkles className="h-5 w-5" />
                 </div>
                 <div>
-                  <h3 className="text-base font-bold text-slate-900 dark:text-slate-100">
+                  <h3 className="text-base font-bold text-slate-900">
                     Convertisseur & Importateur de Fichiers TEJ
                   </h3>
-                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                  <p className="text-xs text-slate-500">
                     Traitement 100% sécurisé sur votre navigateur (Client-side)
                   </p>
                 </div>
               </div>
               <button
                 onClick={() => { setIsImporterOpen(false); setParsedRecords([]) }}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="p-1.5 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -612,7 +607,7 @@ export default function ExportTEJPage() {
               {/* File Dropzone */}
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-emerald-300 dark:border-emerald-800/80 hover:border-emerald-500 bg-emerald-50/30 dark:bg-emerald-950/20 rounded-2xl p-8 text-center cursor-pointer transition-all hover:shadow-md group"
+                className="border-2 border-dashed border-emerald-300 hover:border-emerald-500 bg-emerald-50/30 rounded-2xl p-8 text-center cursor-pointer transition-all hover:shadow-md group"
               >
                 <input
                   ref={fileInputRef}
@@ -621,13 +616,13 @@ export default function ExportTEJPage() {
                   onChange={handleFileUpload}
                   className="hidden"
                 />
-                <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                   <Upload className="h-6 w-6" />
                 </div>
-                <h4 className="text-sm font-bold text-slate-900 dark:text-slate-100">
+                <h4 className="text-sm font-bold text-slate-900">
                   Cliquez ou déposez votre fichier de Retenue / Facture
                 </h4>
-                <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-md mx-auto">
+                <p className="text-xs text-slate-500 mt-1 max-w-md mx-auto">
                   Formats acceptés : PDF, CSV, Excel, TXT, JSON. Le fichier est converti directement dans votre navigateur sans quitter votre ordinateur.
                 </p>
               </div>
@@ -636,7 +631,7 @@ export default function ExportTEJPage() {
               {isProcessing && (
                 <div className="py-8 text-center space-y-3">
                   <LoadingSpinner />
-                  <p className="text-xs font-semibold text-slate-600 dark:text-slate-300">
+                  <p className="text-xs font-semibold text-slate-600">
                     Analyse et conversion du fichier dans votre navigateur...
                   </p>
                 </div>
@@ -646,31 +641,31 @@ export default function ExportTEJPage() {
               {parsedRecords.length > 0 && !isProcessing && (
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                    <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
                       <CheckCircle2 className="h-4 w-4 text-emerald-600" />
                       {parsedRecords.length} enregistrement(s) extrait(s) et prêts à convertir :
                     </span>
-                    <span className="text-[11px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/60 px-2.5 py-1 rounded-full border border-emerald-200 dark:border-emerald-800">
+                    <span className="text-[11px] font-medium text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
                       Génèrera le XML TEJ officiel
                     </span>
                   </div>
 
-                  <div className="border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden max-h-60 overflow-y-auto">
+                  <div className="border border-slate-200 rounded-xl overflow-hidden max-h-60 overflow-y-auto">
                     <table className="w-full text-xs">
-                      <thead className="bg-slate-50 dark:bg-slate-800 sticky top-0">
+                      <thead className="bg-slate-50 sticky top-0">
                         <tr>
-                          <th className="text-left p-2.5 font-semibold text-slate-600 dark:text-slate-300">Bénéficiaire</th>
-                          <th className="text-left p-2.5 font-semibold text-slate-600 dark:text-slate-300">Matricule Fiscal</th>
-                          <th className="text-right p-2.5 font-semibold text-slate-600 dark:text-slate-300">Brut</th>
-                          <th className="text-right p-2.5 font-semibold text-slate-600 dark:text-slate-300">Taux</th>
-                          <th className="text-right p-2.5 font-semibold text-slate-600 dark:text-slate-300">Retenue</th>
+                          <th className="text-left p-2.5 font-semibold text-slate-600">Bénéficiaire</th>
+                          <th className="text-left p-2.5 font-semibold text-slate-600">Matricule Fiscal</th>
+                          <th className="text-right p-2.5 font-semibold text-slate-600">Brut</th>
+                          <th className="text-right p-2.5 font-semibold text-slate-600">Taux</th>
+                          <th className="text-right p-2.5 font-semibold text-slate-600">Retenue</th>
                         </tr>
                       </thead>
-                      <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                      <tbody className="divide-y divide-slate-100">
                         {parsedRecords.map((rec) => (
                           <tr key={rec.id} className="hover:bg-slate-50/50">
-                            <td className="p-2.5 font-medium text-slate-900 dark:text-slate-100">{rec.beneficiaire_name}</td>
-                            <td className="p-2.5 font-mono text-slate-600 dark:text-slate-300">{rec.beneficiaire_mf}</td>
+                            <td className="p-2.5 font-medium text-slate-900">{rec.beneficiaire_name}</td>
+                            <td className="p-2.5 font-mono text-slate-600">{rec.beneficiaire_mf}</td>
                             <td className="p-2.5 text-right font-medium">{formatNumber(rec.montant_brut)} TND</td>
                             <td className="p-2.5 text-right text-emerald-600 font-bold">{rec.taux_retenue}%</td>
                             <td className="p-2.5 text-right text-emerald-600 font-bold">{formatNumber(rec.montant_retenue)} TND</td>
@@ -680,7 +675,7 @@ export default function ExportTEJPage() {
                     </table>
                   </div>
 
-                  <div className="p-3 bg-indigo-50/60 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/60 rounded-xl text-xs text-indigo-900 dark:text-indigo-200 flex items-center gap-2">
+                  <div className="p-3 bg-indigo-50/60 border border-indigo-200 rounded-xl text-xs text-indigo-900 flex items-center gap-2">
                     <Database className="h-4 w-4 text-indigo-600 shrink-0" />
                     <span>
                       En cliquant sur valider, le fichier <strong>TEJ XML</strong> sera téléchargé et les données seront sauvegardées dans votre compte.
@@ -691,7 +686,7 @@ export default function ExportTEJPage() {
             </div>
 
             {/* Footer Modal Actions */}
-            <div className="px-6 py-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 flex items-center justify-between">
+            <div className="px-6 py-4 border-t border-slate-200 bg-slate-50/50 flex items-center justify-between">
               <Button
                 variant="outline"
                 onClick={() => { setIsImporterOpen(false); setParsedRecords([]) }}

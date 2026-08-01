@@ -28,13 +28,13 @@ export function ImageUploadField({
   }
 
   return (
-    <div className="bg-slate-50 dark:bg-slate-800/40 border border-slate-200 dark:border-slate-700/60 rounded-xl p-4 space-y-3">
+    <div className="bg-slate-50 border border-slate-200 rounded-xl p-4 space-y-3">
       <div className="flex justify-between items-center">
-        <label className="text-xs font-semibold uppercase tracking-wider text-slate-700 dark:text-slate-200">
+        <label className="text-xs font-semibold uppercase tracking-wider text-slate-700">
           {label}
         </label>
         {imageUrl && (
-          <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
+          <span className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
             ✓ Importé
           </span>
         )}
@@ -53,7 +53,7 @@ export function ImageUploadField({
 
       {imageUrl ? (
         <div className="space-y-3">
-          <div className="relative group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg p-3 flex items-center justify-center min-h-[90px]">
+          <div className="relative group bg-white border border-slate-200 rounded-lg p-3 flex items-center justify-center min-h-[90px]">
             <img
               src={imageUrl}
               alt={label}
@@ -86,23 +86,23 @@ export function ImageUploadField({
       ) : (
         <div
           onClick={handleClickSelect}
-          className="border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-indigo-500 dark:hover:border-indigo-400 rounded-lg p-4 text-center cursor-pointer transition-colors bg-white/60 dark:bg-slate-900/60 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30"
+          className="border-2 border-dashed border-slate-300 hover:border-indigo-500 rounded-lg p-4 text-center cursor-pointer transition-colors bg-white/80 hover:bg-indigo-50/50"
         >
           <div className="flex flex-col items-center justify-center gap-1.5 py-1">
-            <div className="p-2 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+            <div className="p-2 rounded-full bg-indigo-50 text-indigo-600">
               <ImageIcon className="h-5 w-5" />
             </div>
-            <div className="text-xs font-medium text-slate-800 dark:text-slate-200">
+            <div className="text-xs font-medium text-slate-800">
               Sélectionner un {label.toLowerCase()}
             </div>
-            <p className="text-[11px] text-slate-500 dark:text-slate-400">
+            <p className="text-[11px] text-slate-500">
               PNG, JPG, SVG jusqu&apos;à 5Mo
             </p>
           </div>
         </div>
       )}
 
-      <label className="flex items-center gap-2.5 pt-1 text-xs font-medium text-slate-700 dark:text-slate-300 cursor-pointer select-none">
+      <label className="flex items-center gap-2.5 pt-1 text-xs font-medium text-slate-700 cursor-pointer select-none">
         <input
           type="checkbox"
           checked={showOnDocs}
