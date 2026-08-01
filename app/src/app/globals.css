@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-:root {
-  color-scheme: light;
+:root, html, body {
+  color-scheme: light !important;
   --primary: #4f46e5;
   --primary-dark: #4338ca;
   --primary-light: #818cf8;
