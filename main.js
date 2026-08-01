@@ -78,6 +78,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // ─── Feature Category Filter Tabs ─────────────────────────────────────
+    const featureTabs = document.querySelectorAll('.feature-tab');
+    const featureCards = document.querySelectorAll('.feature-card');
+
+    if (featureTabs.length > 0 && featureCards.length > 0) {
+        featureTabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const targetCategory = tab.getAttribute('data-tab');
+
+                // Update active tab button
+                featureTabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+
+                // Filter cards with smooth fade
+                featureCards.forEach(card => {
+                    const cardCat = card.getAttribute('data-category');
+                    if (targetCategory === 'all' || cardCat === targetCategory) {
+                        card.classList.remove('hidden');
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1)';
+                    } else {
+                        card.classList.add('hidden');
+                        card.style.opacity = '0';
+                        card.style.transform = 'scale(0.95)';
+                    }
+                });
+            });
+        });
+    }
+
     // ─── Email Subscription Form ───────────────────────────────────────────
     const subscribeBtn = document.getElementById('btn-subscribe');
     const subscribeInput = document.getElementById('input-subscribe');

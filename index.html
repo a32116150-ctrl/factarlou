@@ -331,91 +331,141 @@
     </section>
 
     <!-- Features Section -->
+    <!-- Features Section -->
     <section id="features" class="features">
         <div class="section-header" data-reveal>
             <h2>Tout ce dont vous avez besoin.</h2>
             <p>Conçu pour simplifier votre gestion quotidienne tout en respectant les normes fiscales tunisiennes.</p>
+            
+            <div class="features-tabs-wrapper">
+                <div class="features-tabs">
+                    <button class="feature-tab active" data-tab="all">⚡ Toutes les fonctionnalités (16)</button>
+                    <button class="feature-tab" data-tab="pos">🛒 Vente & POS (4)</button>
+                    <button class="feature-tab" data-tab="fiscal">🇹🇳 Fiscalité & TEJ (4)</button>
+                    <button class="feature-tab" data-tab="tools">🤖 IA, Paie & RH (4)</button>
+                    <button class="feature-tab" data-tab="data">🔒 Données & Gestion (4)</button>
+                </div>
+            </div>
         </div>
 
         <div class="features-grid">
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="shopping-cart"></i></div>
-                <h3>Point de Vente (POS)</h3>
+            <!-- Vente & POS -->
+            <div class="feature-card" data-category="pos" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="shopping-cart"></i></div>
+                    <h3>Point de Vente (POS)</h3>
+                </div>
                 <p>Caisse enregistreuse complète avec grille produits tactile, split tender, impressions thermique 80mm, rapports X/Z et gestion des avoirs.</p>
             </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="file-text"></i></div>
-                <h3>Moteur de Documents</h3>
+            <div class="feature-card" data-category="pos" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="file-text"></i></div>
+                    <h3>Moteur de Documents</h3>
+                </div>
                 <p>8 types de documents : Facture, Avoir, Devis, Bon de Commande, BL, BA, BS, BE. Pipeline commercial avec référencement automatique.</p>
             </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="calculator"></i></div>
-                <h3>Conformité Fiscale TN</h3>
-                <p>Calcul automatique du timbre fiscal (1.000 TND), multi-taux TVA (0%, 7%, 13%, 19%), FODEC et retenue à la source 0.5%–15%.</p>
-            </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="scan"></i></div>
-                <h3>Scanner OCR Intelligent</h3>
-                <p>Importez vos reçus et factures fournisseur. L'IA extrait automatiquement montants, dates et fournisseurs. Bilingue français + arabe.</p>
-            </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="briefcase"></i></div>
-                <h3>Paie & Ressources Humaines</h3>
-                <p>Gestion des employés (CDI, CDD, CIVP), fiches de paie avec cotisations CNSS (9.18%) et générateurs de contrats professionnels tunisiens.</p>
-            </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="file-spreadsheet"></i></div>
-                <h3>Assistant TVA Déclaratif</h3>
-                <p>Déclaration TVA mensuelle avec ventilation par taux, rapport TVA annuel, simulateur de scénarios fiscaux et calculateur IRPP.</p>
-            </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="file-signature"></i></div>
-                <h3>Certificats de Retenue</h3>
-                <p>Générez vos certificats de retenue à la source en un clic, conformes à la législation en vigueur, avec export XML TEJ.</p>
-            </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="file-code"></i></div>
-                <h3>Export XML (Portail TEJ)</h3>
-                <p>Fichiers XML compatibles avec le portail de l'administration fiscale tunisienne pour les retenues à la source et e-factures.</p>
-            </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="layout"></i></div>
-                <h3>Rendu PDF Parfait</h3>
-                <p>Moteur de rendu isolé pour des factures A4 professionnelles. Logo, signature et cachet numérique inclus.</p>
-            </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="git-branch"></i></div>
-                <h3>Pipeline Commercial</h3>
+            <div class="feature-card" data-category="pos" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="git-branch"></i></div>
+                    <h3>Pipeline Commercial</h3>
+                </div>
                 <p>Suivi Devis → Facture → BL avec référencement automatique. Conversion BA en dépense en un clic.</p>
             </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="users"></i></div>
-                <h3>Gestion Clients (CRM)</h3>
-                <p>Suivi d'historise, paiements, contrats (CDI, Freelance) et carte interactive Leaflet/OpenStreetMap.</p>
+            <div class="feature-card" data-category="pos" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="users"></i></div>
+                    <h3>Gestion Clients (CRM)</h3>
+                </div>
+                <p>Suivi d'historique, paiements, contrats (CDI, Freelance) et carte interactive Leaflet/OpenStreetMap.</p>
             </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="bar-chart-3"></i></div>
-                <h3>Analytiques en Temps Réel</h3>
-                <p>Tableau de bord avec graphiques revenus/dépenses, top 5 clients, impayés et indicateurs de performance.</p>
+
+            <!-- Fiscalité & TEJ -->
+            <div class="feature-card" data-category="fiscal" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="calculator"></i></div>
+                    <h3>Conformité Fiscale TN</h3>
+                </div>
+                <p>Calcul automatique du timbre fiscal (1.000 TND), multi-taux TVA (0%, 7%, 13%, 19%), FODEC et retenue à la source 0.5%–15%.</p>
             </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="sticky-note"></i></div>
-                <h3>Notes & Productivité</h3>
+            <div class="feature-card" data-category="fiscal" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="file-signature"></i></div>
+                    <h3>Certificats de Retenue</h3>
+                </div>
+                <p>Générez vos certificats de retenue à la source en un clic, conformes à la législation en vigueur, avec export XML TEJ.</p>
+            </div>
+            <div class="feature-card" data-category="fiscal" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="file-code"></i></div>
+                    <h3>Export XML (Portail TEJ)</h3>
+                </div>
+                <p>Fichiers XML compatibles avec le portail de l'administration fiscale tunisienne pour les retenues à la source et e-factures.</p>
+            </div>
+            <div class="feature-card" data-category="fiscal" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="file-spreadsheet"></i></div>
+                    <h3>Assistant TVA Déclaratif</h3>
+                </div>
+                <p>Déclaration TVA mensuelle avec ventilation par taux, rapport TVA annuel, simulateur de scénarios fiscaux et calculateur IRPP.</p>
+            </div>
+
+            <!-- IA, Paie & RH -->
+            <div class="feature-card" data-category="tools" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="scan"></i></div>
+                    <h3>Scanner OCR Intelligent</h3>
+                </div>
+                <p>Importez vos reçus et factures fournisseur. L'IA extrait automatiquement montants, dates et fournisseurs. Bilingue français + arabe.</p>
+            </div>
+            <div class="feature-card" data-category="tools" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="briefcase"></i></div>
+                    <h3>Paie & Ressources Humaines</h3>
+                </div>
+                <p>Gestion des employés (CDI, CDD, CIVP), fiches de paie avec cotisations CNSS (9.18%) et générateurs de contrats professionnels tunisiens.</p>
+            </div>
+            <div class="feature-card" data-category="tools" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="layout"></i></div>
+                    <h3>Rendu PDF Parfait</h3>
+                </div>
+                <p>Moteur de rendu isolé pour des factures A4 professionnelles. Logo, signature et cachet numérique inclus.</p>
+            </div>
+            <div class="feature-card" data-category="tools" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="sticky-note"></i></div>
+                    <h3>Notes & Productivité</h3>
+                </div>
                 <p>Notes autocollantes avec code couleur, templates email, envoi groupé avec barre de progression et saisie semi-automatique.</p>
             </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="file-up"></i></div>
-                <h3>Import / Export</h3>
+
+            <!-- Données & Sécurité -->
+            <div class="feature-card" data-category="data" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="bar-chart-3"></i></div>
+                    <h3>Analytiques en Temps Réel</h3>
+                </div>
+                <p>Tableau de bord avec graphiques revenus/dépenses, top 5 clients, impayés et indicateurs de performance.</p>
+            </div>
+            <div class="feature-card" data-category="data" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="file-up"></i></div>
+                    <h3>Import / Export</h3>
+                </div>
                 <p>Import/export CSV pour clients et services. Export XLSX pour documents, clients et services. Sauvegarde SQLite complète.</p>
             </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="users-2"></i></div>
-                <h3>Multi-utilisateurs</h3>
+            <div class="feature-card" data-category="data" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="users-2"></i></div>
+                    <h3>Multi-utilisateurs</h3>
+                </div>
                 <p>Comptes séparés et sécurisés sur un même ordinateur. Chaque utilisateur garde ses données privées.</p>
             </div>
-            <div class="feature-card" data-reveal>
-                <div class="feature-icon"><i data-lucide="pen-tool"></i></div>
-                <h3>Personnalisation Totale</h3>
+            <div class="feature-card" data-category="data" data-reveal>
+                <div class="feature-card-header">
+                    <div class="feature-icon"><i data-lucide="pen-tool"></i></div>
+                    <h3>Personnalisation Totale</h3>
+                </div>
                 <p>Logo, signature, cachet numérique. Thème premium avec ombres, dégradés et design system complet.</p>
             </div>
         </div>
