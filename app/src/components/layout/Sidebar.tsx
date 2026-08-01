@@ -43,7 +43,7 @@ const navSections: NavSection[] = [
       { href: '/hr', label: 'Ressources Humaines', icon: Briefcase, soon: true },
       { href: '/expenses', label: 'Achats & Dépenses', icon: ShoppingCart },
       { href: '/retenues', label: 'Retenue à la Source', icon: Receipt },
-      { href: '/export-tej', label: 'TEJ Export', icon: FileOutput, soon: true },
+      { href: '/export-tej', label: 'TEJ Export', icon: FileOutput },
       { href: '/outils', label: 'Outils', icon: Wrench, soon: true },
     ],
   },
