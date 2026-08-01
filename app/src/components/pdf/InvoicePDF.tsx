@@ -8,6 +8,7 @@ import { Input, Textarea } from '@/components/ui/Input'
 import { useToast } from '@/components/ui/Toast'
 import type { Document } from '@/types'
 import { formatDate, formatNumber, formatCurrency, DOC_TYPE_LABELS } from '@/lib/formatters'
+import { downloadElementAsPDF } from '@/lib/pdfDownloader'
 
 interface InvoicePDFProps {
   doc: Document
@@ -83,6 +84,9 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
   const items = Array.isArray(rawItems) ? rawItems : []
   const decimals = 3
 
+  const docTypeLabel = DOC_TYPE_LABELS[doc.type] || doc.type || 'Facture'
+  const docTitle = `${docTypeLabel} ${doc.number || ''}`
+
   const print = () => {
     const content = contentRef.current
     if (!content) return
@@ -96,12 +100,22 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
       <html>
         <head>
           <meta charset="UTF-8">
-          <title>${(doc.type || 'document').toUpperCase()} ${doc.number || ''}</title>
+          <title>${docTitle}</title>
           ${headHTML}
           <style>
             @page {
               size: A4 portrait;
-              margin: 8mm 8mm 12mm 8mm;
+              margin: 8mm 8mm 8mm 8mm;
+            }
+            @media print {
+              html, body {
+                background-color: #ffffff !important;
+                color: #0f172a !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+              }
             }
             body {
               font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
@@ -109,8 +123,6 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
               color: #0f172a !important;
               margin: 0 !important;
               padding: 15px !important;
-              -webkit-print-color-adjust: exact !important;
-              print-color-adjust: exact !important;
             }
             .print-container {
               width: 100% !important;
@@ -143,37 +155,16 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
   }
 
   const downloadPDF = async () => {
-    if (typeof window === 'undefined') return
     const content = contentRef.current
     if (!content) return
     setDownloading(true)
     try {
-      const html2canvasModule = await import('html2canvas')
-      const html2canvas = html2canvasModule.default || html2canvasModule
-
-      const jspdfModule = await import('jspdf')
-      const jsPDF = jspdfModule.jsPDF || jspdfModule.default
-
-      const canvas = await html2canvas(content, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff',
-        logging: false,
-      })
-
-      const imgData = canvas.toDataURL('image/png')
-      const pdf = new jsPDF('p', 'mm', 'a4')
-      const imgWidth = 210
-      const pageHeight = 297
-      const imgHeight = (canvas.height * imgWidth) / canvas.width
-
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, Math.min(imgHeight, pageHeight))
-      pdf.save(`${doc.number || 'document'}.pdf`)
-      toast('PDF téléchargé avec succès')
+      const fileName = `${doc.number || 'Document'}.pdf`
+      await downloadElementAsPDF(content, fileName)
+      toast('PDF téléchargé directement dans vos fichiers !')
     } catch (e: any) {
       console.error('PDF download error:', e)
-      toast(`Erreur lors du téléchargement direct : ${e?.message || 'Fichier indisponible'}`, 'error')
+      toast(`Erreur lors du téléchargement direct : ${e?.message || 'Erreur inconnue'}`, 'error')
     } finally {
       setDownloading(false)
     }
