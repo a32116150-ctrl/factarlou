@@ -89,7 +89,6 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
     const printWindow = window.open('', '_blank')
     if (!printWindow) return
 
-    // Extract all head styles from current document to preserve Tailwind CSS & fonts
     const headHTML = document.head.innerHTML
 
     printWindow.document.write(`
@@ -113,7 +112,6 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
               -webkit-print-color-adjust: exact !important;
               print-color-adjust: exact !important;
             }
-            /* Explicit layout overrides for print window */
             .print-container {
               width: 100% !important;
               max-width: 210mm !important;
@@ -150,27 +148,32 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
     if (!content) return
     setDownloading(true)
     try {
-      const html2canvas = (await import('html2canvas')).default
-      const { jsPDF } = await import('jspdf')
+      const html2canvasModule = await import('html2canvas')
+      const html2canvas = html2canvasModule.default || html2canvasModule
+
+      const jspdfModule = await import('jspdf')
+      const jsPDF = jspdfModule.jsPDF || jspdfModule.default
+
       const canvas = await html2canvas(content, {
-        scale: 3,
+        scale: 2,
         useCORS: true,
         allowTaint: true,
         backgroundColor: '#ffffff',
         logging: false,
-        windowWidth: 1024,
       })
+
       const imgData = canvas.toDataURL('image/png')
       const pdf = new jsPDF('p', 'mm', 'a4')
       const imgWidth = 210
       const pageHeight = 297
       const imgHeight = (canvas.height * imgWidth) / canvas.width
+
       pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, Math.min(imgHeight, pageHeight))
       pdf.save(`${doc.number || 'document'}.pdf`)
       toast('PDF téléchargé avec succès')
-    } catch (e) {
+    } catch (e: any) {
       console.error('PDF download error:', e)
-      print()
+      toast(`Erreur lors du téléchargement direct : ${e?.message || 'Fichier indisponible'}`, 'error')
     } finally {
       setDownloading(false)
     }

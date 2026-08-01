@@ -1,8 +1,9 @@
 'use client'
 
-import { useRef } from 'react'
-import { Printer } from 'lucide-react'
+import { useRef, useState } from 'react'
+import { Printer, Download } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
+import { useToast } from '@/components/ui/Toast'
 import type { Retenue } from '@/types'
 import { formatDate, formatNumber } from '@/lib/formatters'
 
@@ -12,6 +13,8 @@ interface RetenuePDFProps {
 
 export function RetenuePDF({ retenue }: RetenuePDFProps) {
   const contentRef = useRef<HTMLDivElement>(null)
+  const { toast } = useToast()
+  const [downloading, setDownloading] = useState(false)
   const r = retenue
   const decimals = 3
 
@@ -52,10 +55,52 @@ export function RetenuePDF({ retenue }: RetenuePDFProps) {
     setTimeout(() => printWindow.print(), 300)
   }
 
+  const downloadPDF = async () => {
+    if (typeof window === 'undefined') return
+    const content = contentRef.current
+    if (!content) return
+    setDownloading(true)
+    try {
+      const html2canvasModule = await import('html2canvas')
+      const html2canvas = html2canvasModule.default || html2canvasModule
+
+      const jspdfModule = await import('jspdf')
+      const jsPDF = jspdfModule.jsPDF || jspdfModule.default
+
+      const canvas = await html2canvas(content, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        logging: false,
+      })
+
+      const imgData = canvas.toDataURL('image/png')
+      const pdf = new jsPDF('p', 'mm', 'a4')
+      const imgWidth = 210
+      const pageHeight = 297
+      const imgHeight = (canvas.height * imgWidth) / canvas.width
+
+      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, Math.min(imgHeight, pageHeight))
+      pdf.save(`Retenue_${r.number || 'certificat'}.pdf`)
+      toast('PDF téléchargé avec succès')
+    } catch (e: any) {
+      console.error('PDF download error:', e)
+      toast(`Erreur lors du téléchargement : ${e?.message || 'Fichier indisponible'}`, 'error')
+    } finally {
+      setDownloading(false)
+    }
+  }
+
   return (
-    <div className="bg-slate-100 p-2 sm:p-6 rounded-xl space-y-4">
-      <div className="flex justify-end">
-        <Button size="sm" onClick={print}><Printer className="h-4 w-4" /> Imprimer / PDF</Button>
+    <div className="bg-slate-100 dark:bg-slate-900 p-2 sm:p-6 rounded-xl space-y-4">
+      <div className="flex justify-end gap-2">
+        <Button variant="secondary" size="sm" onClick={downloadPDF} loading={downloading}>
+          <Download className="h-4 w-4 mr-1" /> Télécharger PDF
+        </Button>
+        <Button size="sm" onClick={print}>
+          <Printer className="h-4 w-4 mr-1" /> Imprimer
+        </Button>
       </div>
       <div className="bg-white rounded-xl shadow-sm overflow-hidden p-4 sm:p-8">
         <div ref={contentRef} className="max-w-[210mm] mx-auto text-black text-xs sm:text-sm">
@@ -91,51 +136,61 @@ export function RetenuePDF({ retenue }: RetenuePDFProps) {
                 <tbody>
                   <tr className="border-b border-slate-200"><td className="bg-slate-100 font-bold p-2 w-1/3">Raison sociale / Nom</td><td className="p-2">{r.beneficiaire_name}</td></tr>
                   <tr className="border-b border-slate-200"><td className="bg-slate-100 font-bold p-2">Matricule fiscal</td><td className="p-2">{r.beneficiaire_mf || '—'}</td></tr>
-                  <tr className="border-b border-slate-200"><td className="bg-slate-100 font-bold p-2">CIN</td><td className="p-2">{r.beneficiaire_cin || '—'}</td></tr>
-                  <tr className="border-b border-slate-200"><td className="bg-slate-100 font-bold p-2">Adresse</td><td className="p-2">{r.beneficiaire_address || '—'}</td></tr>
-                  <tr><td className="bg-slate-100 font-bold p-2">RIB</td><td className="p-2">{r.beneficiaire_rib || '—'}</td></tr>
+                  <tr className="border-b border-slate-200"><td className="bg-slate-100 font-bold p-2">CIN / Passeport</td><td className="p-2">{r.beneficiaire_cin || '—'}</td></tr>
+                  <tr><td className="bg-slate-100 font-bold p-2">Adresse</td><td className="p-2">{r.beneficiaire_address || '—'}</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
 
           <div className="mb-4">
-            <h3 className="text-xs font-bold uppercase text-white bg-blue-900 px-2 py-1 mb-2">Section C — Montant</h3>
+            <h3 className="text-xs font-bold uppercase text-white bg-blue-900 px-2 py-1 mb-2">Section C — Montants retenus à la source</h3>
             <div className="overflow-x-auto">
-              <table className="w-full sm:w-2/3 ml-auto border-collapse text-xs border border-slate-200">
+              <table className="w-full border-collapse text-xs border border-slate-200">
+                <thead>
+                  <tr className="bg-slate-100 text-slate-700">
+                    <th className="p-2 text-left font-bold border-b border-slate-200">Nature des revenus</th>
+                    <th className="p-2 text-left font-bold border-b border-slate-200">Base légale</th>
+                    <th className="p-2 text-right font-bold border-b border-slate-200">Montant brut (TND)</th>
+                    <th className="p-2 text-right font-bold border-b border-slate-200">Taux</th>
+                    <th className="p-2 text-right font-bold border-b border-slate-200">Retenue (TND)</th>
+                  </tr>
+                </thead>
                 <tbody>
-                  <tr className="border-b border-slate-200"><td className="p-2 font-medium">Nature du revenu</td><td className="p-2 text-right">{r.nature_revenu || 'Honoraires et commissions'}</td></tr>
-                  {r.facture_number && <tr className="border-b border-slate-200"><td className="p-2 font-medium">Facture concernée</td><td className="p-2 text-right">{r.facture_number}</td></tr>}
-                  <tr className="border-b border-slate-200"><td className="p-2 font-medium">Montant brut</td><td className="p-2 text-right">{formatNumber(r.montant_brut, decimals)} TND</td></tr>
-                  <tr className="border-b border-slate-200"><td className="p-2 font-medium">Taux de retenue</td><td className="p-2 text-right">{r.taux_retenue}%</td></tr>
-                  <tr className="border-b border-slate-200 font-bold bg-slate-50"><td className="p-2">Montant de la retenue</td><td className="p-2 text-right text-blue-900">{formatNumber(r.montant_retenue, decimals)} TND</td></tr>
-                  <tr className="font-bold"><td className="p-2">Montant net à payer</td><td className="p-2 text-right text-green-700">{formatNumber(r.montant_brut - r.montant_retenue, decimals)} TND</td></tr>
+                  <tr>
+                    <td className="p-2 border-b border-slate-200 font-medium">{r.nature_revenu}</td>
+                    <td className="p-2 border-b border-slate-200 text-slate-600">{r.base_legale}</td>
+                    <td className="p-2 text-right border-b border-slate-200 font-semibold">{formatNumber(r.montant_brut, decimals)}</td>
+                    <td className="p-2 text-right border-b border-slate-200 font-bold text-blue-900">{r.taux_retenue}%</td>
+                    <td className="p-2 text-right border-b border-slate-200 font-extrabold text-blue-900">{formatNumber(r.montant_retenue, decimals)}</td>
+                  </tr>
                 </tbody>
               </table>
             </div>
           </div>
 
-          {r.notes && (
-            <div className="mb-4">
-              <h3 className="text-xs font-bold uppercase text-white bg-blue-900 px-2 py-1 mb-2">Observations</h3>
-              <p className="whitespace-pre-wrap m-0 text-xs p-2 bg-slate-50 border border-slate-200 rounded">{r.notes}</p>
+          <div className="flex justify-between items-start pt-4 border-t border-slate-200 mt-6">
+            <div className="text-xs text-slate-500 max-w-xs">
+              <p>Attestation délivrée en application de la législation fiscale tunisienne en vigueur.</p>
+              {r.facture_number && <p className="mt-1 font-semibold text-slate-700">Réf Facture : {r.facture_number}</p>}
             </div>
-          )}
 
-          <div className="flex justify-between mt-8 gap-4">
-            <div className="w-1/2 text-center">
-              {r.signature_image && <img src={r.signature_image} alt="Signature" className="max-h-16 max-w-[140px] mx-auto mb-1 object-contain" />}
-              <div className="border-t border-black pt-1 text-xs font-bold">Signature et cachet du payeur</div>
-            </div>
-            <div className="w-1/2 text-center">
-              {r.stamp_image && <img src={r.stamp_image} alt="Cachet" className="max-h-16 max-w-[140px] mx-auto mb-1 object-contain" />}
-              <div className="border-t border-black pt-1 text-xs font-bold">Signature et cachet du bénéficiaire</div>
+            <div className="flex gap-4 items-center">
+              {r.stamp_image && (
+                <div className="text-center">
+                  <div className="text-[10px] text-slate-400 uppercase mb-1">Cachet</div>
+                  <img src={r.stamp_image} alt="Cachet" className="max-h-16 max-w-[120px] object-contain" />
+                </div>
+              )}
+              {r.signature_image && (
+                <div className="text-center">
+                  <div className="text-[10px] text-slate-400 uppercase mb-1">Signature</div>
+                  <img src={r.signature_image} alt="Signature" className="max-h-16 max-w-[120px] object-contain" />
+                </div>
+              )}
             </div>
           </div>
 
-          <div className="mt-6 pt-3 border-t border-slate-300 text-[10px] text-slate-500">
-            Base légale : {r.base_legale || "Art. 52 du Code de l'IRPP et de l'IS"}.
-          </div>
         </div>
       </div>
     </div>
