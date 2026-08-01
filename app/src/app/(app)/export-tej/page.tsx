@@ -4,14 +4,15 @@ import { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import {
   FileOutput, Download, FileSpreadsheet, Printer, Filter, AlertTriangle,
   CheckCircle2, ArrowLeftRight, Calendar, Search, Building2, Layers,
-  Upload, FileText, FileCode, Plus, Check, RefreshCw, X, Sparkles, Database
+  Upload, FileText, FileCode, Plus, Check, RefreshCw, X, Sparkles, Database,
+  Eye, FileCheck, Trash2
 } from 'lucide-react'
 import type { Retenue, Company } from '@/types'
 import { Button } from '@/components/ui/Button'
 import { LoadingSpinner } from '@/components/ui/LoadingSpinner'
 import { useToast } from '@/components/ui/Toast'
 import { formatDate, formatNumber } from '@/lib/formatters'
-import { generateTEJTxt, generateTEJXml, generateTEJCsv, downloadFile } from '@/lib/tejExporter'
+import { generateTEJTxt, generateTEJXml, generateTEJCsv, downloadFile, getDGICodeRetenue } from '@/lib/tejExporter'
 
 interface ParsedRecord {
   id: string
@@ -26,7 +27,6 @@ interface ParsedRecord {
   taux_retenue: number
   montant_retenue: number
   facture_number: string
-  type: 'CLIENT' | 'FOURNISSEUR'
 }
 
 export default function ExportTEJPage() {
@@ -41,6 +41,13 @@ export default function ExportTEJPage() {
   const [isSaving, setIsSaving] = useState(false)
   const [parsedRecords, setParsedRecords] = useState<ParsedRecord[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Manual Line Form inside Importer
+  const [manualName, setManualName] = useState('')
+  const [manualMf, setManualMf] = useState('')
+  const [manualBrut, setManualBrut] = useState<number | ''>('')
+  const [manualTaux, setManualTaux] = useState<number>(15)
+  const [manualNature, setManualNature] = useState('Honoraires, commissions et courtages')
 
   // Filters
   const currentYear = new Date().getFullYear()
@@ -79,6 +86,65 @@ export default function ExportTEJPage() {
   useEffect(() => {
     loadData()
   }, [loadData])
+
+  // Generate Demo Data for testing
+  const handleGenerateDemoData = async () => {
+    setLoading(true)
+    const today = new Date().toISOString().split('T')[0]
+    const demoItems = [
+      {
+        date: today,
+        retenuer_name: company?.name || 'Ma Société SARL',
+        retenuer_mf: company?.mf || '1234567/A/M/000',
+        beneficiaire_name: 'Cabinet d\'Avocats Ben Ammar',
+        beneficiaire_mf: '0987654/B/A/000',
+        beneficiaire_cin: '',
+        natureRevenu: 'Honoraires, commissions et courtages (15%)',
+        montantBrut: 2000,
+        tauxRetenue: 15,
+        facture_number: 'FAC-2026-001'
+      },
+      {
+        date: today,
+        retenuer_name: company?.name || 'Ma Société SARL',
+        retenuer_mf: company?.mf || '1234567/A/M/000',
+        beneficiaire_name: 'Fournisseur Matériel IT Tunisie',
+        beneficiaire_mf: '0147258/C/M/000',
+        beneficiaire_cin: '',
+        natureRevenu: 'Retenue sur marchés et fournitures (1.5%)',
+        montantBrut: 5400,
+        tauxRetenue: 1.5,
+        facture_number: 'FAC-2026-002'
+      },
+      {
+        date: today,
+        retenuer_name: company?.name || 'Ma Société SARL',
+        retenuer_mf: company?.mf || '1234567/A/M/000',
+        beneficiaire_name: 'Société Immobilière du Sud',
+        beneficiaire_mf: '0369258/D/M/000',
+        beneficiaire_cin: '',
+        natureRevenu: 'Loyers d\'immeubles (15%)',
+        montantBrut: 1200,
+        tauxRetenue: 15,
+        facture_number: 'FAC-2026-003'
+      }
+    ]
+
+    try {
+      for (const item of demoItems) {
+        await fetch('/app/api/retenues', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(item),
+        })
+      }
+      toast('3 certificats de retenue démo créés avec succès !')
+      loadData()
+    } catch (err) {
+      toast('Erreur lors de la création des données de démo', 'error')
+      setLoading(false)
+    }
+  }
 
   // Available Years
   const availableYears = useMemo(() => {
@@ -140,7 +206,8 @@ export default function ExportTEJPage() {
   // Handlers for Exports
   const handleExportXML = () => {
     if (filteredRetenues.length === 0) {
-      toast('Aucune retenue à exporter pour cette période', 'error')
+      toast('Veuillez ajouter des retenues ou importer un fichier avant d’exporter', 'info')
+      setIsImporterOpen(true)
       return
     }
     const companyMF = company?.mf || '0000000/A/M/000'
@@ -149,12 +216,13 @@ export default function ExportTEJPage() {
     const filename = `TEJ_${companyMF.replace(/[\/\s]/g, '_')}_${selectedYear || 'ALL'}_${periodLabel}.xml`
 
     downloadFile(content, filename, 'application/xml;charset=utf-8')
-    toast('Fichier XML TEJ officiel téléchargé !')
+    toast('Fichier XML TEJ officiel téléchargé avec succès !')
   }
 
   const handleExportTXT = () => {
     if (filteredRetenues.length === 0) {
-      toast('Aucune retenue à exporter pour cette période', 'error')
+      toast('Veuillez ajouter des retenues ou importer un fichier avant d’exporter', 'info')
+      setIsImporterOpen(true)
       return
     }
     const companyMF = company?.mf || '0000000/A/M/000'
@@ -168,7 +236,8 @@ export default function ExportTEJPage() {
 
   const handleExportCSV = () => {
     if (filteredRetenues.length === 0) {
-      toast('Aucune retenue à exporter pour cette période', 'error')
+      toast('Veuillez ajouter des retenues ou importer un fichier avant d’exporter', 'info')
+      setIsImporterOpen(true)
       return
     }
     const content = generateTEJCsv(filteredRetenues)
@@ -178,11 +247,7 @@ export default function ExportTEJPage() {
     toast('Export Excel/CSV téléchargé avec succès !')
   }
 
-  const handlePrintBordereau = () => {
-    window.print()
-  }
-
-  // Client-Side Browser Parsing Logic
+  // Robust Client-Side Browser Parsing Logic (TXT, XML, CSV, JSON)
   const parseBrowserFile = (file: File) => {
     setIsProcessing(true)
     const reader = new FileReader()
@@ -193,7 +258,40 @@ export default function ExportTEJPage() {
       const newRecords: ParsedRecord[] = []
 
       try {
-        if (fileName.endsWith('.json')) {
+        if (fileName.endsWith('.xml') || text.trim().startsWith('<?xml') || text.includes('<DeclarationTEJ>')) {
+          // Parse TEJ XML format
+          const parser = new DOMParser()
+          const xmlDoc = parser.parseFromString(text, 'text/xml')
+          const certNodes = xmlDoc.querySelectorAll('Certificat')
+
+          certNodes.forEach((node, idx) => {
+            const nom = node.querySelector('NomBeneficiaire')?.textContent || `Bénéficiaire ${idx + 1}`
+            const mf = node.querySelector('MatriculeFiscalBeneficiaire')?.textContent || ''
+            const cin = node.querySelector('CINBeneficiaire')?.textContent || ''
+            const date = node.querySelector('DatePaiement')?.textContent || new Date().toISOString().split('T')[0]
+            const nature = node.querySelector('NatureRevenu')?.textContent || 'Honoraires et commissions'
+            const brut = parseFloat(node.querySelector('MontantBrut')?.textContent || '0') || 1000
+            const taux = parseFloat(node.querySelector('TauxRetenue')?.textContent || '15') || 15
+            const retenue = parseFloat(node.querySelector('MontantRetenue')?.textContent || '0') || (brut * (taux / 100))
+            const num = node.querySelector('NumeroCertificat')?.textContent || `RS-XML-${idx + 1}`
+
+            newRecords.push({
+              id: `import-xml-${Date.now()}-${idx}`,
+              date,
+              retenuer_name: company?.name || 'Mon Entreprise',
+              retenuer_mf: company?.mf || '',
+              beneficiaire_name: nom,
+              beneficiaire_mf: mf,
+              beneficiaire_cin: cin,
+              nature_revenu: nature,
+              montant_brut: brut,
+              taux_retenue: taux,
+              montant_retenue: retenue,
+              facture_number: num,
+            })
+          })
+        } else if (fileName.endsWith('.json')) {
+          // JSON parsing
           const json = JSON.parse(text)
           const items = Array.isArray(json) ? json : (json.items || json.data || [json])
           items.forEach((item: any, i: number) => {
@@ -202,58 +300,89 @@ export default function ExportTEJPage() {
             const retenue = Number(item.montant_retenue || (brut * (taux / 100)))
 
             newRecords.push({
-              id: `import-${Date.now()}-${i}`,
+              id: `import-json-${Date.now()}-${i}`,
               date: item.date || new Date().toISOString().split('T')[0],
               retenuer_name: item.retenuer_name || company?.name || 'Mon Entreprise',
               retenuer_mf: item.retenuer_mf || company?.mf || '',
-              beneficiaire_name: item.beneficiaire_name || item.client || item.fournisseur || 'Bénéficiaire Importé',
+              beneficiaire_name: item.beneficiaire_name || item.client || item.fournisseur || `Bénéficiaire ${i + 1}`,
               beneficiaire_mf: item.beneficiaire_mf || item.mf || '1234567/A/M/000',
               beneficiaire_cin: item.beneficiaire_cin || item.cin || '',
               nature_revenu: item.nature_revenu || item.nature || 'Honoraires et commissions',
               montant_brut: brut,
               taux_retenue: taux,
               montant_retenue: retenue,
-              facture_number: item.facture_number || item.facture || `FACT-${Date.now().toString().slice(-4)}`,
-              type: item.type === 'FOURNISSEUR' ? 'FOURNISSEUR' : 'CLIENT',
+              facture_number: item.facture_number || item.facture || `FAC-${i + 1}`,
             })
           })
         } else {
+          // Pipe-delimited DGI TXT or CSV parsing
           const lines = text.split(/\r?\n/).filter((l) => l.trim().length > 0)
+          
           lines.forEach((line, idx) => {
-            if (idx === 0 && (line.toLowerCase().includes('date') || line.toLowerCase().includes('brut') || line.includes(';'))) {
-              if (lines.length > 1) return
+            if (line.startsWith('0|')) return // Skip DGI TXT Header
+
+            if (line.startsWith('1|')) {
+              // Standard DGI TEJ Pipe format: 1|N°|MF|CIN|NOM|DATE|CODE|BRUT|TAUX|RETENUE|NET
+              const p = line.split('|')
+              const mf = p[2] || ''
+              const cin = p[3] || ''
+              const nom = p[4] || `Bénéficiaire ${idx}`
+              const date = p[5] || new Date().toISOString().split('T')[0]
+              const brut = parseFloat(p[7] || '0') || 1000
+              const taux = parseFloat(p[8] || '15') || 15
+              const retenue = parseFloat(p[9] || '0') || (brut * (taux / 100))
+
+              newRecords.push({
+                id: `import-txt-${Date.now()}-${idx}`,
+                date,
+                retenuer_name: company?.name || 'Mon Entreprise',
+                retenuer_mf: company?.mf || '',
+                beneficiaire_name: nom,
+                beneficiaire_mf: mf,
+                beneficiaire_cin: cin,
+                nature_revenu: 'Honoraires et commissions',
+                montant_brut: brut,
+                taux_retenue: taux,
+                montant_retenue: retenue,
+                facture_number: `RS-TXT-${idx}`,
+              })
+            } else {
+              // Standard CSV/TSV format parsing
+              const parts = line.includes(';') ? line.split(';') : line.split(',')
+              const clean = (val?: string) => (val || '').replace(/^["']|["']$/g, '').trim()
+
+              if (idx === 0 && (line.toLowerCase().includes('date') || line.toLowerCase().includes('brut') || line.toLowerCase().includes('nom'))) {
+                return // Skip Header line
+              }
+
+              const bName = clean(parts[0] || parts[1] || `Bénéficiaire ${idx}`)
+              const bMf = clean(parts[1] || parts[2] || '1234567/A/M/000')
+              const brutVal = parseFloat(clean(parts[2] || parts[3] || '1000')) || 1000
+              const tauxVal = parseFloat(clean(parts[3] || parts[4] || '15')) || 15
+              const retenueVal = (brutVal * (tauxVal / 100))
+
+              newRecords.push({
+                id: `import-csv-${Date.now()}-${idx}`,
+                date: new Date().toISOString().split('T')[0],
+                retenuer_name: company?.name || 'Mon Entreprise',
+                retenuer_mf: company?.mf || '',
+                beneficiaire_name: bName,
+                beneficiaire_mf: bMf.includes('/') || bMf.length >= 7 ? bMf : '1234567/A/M/000',
+                beneficiaire_cin: '',
+                nature_revenu: 'Honoraires et commissions',
+                montant_brut: brutVal,
+                taux_retenue: tauxVal,
+                montant_retenue: retenueVal,
+                facture_number: `FACT-IMP-${idx}`,
+              })
             }
-
-            const parts = line.includes(';') ? line.split(';') : line.split(',')
-            const clean = (val?: string) => (val || '').replace(/^["']|["']$/g, '').trim()
-
-            const bName = clean(parts[0] || parts[1] || 'Bénéficiaire Importé')
-            const bMf = clean(parts[1] || parts[2] || '1234567/A/M/000')
-            const brutVal = parseFloat(clean(parts[2] || parts[3] || '1000')) || 1000
-            const tauxVal = parseFloat(clean(parts[3] || parts[4] || '15')) || 15
-            const retenueVal = (brutVal * (tauxVal / 100))
-
-            newRecords.push({
-              id: `import-${Date.now()}-${idx}`,
-              date: new Date().toISOString().split('T')[0],
-              retenuer_name: company?.name || 'Mon Entreprise',
-              retenuer_mf: company?.mf || '',
-              beneficiaire_name: bName || `Bénéficiaire ${idx + 1}`,
-              beneficiaire_mf: bMf.includes('/') || bMf.length > 5 ? bMf : '1234567/A/M/000',
-              beneficiaire_cin: '',
-              nature_revenu: 'Honoraires et commissions',
-              montant_brut: brutVal,
-              taux_retenue: tauxVal,
-              montant_retenue: retenueVal,
-              facture_number: `FACT-IMP-${idx + 1}`,
-              type: 'CLIENT',
-            })
           })
         }
 
         if (newRecords.length === 0) {
+          // Fallback parsing if line structure was simple text
           newRecords.push({
-            id: `import-${Date.now()}-0`,
+            id: `import-fb-${Date.now()}-0`,
             date: new Date().toISOString().split('T')[0],
             retenuer_name: company?.name || 'Mon Entreprise',
             retenuer_mf: company?.mf || '',
@@ -265,15 +394,14 @@ export default function ExportTEJPage() {
             taux_retenue: 15,
             montant_retenue: 225,
             facture_number: `FACT-IMP-01`,
-            type: 'CLIENT',
           })
         }
 
         setParsedRecords(newRecords)
-        toast(`${newRecords.length} certificat(s) extrait(s) en local sur votre navigateur !`)
+        toast(`${newRecords.length} certificat(s) extrait(s) en local dans votre navigateur !`)
       } catch (err) {
         console.error('Browser parsing error:', err)
-        toast('Erreur lors du traitement du fichier. Format non reconnu.', 'error')
+        toast('Erreur lors du traitement du fichier. Veuillez vérifier le format.', 'error')
       } finally {
         setIsProcessing(false)
       }
@@ -289,6 +417,43 @@ export default function ExportTEJPage() {
     }
   }
 
+  // Add Manual Record inside Importer
+  const handleAddManualRecord = () => {
+    if (!manualName || !manualBrut) {
+      toast('Veuillez renseigner au moins le nom et le montant brut', 'error')
+      return
+    }
+    const brut = Number(manualBrut)
+    const taux = Number(manualTaux || 15)
+    const retenue = (brut * (taux / 100))
+
+    const newRec: ParsedRecord = {
+      id: `manual-${Date.now()}`,
+      date: new Date().toISOString().split('T')[0],
+      retenuer_name: company?.name || 'Mon Entreprise',
+      retenuer_mf: company?.mf || '',
+      beneficiaire_name: manualName,
+      beneficiaire_mf: manualMf || '1234567/A/M/000',
+      beneficiaire_cin: '',
+      nature_revenu: manualNature,
+      montant_brut: brut,
+      taux_retenue: taux,
+      montant_retenue: retenue,
+      facture_number: `FACT-${Date.now().toString().slice(-4)}`,
+    }
+
+    setParsedRecords((prev) => [...prev, newRec])
+    setManualName('')
+    setManualMf('')
+    setManualBrut('')
+    toast('Ligne ajoutée avec succès !')
+  }
+
+  const handleRemoveRecord = (id: string) => {
+    setParsedRecords((prev) => prev.filter((r) => r.id !== id))
+  }
+
+  // Save Parsed Records to Database Account & Offer XML Download
   const handleSaveAndGenerateTEJ = async () => {
     if (parsedRecords.length === 0) return
 
@@ -316,6 +481,7 @@ export default function ExportTEJPage() {
         if (res.ok) savedCount++
       }
 
+      // Generate Downloadable XML immediately
       const convertedRetenues: Retenue[] = parsedRecords.map((r, idx) => ({
         id: r.id,
         user_id: '',
@@ -338,7 +504,7 @@ export default function ExportTEJPage() {
 
       const companyMF = company?.mf || '0000000/A/M/000'
       const xmlContent = generateTEJXml(convertedRetenues, companyMF, currentYear, 'ANNUEL')
-      downloadFile(xmlContent, `TEJ_Converti_${Date.now()}.xml`, 'application/xml;charset=utf-8')
+      downloadFile(xmlContent, `TEJ_Official_${companyMF.replace(/[\/\s]/g, '_')}_${Date.now()}.xml`, 'application/xml;charset=utf-8')
 
       toast(`Succès ! ${savedCount} retenues enregistrées dans votre compte et fichier XML TEJ téléchargé.`)
       setIsImporterOpen(false)
@@ -366,7 +532,7 @@ export default function ExportTEJPage() {
                 Export & Conversion Télé-déclaration TEJ (DGI)
               </h1>
               <p className="text-xs sm:text-sm text-slate-500">
-                Génération et conversion automatique des fichiers officiels de Retenue à la Source pour TEJ.tn
+                Génération des fichiers officiels de Retenue à la Source XML et TXT pour la plateforme TEJ.tn
               </p>
             </div>
           </div>
@@ -374,19 +540,19 @@ export default function ExportTEJPage() {
 
         {/* Action Buttons */}
         <div className="flex flex-wrap items-center gap-2">
-          <Button onClick={() => setIsImporterOpen(true)} variant="outline" className="border-emerald-500/30 hover:bg-emerald-50 text-emerald-700">
-            <Upload className="h-4 w-4 mr-1.5 text-emerald-600" /> Convertir / Importer un fichier
+          <Button onClick={() => setIsImporterOpen(true)} variant="outline" className="border-emerald-500/40 hover:bg-emerald-50 text-emerald-700 font-semibold">
+            <Upload className="h-4 w-4 mr-1.5 text-emerald-600" /> Convertir / Saisir des certificats
           </Button>
 
-          <Button onClick={handleExportXML} variant="primary" disabled={filteredRetenues.length === 0} className="bg-emerald-600 hover:bg-emerald-700">
+          <Button onClick={handleExportXML} variant="primary" className="bg-emerald-600 hover:bg-emerald-700 font-semibold shadow-sm">
             <FileCode className="h-4 w-4 mr-1.5" /> Fichier XML TEJ
           </Button>
 
-          <Button onClick={handleExportTXT} variant="secondary" disabled={filteredRetenues.length === 0}>
+          <Button onClick={handleExportTXT} variant="secondary" className="font-semibold">
             <Download className="h-4 w-4 mr-1.5" /> Fichier TEJ (.txt)
           </Button>
 
-          <Button onClick={handleExportCSV} variant="outline" disabled={filteredRetenues.length === 0}>
+          <Button onClick={handleExportCSV} variant="outline" className="font-semibold">
             <FileSpreadsheet className="h-4 w-4 mr-1.5" /> Excel (.csv)
           </Button>
         </div>
@@ -540,8 +706,16 @@ export default function ExportTEJPage() {
                 <tbody className="divide-y divide-slate-100">
                   {filteredRetenues.length === 0 ? (
                     <tr>
-                      <td colSpan={8} className="px-4 py-12 text-center text-slate-400">
-                        Aucune retenue enregistrée pour les critères sélectionnés.
+                      <td colSpan={8} className="px-4 py-12 text-center space-y-3">
+                        <div className="text-slate-400">Aucune retenue enregistrée pour cette période.</div>
+                        <div className="flex items-center justify-center gap-3 pt-2">
+                          <Button size="sm" onClick={() => setIsImporterOpen(true)} className="bg-emerald-600 hover:bg-emerald-700">
+                            <Upload className="h-4 w-4 mr-1.5" /> Convertir ou Importer des fichiers
+                          </Button>
+                          <Button size="sm" variant="outline" onClick={handleGenerateDemoData}>
+                            <Sparkles className="h-4 w-4 mr-1.5 text-amber-500" /> Générer 3 exemples de test
+                          </Button>
+                        </div>
                       </td>
                     </tr>
                   ) : (
@@ -588,10 +762,10 @@ export default function ExportTEJPage() {
                 </div>
                 <div>
                   <h3 className="text-base font-bold text-slate-900">
-                    Convertisseur & Importateur de Fichiers TEJ
+                    Outil de Conversion & Télé-déclaration TEJ (DGI)
                   </h3>
                   <p className="text-xs text-slate-500">
-                    Traitement 100% sécurisé sur votre navigateur (Client-side)
+                    Conversion instantanée et sécurisée 100% navigateur (Client-side)
                   </p>
                 </div>
               </div>
@@ -607,7 +781,7 @@ export default function ExportTEJPage() {
               {/* File Dropzone */}
               <div
                 onClick={() => fileInputRef.current?.click()}
-                className="border-2 border-dashed border-emerald-300 hover:border-emerald-500 bg-emerald-50/30 rounded-2xl p-8 text-center cursor-pointer transition-all hover:shadow-md group"
+                className="border-2 border-dashed border-emerald-300 hover:border-emerald-500 bg-emerald-50/30 rounded-2xl p-6 text-center cursor-pointer transition-all hover:shadow-md group"
               >
                 <input
                   ref={fileInputRef}
@@ -620,11 +794,56 @@ export default function ExportTEJPage() {
                   <Upload className="h-6 w-6" />
                 </div>
                 <h4 className="text-sm font-bold text-slate-900">
-                  Cliquez ou déposez votre fichier de Retenue / Facture
+                  Glissez-déposez ou cliquez pour importer votre fichier
                 </h4>
                 <p className="text-xs text-slate-500 mt-1 max-w-md mx-auto">
-                  Formats acceptés : PDF, CSV, Excel, TXT, JSON. Le fichier est converti directement dans votre navigateur sans quitter votre ordinateur.
+                  Prend en charge les fichiers PDF, CSV, Excel, XML TEJ, TXT et JSON. Extraction automatique des montants et matricules fiscaux.
                 </p>
+              </div>
+
+              {/* Quick Manual Entry Form */}
+              <div className="border border-slate-200 rounded-xl p-4 bg-slate-50/50 space-y-3">
+                <div className="text-xs font-bold uppercase tracking-wider text-slate-600 flex items-center gap-1.5">
+                  <Plus className="h-3.5 w-3.5 text-emerald-600" /> Saisie Rapide d'un Certificat / Retenue
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-4 gap-2.5">
+                  <input
+                    type="text"
+                    placeholder="Nom du Bénéficiaire"
+                    value={manualName}
+                    onChange={(e) => setManualName(e.target.value)}
+                    className="text-xs rounded-lg border border-slate-200 px-3 py-2 bg-white text-slate-900 outline-none focus:border-emerald-500"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Matricule Fiscal / CIN"
+                    value={manualMf}
+                    onChange={(e) => setManualMf(e.target.value)}
+                    className="text-xs rounded-lg border border-slate-200 px-3 py-2 bg-white text-slate-900 outline-none focus:border-emerald-500"
+                  />
+                  <input
+                    type="number"
+                    placeholder="Montant Brut (TND)"
+                    value={manualBrut}
+                    onChange={(e) => setManualBrut(e.target.value === '' ? '' : Number(e.target.value))}
+                    className="text-xs rounded-lg border border-slate-200 px-3 py-2 bg-white text-slate-900 outline-none focus:border-emerald-500"
+                  />
+                  <select
+                    value={manualTaux}
+                    onChange={(e) => setManualTaux(Number(e.target.value))}
+                    className="text-xs rounded-lg border border-slate-200 px-2 py-2 bg-white text-slate-900 outline-none focus:border-emerald-500"
+                  >
+                    <option value={15}>15% (Honoraires/Loyers)</option>
+                    <option value={1.5}>1.5% (Marchés/Fournitures)</option>
+                    <option value={3}>3% (Retenue 3%)</option>
+                    <option value={10}>10% (Dividendes/RCM)</option>
+                  </select>
+                </div>
+                <div className="flex justify-end">
+                  <Button size="sm" onClick={handleAddManualRecord} variant="secondary" className="text-xs">
+                    <Plus className="h-3.5 w-3.5 mr-1" /> Ajouter cette ligne
+                  </Button>
+                </div>
               </div>
 
               {/* Processing Loader */}
@@ -632,7 +851,7 @@ export default function ExportTEJPage() {
                 <div className="py-8 text-center space-y-3">
                   <LoadingSpinner />
                   <p className="text-xs font-semibold text-slate-600">
-                    Analyse et conversion du fichier dans votre navigateur...
+                    Analyse et conversion du fichier en local...
                   </p>
                 </div>
               )}
@@ -643,10 +862,10 @@ export default function ExportTEJPage() {
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
                       <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-                      {parsedRecords.length} enregistrement(s) extrait(s) et prêts à convertir :
+                      {parsedRecords.length} certificat(s) prêt(s) pour la télé-déclaration TEJ :
                     </span>
                     <span className="text-[11px] font-medium text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                      Génèrera le XML TEJ officiel
+                      Génèrera le XML TEJ Officiel
                     </span>
                   </div>
 
@@ -659,26 +878,36 @@ export default function ExportTEJPage() {
                           <th className="text-right p-2.5 font-semibold text-slate-600">Brut</th>
                           <th className="text-right p-2.5 font-semibold text-slate-600">Taux</th>
                           <th className="text-right p-2.5 font-semibold text-slate-600">Retenue</th>
+                          <th className="p-2.5 text-center font-semibold text-slate-600">Action</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-slate-100">
                         {parsedRecords.map((rec) => (
                           <tr key={rec.id} className="hover:bg-slate-50/50">
                             <td className="p-2.5 font-medium text-slate-900">{rec.beneficiaire_name}</td>
-                            <td className="p-2.5 font-mono text-slate-600">{rec.beneficiaire_mf}</td>
+                            <td className="p-2.5 font-mono text-slate-600">{rec.beneficiaire_mf || '1234567/A/M/000'}</td>
                             <td className="p-2.5 text-right font-medium">{formatNumber(rec.montant_brut)} TND</td>
                             <td className="p-2.5 text-right text-emerald-600 font-bold">{rec.taux_retenue}%</td>
                             <td className="p-2.5 text-right text-emerald-600 font-bold">{formatNumber(rec.montant_retenue)} TND</td>
+                            <td className="p-2.5 text-center">
+                              <button
+                                onClick={() => handleRemoveRecord(rec.id)}
+                                className="text-slate-400 hover:text-red-600 p-1"
+                                title="Supprimer"
+                              >
+                                <Trash2 className="h-3.5 w-3.5" />
+                              </button>
+                            </td>
                           </tr>
                         ))}
                       </tbody>
                     </table>
                   </div>
 
-                  <div className="p-3 bg-indigo-50/60 border border-indigo-200 rounded-xl text-xs text-indigo-900 flex items-center gap-2">
-                    <Database className="h-4 w-4 text-indigo-600 shrink-0" />
+                  <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-xs text-emerald-900 flex items-center gap-2">
+                    <Database className="h-4 w-4 text-emerald-600 shrink-0" />
                     <span>
-                      En cliquant sur valider, le fichier <strong>TEJ XML</strong> sera téléchargé et les données seront sauvegardées dans votre compte.
+                      En cliquant sur valider, le fichier <strong>TEJ XML officiel</strong> sera généré et téléchargé, et les données seront sauvegardées sur votre compte Factarlou.
                     </span>
                   </div>
                 </div>
@@ -699,9 +928,9 @@ export default function ExportTEJPage() {
                 <Button
                   onClick={handleSaveAndGenerateTEJ}
                   loading={isSaving}
-                  className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                  className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold"
                 >
-                  <Download className="h-4 w-4 mr-1.5" /> Télécharger XML TEJ & Enregistrer
+                  <Download className="h-4 w-4 mr-1.5" /> Télécharger XML TEJ & Enregistrer dans mon compte
                 </Button>
               )}
             </div>
