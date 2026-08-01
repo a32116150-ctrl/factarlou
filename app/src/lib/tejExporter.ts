@@ -12,7 +12,7 @@ function formatDGIAmount(amount: number): string {
  */
 function cleanText(str: string | null | undefined): string {
   if (!str) return ''
-  return str.replace(/[|;\r\n]/g, ' ').trim()
+  return str.replace(/[|<>&;\r\n]/g, ' ').trim()
 }
 
 /**
@@ -29,9 +29,6 @@ export function getDGICodeRetenue(nature: string, taux: number): string {
 
 /**
  * Generate DGI official TEJ text format (.txt)
- * Format:
- * Line 0 (Header): 0|MF_EMETTEUR|ANNEE|PERIODE|NB_LIGNES|TOTAL_BRUT|TOTAL_RETENUE
- * Line 1 (Records): 1|MF_BENEFICIAIRE|CIN_BENEFICIAIRE|NOM_BENEFICIAIRE|DATE_PAIEMENT|CODE_RETENUE|MONTANT_BRUT|TAUX_RETENUE|MONTANT_RETENUE|MONTANT_NET
  */
 export function generateTEJTxt(retenues: Retenue[], companyMF: string, year: number, periodLabel: string): string {
   const totalBrut = retenues.reduce((sum, r) => sum + (r.montant_brut || 0), 0)
@@ -59,6 +56,57 @@ export function generateTEJTxt(retenues: Retenue[], companyMF: string, year: num
   })
 
   return lines.join('\r\n')
+}
+
+/**
+ * Generate DGI official TEJ XML format (.xml)
+ */
+export function generateTEJXml(retenues: Retenue[], companyMF: string, year: number, periodLabel: string): string {
+  const totalBrut = retenues.reduce((sum, r) => sum + (r.montant_brut || 0), 0)
+  const totalRetenue = retenues.reduce((sum, r) => sum + (r.montant_retenue || 0), 0)
+  const cleanMF = cleanText(companyMF || '0000000/A/M/000')
+
+  const xmlItems = retenues.map((r, idx) => {
+    const mfBenef = cleanText(r.beneficiaire_mf || '')
+    const cinBenef = cleanText(r.beneficiaire_cin || '')
+    const nomBenef = cleanText(r.beneficiaire_name || 'Bénéficiaire Anonyme')
+    const dateStr = r.date ? r.date.split('T')[0] : ''
+    const codeRetenue = getDGICodeRetenue(r.nature_revenu, r.taux_retenue)
+    const brut = formatDGIAmount(r.montant_brut)
+    const taux = (r.taux_retenue || 0).toFixed(2)
+    const retenue = formatDGIAmount(r.montant_retenue)
+    const net = formatDGIAmount((r.montant_brut || 0) - (r.montant_retenue || 0))
+
+    return `    <Certificat>
+      <NumeroLigne>${idx + 1}</NumeroLigne>
+      <NumeroCertificat>${cleanText(r.number)}</NumeroCertificat>
+      <DatePaiement>${dateStr}</DatePaiement>
+      <MatriculeFiscalBeneficiaire>${mfBenef}</MatriculeFiscalBeneficiaire>
+      <CINBeneficiaire>${cinBenef}</CINBeneficiaire>
+      <NomBeneficiaire>${nomBenef}</NomBeneficiaire>
+      <NatureRevenu>${cleanText(r.nature_revenu || 'Honoraires')}</NatureRevenu>
+      <CodeRetenue>${codeRetenue}</CodeRetenue>
+      <MontantBrut>${brut}</MontantBrut>
+      <TauxRetenue>${taux}</TauxRetenue>
+      <MontantRetenue>${retenue}</MontantRetenue>
+      <MontantNet>${net}</MontantNet>
+    </Certificat>`
+  }).join('\n')
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<DeclarationTEJ xmlns="http://www.impots.finances.gov.tn/tej">
+  <Entete>
+    <MatriculeFiscalEmetteur>${cleanMF}</MatriculeFiscalEmetteur>
+    <AnneeFiscale>${year}</AnneeFiscale>
+    <Periode>${cleanText(periodLabel)}</Periode>
+    <NombreLignes>${retenues.length}</NombreLignes>
+    <TotalBrut>${formatDGIAmount(totalBrut)}</TotalBrut>
+    <TotalRetenue>${formatDGIAmount(totalRetenue)}</TotalRetenue>
+  </Entete>
+  <Certificats>
+${xmlItems}
+  </Certificats>
+</DeclarationTEJ>`
 }
 
 /**
