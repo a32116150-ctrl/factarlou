@@ -83,6 +83,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const featureCards = document.querySelectorAll('.feature-card');
 
     if (featureTabs.length > 0 && featureCards.length > 0) {
+        function applyFeatureFilter(category) {
+            featureCards.forEach(card => {
+                const cardCat = card.getAttribute('data-category');
+                if (cardCat === category) {
+                    card.classList.remove('hidden');
+                    card.style.opacity = '1';
+                    card.style.transform = 'scale(1)';
+                } else {
+                    card.classList.add('hidden');
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.95)';
+                }
+            });
+        }
+
+        // Apply default filter (pos) on page load
+        applyFeatureFilter('pos');
+
         featureTabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const targetCategory = tab.getAttribute('data-tab');
@@ -91,19 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 featureTabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
 
-                // Filter cards with smooth fade
-                featureCards.forEach(card => {
-                    const cardCat = card.getAttribute('data-category');
-                    if (targetCategory === 'all' || cardCat === targetCategory) {
-                        card.classList.remove('hidden');
-                        card.style.opacity = '1';
-                        card.style.transform = 'scale(1)';
-                    } else {
-                        card.classList.add('hidden');
-                        card.style.opacity = '0';
-                        card.style.transform = 'scale(0.95)';
-                    }
-                });
+                applyFeatureFilter(targetCategory);
             });
         });
     }
