@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 :root {
+  color-scheme: light;
   --primary: #4f46e5;
   --primary-dark: #4338ca;
   --primary-light: #818cf8;
@@ -62,6 +63,25 @@
   --radius-14: 14px;
   --radius-20: 20px;
   --font-sans: var(--font-inter);
+}
+
+/* Force light color scheme for all form controls & inputs across all browsers and devices */
+input, textarea, select {
+  color-scheme: light !important;
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+/* Fix browser autofill dark navy backgrounds */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #0f172a !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 body {
