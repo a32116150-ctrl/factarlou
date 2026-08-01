@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button'
 import { useToast } from '@/components/ui/Toast'
 import type { Retenue } from '@/types'
 import { formatDate, formatNumber } from '@/lib/formatters'
+import { downloadElementAsPDF } from '@/lib/pdfDownloader'
 
 interface RetenuePDFProps {
   retenue: Retenue
@@ -56,37 +57,15 @@ export function RetenuePDF({ retenue }: RetenuePDFProps) {
   }
 
   const downloadPDF = async () => {
-    if (typeof window === 'undefined') return
     const content = contentRef.current
     if (!content) return
     setDownloading(true)
     try {
-      const html2canvasModule = await import('html2canvas')
-      const html2canvas = html2canvasModule.default || html2canvasModule
-
-      const jspdfModule = await import('jspdf')
-      const jsPDF = jspdfModule.jsPDF || jspdfModule.default
-
-      const canvas = await html2canvas(content, {
-        scale: 2,
-        useCORS: true,
-        allowTaint: true,
-        backgroundColor: '#ffffff',
-        logging: false,
-      })
-
-      const imgData = canvas.toDataURL('image/png')
-      const pdf = new jsPDF('p', 'mm', 'a4')
-      const imgWidth = 210
-      const pageHeight = 297
-      const imgHeight = (canvas.height * imgWidth) / canvas.width
-
-      pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, Math.min(imgHeight, pageHeight))
-      pdf.save(`Retenue_${r.number || 'certificat'}.pdf`)
-      toast('PDF téléchargé avec succès')
+      await downloadElementAsPDF(content, `Retenue_${r.number || 'certificat'}.pdf`)
+      toast('PDF téléchargé directement dans vos fichiers !')
     } catch (e: any) {
       console.error('PDF download error:', e)
-      toast(`Erreur lors du téléchargement : ${e?.message || 'Fichier indisponible'}`, 'error')
+      toast(`Erreur lors du téléchargement : ${e?.message || 'Erreur inconnue'}`, 'error')
     } finally {
       setDownloading(false)
     }

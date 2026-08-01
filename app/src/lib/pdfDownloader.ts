@@ -21,14 +21,13 @@ async function toDataURL(url: string): Promise<string> {
 
 /**
  * Direct PDF Downloader for Invoice & Document elements.
- * Converts all images to base64 Data URLs to prevent canvas tainting CORS issues.
+ * Pre-converts images to Base64 and sanitizes Tailwind v4 lab()/oklch() color functions in onclone.
  */
 export async function downloadElementAsPDF(element: HTMLElement, filename: string): Promise<void> {
-  // 1. Clone element or prepare image data URLs
+  // 1. Pre-load all images as Base64 Data URLs
   const imgs = Array.from(element.querySelectorAll('img'))
   const originalSrcs: string[] = []
 
-  // Pre-load all images as Base64 Data URLs
   await Promise.all(
     imgs.map(async (img, idx) => {
       originalSrcs[idx] = img.src
@@ -40,13 +39,39 @@ export async function downloadElementAsPDF(element: HTMLElement, filename: strin
   )
 
   try {
-    // 2. Render element to Canvas using html2canvas
+    // 2. Render element to Canvas using html2canvas with lab()/oklch() sanitizer in onclone
     const canvas = await html2canvas(element, {
       scale: 2,
       useCORS: true,
       allowTaint: true,
       backgroundColor: '#ffffff',
       logging: false,
+      onclone: (clonedDoc, clonedElement) => {
+        // Sanitize <style> tags containing unsupported lab() or oklch() color functions
+        const styles = Array.from(clonedDoc.querySelectorAll('style'))
+        styles.forEach((style) => {
+          if (style.innerHTML) {
+            style.innerHTML = style.innerHTML
+              .replace(/lab\([^)]+\)/gi, '#0f172a')
+              .replace(/oklch\([^)]+\)/gi, '#0f172a')
+              .replace(/color\(display-p3[^)]+\)/gi, '#0f172a')
+          }
+        })
+
+        // Ensure all cloned elements use clean inline HEX/RGB colors
+        const allNodes = [clonedElement, ...Array.from(clonedElement.querySelectorAll('*'))]
+        allNodes.forEach((node) => {
+          const htmlEl = node as HTMLElement
+          if (!htmlEl || !htmlEl.style) return
+
+          if (htmlEl.style.cssText) {
+            htmlEl.style.cssText = htmlEl.style.cssText
+              .replace(/lab\([^)]+\)/gi, '#0f172a')
+              .replace(/oklch\([^)]+\)/gi, '#0f172a')
+              .replace(/color\(display-p3[^)]+\)/gi, '#0f172a')
+          }
+        })
+      },
     })
 
     // 3. Create PDF and save file directly
