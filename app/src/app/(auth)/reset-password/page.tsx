@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
 import { useToast } from '@/components/ui/Toast'
 import { createClient } from '@/lib/supabase/client'
-import { CheckCircle2, KeyRound, AlertCircle } from 'lucide-react'
+import { CheckCircle2, KeyRound, AlertCircle, Loader2 } from 'lucide-react'
 
 export default function ResetPasswordPage() {
   const router = useRouter()
@@ -18,44 +18,60 @@ export default function ResetPasswordPage() {
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const [validSession, setValidSession] = useState<boolean | null>(null)
+  const [checking, setChecking] = useState(true)
 
   useEffect(() => {
     const supabase = createClient()
+    let settled = false
 
-    // 1. Check if URL contains PKCE ?code=...
+    const settle = (valid: boolean) => {
+      if (!settled) {
+        settled = true
+        setValidSession(valid)
+        setChecking(false)
+      }
+    }
+
+    // 1. Listen for PASSWORD_RECOVERY event (fires when Supabase processes recovery tokens)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === 'PASSWORD_RECOVERY') {
+        settle(true)
+      } else if (event === 'SIGNED_IN' && session) {
+        settle(true)
+      }
+    })
+
+    // 2. Check if URL contains a PKCE code (shouldn't normally happen since callback handles it, but safety net)
     const searchParams = new URLSearchParams(window.location.search)
     const code = searchParams.get('code')
 
     if (code) {
       supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
         if (!error) {
-          setValidSession(true)
+          settle(true)
+          // Clean up the URL
+          window.history.replaceState({}, '', window.location.pathname)
         }
       })
     }
 
-    // 2. Listen for recovery session or auth state change
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
-      if (event === 'PASSWORD_RECOVERY' || session) {
-        setValidSession(true)
+    // 3. Check if we already have a valid session (set by the callback route via cookies)
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        settle(true)
       }
     })
 
-    // 3. Also check current session
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session) {
-        setValidSession(true)
-      } else if (!code) {
-        setTimeout(() => {
-          supabase.auth.getSession().then(({ data: { session: s } }) => {
-            setValidSession(Boolean(s))
-          })
-        }, 800)
-      }
-    })
+    // 4. Give a short grace period for auth state changes to process, then decide
+    const timeout = setTimeout(() => {
+      supabase.auth.getSession().then(({ data: { session } }) => {
+        settle(Boolean(session))
+      })
+    }, 1500)
 
     return () => {
       subscription.unsubscribe()
+      clearTimeout(timeout)
     }
   }, [])
 
@@ -108,6 +124,17 @@ export default function ResetPasswordPage() {
     )
   }
 
+  if (checking) {
+    return (
+      <AuthCard>
+        <div className="text-center space-y-4 py-6">
+          <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto" />
+          <p className="text-sm text-text-muted">Vérification de votre session...</p>
+        </div>
+      </AuthCard>
+    )
+  }
+
   return (
     <AuthCard>
       <div className="flex items-center gap-2 mb-2">
@@ -124,7 +151,7 @@ export default function ResetPasswordPage() {
         <div className="mb-4 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-200 flex items-start gap-2">
           <AlertCircle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
           <div>
-            <strong>Information :</strong> Si le formulaire échoue, votre lien a peut-être expiré. Vous pouvez{' '}
+            <strong>Information :</strong> Votre lien a peut-être expiré ou est invalide. Vous pouvez{' '}
             <Link href="/forgot-password" className="underline font-bold">
               demander un nouveau lien ici
             </Link>.

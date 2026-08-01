@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { createClient } from '@/lib/supabase/server'
+import { createServerClient } from '@supabase/ssr'
 import type { EmailOtpType } from '@supabase/supabase-js'
 
 export async function GET(request: NextRequest) {
@@ -18,17 +18,50 @@ export async function GET(request: NextRequest) {
     next = `/${next}`
   }
 
+  // For recovery flow, always go to reset-password
+  if (type === 'recovery' || next.includes('reset-password')) {
+    next = '/reset-password'
+  }
+
   const targetUrl = `${origin}/app${next}`
 
-  const supabase = await createClient()
+  // Create the redirect response FIRST so we can attach cookies to it
+  const redirectResponse = NextResponse.redirect(targetUrl)
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || ''
+  const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY || ''
+
+  // Create Supabase client that writes cookies directly onto the redirect response
+  const supabase = createServerClient(
+    supabaseUrl,
+    supabaseAnonKey,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll()
+        },
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            redirectResponse.cookies.set(name, value, options)
+          })
+        },
+      },
+    }
+  )
 
   // Case 1: PKCE Code Flow
   if (code) {
     const { error } = await supabase.auth.exchangeCodeForSession(code)
-    if (!error) {
-      return NextResponse.redirect(targetUrl)
+    if (error) {
+      console.error('exchangeCodeForSession error:', error)
+      // Even on error, redirect to reset-password if that was the intent
+      if (next === '/reset-password') {
+        return redirectResponse
+      }
+      // On error, redirect to auth error page
+      return NextResponse.redirect(`${origin}/app/auth-code-error`)
     }
-    console.error('exchangeCodeForSession error:', error)
+    return redirectResponse
   }
 
   // Case 2: Email OTP Token Hash Flow (Recovery / Email confirmation)
@@ -37,16 +70,16 @@ export async function GET(request: NextRequest) {
       type,
       token_hash,
     })
-    if (!error) {
-      return NextResponse.redirect(targetUrl)
+    if (error) {
+      console.error('verifyOtp error:', error)
+      if (next === '/reset-password') {
+        return redirectResponse
+      }
+      return NextResponse.redirect(`${origin}/app/auth-code-error`)
     }
-    console.error('verifyOtp error:', error)
+    return redirectResponse
   }
 
-  // Case 3: Recovery fallback
-  if (type === 'recovery' || next.includes('reset-password')) {
-    return NextResponse.redirect(`${origin}/app/reset-password`)
-  }
-
-  return NextResponse.redirect(targetUrl)
+  // Fallback: redirect to target
+  return redirectResponse
 }
