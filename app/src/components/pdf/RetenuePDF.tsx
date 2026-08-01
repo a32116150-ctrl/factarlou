@@ -21,42 +21,35 @@ export function RetenuePDF({ retenue }: RetenuePDFProps) {
     const printWindow = window.open('', '_blank')
     if (!printWindow) return
 
+    const headHTML = document.head.innerHTML
+
     printWindow.document.write(`
       <!DOCTYPE html>
       <html>
         <head>
           <meta charset="UTF-8">
           <title>Retenue ${r.number}</title>
+          ${headHTML}
           <style>
-            @page { size: A4; margin: 15mm 15mm 20mm 15mm; }
-            body { font-family: 'Arial', 'Helvetica', sans-serif; font-size: 12px; color: #000; margin: 0; }
-            .ret-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid #1e3a8a; padding-bottom: 16px; margin-bottom: 16px; }
-            .ret-header h1 { font-size: 20px; color: #1e3a8a; margin: 0 0 4px 0; }
-            .ret-header h2 { font-size: 12px; color: #333; margin: 0 0 4px 0; }
-            .section { margin-bottom: 16px; }
-            .section h3 { font-size: 11px; text-transform: uppercase; color: #fff; background: #1e3a8a; padding: 4px 8px; margin: 0 0 8px 0; }
-            table.info { width: 100%; border-collapse: collapse; }
-            table.info td { border: 1px solid #ddd; padding: 5px 8px; }
-            table.info td.label { background: #f0f0f0; font-weight: bold; width: 30%; }
-            table.amounts { width: 100%; max-width: 400px; margin-left: auto; border-collapse: collapse; }
-            table.amounts td { border: 1px solid #ddd; padding: 5px 8px; }
-            .footer { margin-top: 24px; font-size: 10px; color: #555; border-top: 1px solid #ccc; padding-top: 12px; }
-            .signatures { display: flex; justify-content: space-between; margin-top: 36px; gap: 16px; }
-            .signature-box { width: 48%; text-align: center; }
-            .signature-box img { max-height: 70px; max-width: 140px; margin-bottom: 8px; }
-            .signature-line { border-top: 1px solid #000; padding-top: 6px; font-size: 11px; font-weight: bold; }
-            .text-right { text-align: right; }
-            .font-bold { font-weight: bold; }
+            @page { size: A4; margin: 12mm 12mm 15mm 12mm; }
+            body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important; background: #ffffff !important; color: #000000 !important; margin: 0 !important; padding: 15px !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .print-container { width: 100% !important; max-width: 210mm !important; margin: 0 auto !important; }
+            .flex { display: flex !important; }
+            .justify-between { justify-content: space-between !important; }
+            .border-b-2 { border-bottom-width: 2px !important; }
+            table { width: 100% !important; border-collapse: collapse !important; }
           </style>
         </head>
         <body>
-          ${content.innerHTML}
+          <div class="print-container">
+            ${content.innerHTML}
+          </div>
         </body>
       </html>
     `)
     printWindow.document.close()
     printWindow.focus()
-    setTimeout(() => printWindow.print(), 250)
+    setTimeout(() => printWindow.print(), 300)
   }
 
   return (

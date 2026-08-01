@@ -89,25 +89,59 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
     const printWindow = window.open('', '_blank')
     if (!printWindow) return
 
+    // Extract all head styles from current document to preserve Tailwind CSS & fonts
+    const headHTML = document.head.innerHTML
+
     printWindow.document.write(`
       <!DOCTYPE html>
       <html>
         <head>
           <meta charset="UTF-8">
           <title>${(doc.type || 'document').toUpperCase()} ${doc.number || ''}</title>
+          ${headHTML}
           <style>
-            @page { size: A4; margin: 10mm 10mm 15mm 10mm; }
-            body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            @page {
+              size: A4 portrait;
+              margin: 8mm 8mm 12mm 8mm;
+            }
+            body {
+              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+              background-color: #ffffff !important;
+              color: #0f172a !important;
+              margin: 0 !important;
+              padding: 15px !important;
+              -webkit-print-color-adjust: exact !important;
+              print-color-adjust: exact !important;
+            }
+            /* Explicit layout overrides for print window */
+            .print-container {
+              width: 100% !important;
+              max-width: 210mm !important;
+              margin: 0 auto !important;
+              box-sizing: border-box !important;
+            }
+            .grid { display: grid !important; }
+            .grid-cols-2 { grid-template-columns: 1fr 1fr !important; }
+            .flex { display: flex !important; }
+            .flex-row { flex-direction: row !important; }
+            .justify-between { justify-content: space-between !important; }
+            .items-start { align-items: flex-start !important; }
+            .items-end { align-items: flex-end !important; }
+            .items-center { align-items: center !important; }
+            table { width: 100% !important; border-collapse: collapse !important; }
+            th, td { border-color: #e2e8f0 !important; }
           </style>
         </head>
         <body>
-          ${content.innerHTML}
+          <div class="print-container">
+            ${content.innerHTML}
+          </div>
         </body>
       </html>
     `)
     printWindow.document.close()
     printWindow.focus()
-    setTimeout(() => printWindow.print(), 300)
+    setTimeout(() => printWindow.print(), 350)
   }
 
   const downloadPDF = async () => {
@@ -118,7 +152,14 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
     try {
       const html2canvas = (await import('html2canvas')).default
       const { jsPDF } = await import('jspdf')
-      const canvas = await html2canvas(content, { scale: 2, useCORS: true, backgroundColor: '#ffffff' })
+      const canvas = await html2canvas(content, {
+        scale: 3,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#ffffff',
+        logging: false,
+        windowWidth: 1024,
+      })
       const imgData = canvas.toDataURL('image/png')
       const pdf = new jsPDF('p', 'mm', 'a4')
       const imgWidth = 210
@@ -180,7 +221,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
   const titleText = DOC_TYPE_LABELS[docType] || docType
 
   return (
-    <div className="p-2 sm:p-6 bg-slate-100 rounded-xl space-y-4">
+    <div className="p-2 sm:p-6 bg-slate-100 dark:bg-slate-900 rounded-xl space-y-4">
       {/* Top Action Toolbar */}
       <div className="flex flex-wrap items-center justify-stretch sm:justify-end gap-2">
         <Button variant="secondary" size="sm" onClick={() => setEmailModal(true)} className="flex-1 sm:flex-none justify-center">
@@ -199,12 +240,12 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
         <div ref={contentRef} className="w-full max-w-[210mm] mx-auto p-4 sm:p-8 bg-white text-slate-900 font-sans box-border">
           
           {/* Header Block */}
-          <div className="flex flex-col sm:flex-row justify-between items-start gap-4 border-b-2 border-blue-900 pb-5 mb-6">
+          <div className="flex flex-row justify-between items-start gap-4 border-b-2 border-slate-800 pb-5 mb-6">
             <div className="flex-1">
               {logoImage ? (
-                <img src={logoImage} alt="Logo" className="max-h-14 sm:max-h-16 max-w-[200px] mb-3 object-contain" />
+                <img src={logoImage} alt="Logo" className="max-h-16 max-w-[220px] mb-3 object-contain" />
               ) : companyName ? (
-                <div className="text-xl sm:text-2xl font-extrabold text-blue-900 tracking-tight mb-1">
+                <div className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight mb-1">
                   {companyName}
                 </div>
               ) : null}
@@ -221,14 +262,14 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
               </div>
             </div>
 
-            <div className="sm:text-right border-t sm:border-t-0 pt-3 sm:pt-0 w-full sm:w-auto border-slate-200">
-              <div className="inline-block bg-indigo-100 text-indigo-900 px-3 py-1 rounded-full font-bold text-xs uppercase tracking-wider mb-2">
+            <div className="text-right whitespace-nowrap">
+              <div className="inline-block bg-slate-100 text-slate-900 px-3.5 py-1 rounded-full font-bold text-xs uppercase tracking-wider mb-2 border border-slate-200">
                 {titleText}
               </div>
-              <div className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight whitespace-nowrap">
+              <div className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
                 N° {doc.number || '—'}
               </div>
-              <div className="text-xs sm:text-sm text-slate-500 mt-1 space-y-0.5">
+              <div className="text-xs sm:text-sm text-slate-600 mt-1 space-y-0.5">
                 <div><strong>Date :</strong> {formatDate(doc.date)}</div>
                 {doc.due_date && <div><strong>Échéance :</strong> {formatDate(doc.due_date)}</div>}
               </div>
@@ -236,7 +277,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
           </div>
 
           {/* Parties Grid (Émetteur vs Client) */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+          <div className="grid grid-cols-2 gap-4 mb-6">
             <div className="bg-slate-50 border border-slate-200 rounded-xl p-4">
               <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1.5">
                 Émetteur / Vendeur
@@ -255,7 +296,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
             </div>
 
             <div className="bg-slate-50 border border-slate-300 rounded-xl p-4">
-              <div className="text-[11px] font-bold text-blue-900 uppercase tracking-wider mb-1.5">
+              <div className="text-[11px] font-bold text-slate-800 uppercase tracking-wider mb-1.5">
                 Client / Facturé à
               </div>
               <div className="text-sm sm:text-base font-bold text-slate-900">
@@ -309,7 +350,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
           </div>
 
           {/* Totals & TVA Breakdown Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-6 items-start mb-7">
+          <div className="grid grid-cols-2 gap-6 items-start mb-7">
             {/* Left: TVA Summary Table */}
             <div>
               <div className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-2">
@@ -384,7 +425,7 @@ export function InvoicePDF({ doc }: InvoicePDFProps) {
             </div>
           )}
 
-          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-6 pt-5 border-t border-slate-200 mt-6">
+          <div className="flex flex-row justify-between items-end gap-6 pt-5 border-t border-slate-200 mt-6">
             <div className="text-xs text-slate-500 max-w-sm space-y-1">
               <div><strong>Arrêté le présent document à la somme de :</strong></div>
               <div className="text-sm font-bold text-slate-900">
