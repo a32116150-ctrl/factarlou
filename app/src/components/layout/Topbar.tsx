@@ -76,7 +76,8 @@ export function Topbar({
           value={q}
           onChange={(e) => setQ(e.target.value)}
           placeholder="Rechercher un document..."
-          className="w-48 lg:w-80 pl-9 pr-3 py-1.5 bg-gray-100 border border-border-color rounded-lg text-xs sm:text-sm text-text placeholder-text-muted focus:outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
+          style={{ backgroundColor: '#f1f5f9', color: '#0f172a', WebkitTextFillColor: '#0f172a', colorScheme: 'light' }}
+          className="w-48 lg:w-80 pl-9 pr-3 py-1.5 border border-border-color rounded-lg text-xs sm:text-sm text-text placeholder-text-muted focus:outline-none focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/20 transition"
         />
       </form>
 

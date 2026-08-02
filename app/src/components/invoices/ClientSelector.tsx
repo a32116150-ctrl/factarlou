@@ -82,7 +82,8 @@ export function ClientSelector({ value, onChange }: ClientSelectorProps) {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               placeholder="Rechercher par nom, MF, email..."
-              className="w-full pl-9 pr-3 py-2 bg-white border border-border-color rounded-lg text-sm text-text placeholder-text-light focus:outline-none focus:ring-1 focus:ring-primary"
+              style={{ backgroundColor: '#ffffff', color: '#0f172a', WebkitTextFillColor: '#0f172a', colorScheme: 'light' }}
+              className="w-full pl-9 pr-3 py-2 border border-border-color rounded-lg text-sm text-text placeholder-text-light focus:outline-none focus:ring-1 focus:ring-primary"
             />
           </div>
           <div className="max-h-60 overflow-y-auto">

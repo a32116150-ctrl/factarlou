@@ -812,26 +812,30 @@ export default function ExportTEJPage() {
                     placeholder="Nom du Bénéficiaire"
                     value={manualName}
                     onChange={(e) => setManualName(e.target.value)}
-                    className="text-xs rounded-lg border border-slate-200 px-3 py-2 bg-white text-slate-900 outline-none focus:border-emerald-500"
+                    style={{ backgroundColor: '#ffffff', color: '#0f172a', WebkitTextFillColor: '#0f172a', colorScheme: 'light' }}
+                    className="text-xs rounded-lg border border-slate-200 px-3 py-2 text-slate-900 outline-none focus:border-emerald-500"
                   />
                   <input
                     type="text"
                     placeholder="Matricule Fiscal / CIN"
                     value={manualMf}
                     onChange={(e) => setManualMf(e.target.value)}
-                    className="text-xs rounded-lg border border-slate-200 px-3 py-2 bg-white text-slate-900 outline-none focus:border-emerald-500"
+                    style={{ backgroundColor: '#ffffff', color: '#0f172a', WebkitTextFillColor: '#0f172a', colorScheme: 'light' }}
+                    className="text-xs rounded-lg border border-slate-200 px-3 py-2 text-slate-900 outline-none focus:border-emerald-500"
                   />
                   <input
                     type="number"
                     placeholder="Montant Brut (TND)"
                     value={manualBrut}
                     onChange={(e) => setManualBrut(e.target.value === '' ? '' : Number(e.target.value))}
-                    className="text-xs rounded-lg border border-slate-200 px-3 py-2 bg-white text-slate-900 outline-none focus:border-emerald-500"
+                    style={{ backgroundColor: '#ffffff', color: '#0f172a', WebkitTextFillColor: '#0f172a', colorScheme: 'light' }}
+                    className="text-xs rounded-lg border border-slate-200 px-3 py-2 text-slate-900 outline-none focus:border-emerald-500"
                   />
                   <select
                     value={manualTaux}
                     onChange={(e) => setManualTaux(Number(e.target.value))}
-                    className="text-xs rounded-lg border border-slate-200 px-2 py-2 bg-white text-slate-900 outline-none focus:border-emerald-500"
+                    style={{ backgroundColor: '#ffffff', color: '#0f172a', WebkitTextFillColor: '#0f172a', colorScheme: 'light' }}
+                    className="text-xs rounded-lg border border-slate-200 px-2 py-2 text-slate-900 outline-none focus:border-emerald-500"
                   >
                     <option value={15}>15% (Honoraires/Loyers)</option>
                     <option value={1.5}>1.5% (Marchés/Fournitures)</option>

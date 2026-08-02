@@ -196,7 +196,8 @@ export default function InvoiceForm({ initialData }: InvoiceFormProps = {}) {
                   value={discountPercent || ''}
                   onChange={(e) => handleDiscountPercent(Number(e.target.value))}
                   placeholder="0"
-                  className="w-full px-3 py-2 bg-white border border-border-color rounded-lg text-sm text-text placeholder-text-light focus:outline-none focus:ring-2 focus:ring-primary"
+                  style={{ backgroundColor: '#ffffff', color: '#0f172a', WebkitTextFillColor: '#0f172a', colorScheme: 'light' }}
+                  className="w-full px-3 py-2 border border-border-color rounded-lg text-sm text-text placeholder-text-light focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
               <div>
@@ -208,7 +209,8 @@ export default function InvoiceForm({ initialData }: InvoiceFormProps = {}) {
                   value={discountAmount || ''}
                   onChange={(e) => handleDiscountAmount(Number(e.target.value))}
                   placeholder="0"
-                  className="w-full px-3 py-2 bg-white border border-border-color rounded-lg text-sm text-text placeholder-text-light focus:outline-none focus:ring-2 focus:ring-primary"
+                  style={{ backgroundColor: '#ffffff', color: '#0f172a', WebkitTextFillColor: '#0f172a', colorScheme: 'light' }}
+                  className="w-full px-3 py-2 border border-border-color rounded-lg text-sm text-text placeholder-text-light focus:outline-none focus:ring-2 focus:ring-primary"
                 />
               </div>
             </div>

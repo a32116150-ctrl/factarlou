@@ -4,7 +4,7 @@ import { forwardRef, useState, type InputHTMLAttributes, type TextareaHTMLAttrib
 import { Eye, EyeOff } from 'lucide-react'
 
 const baseClasses =
-  'w-full px-3 py-2 bg-white border border-border-color rounded-lg text-sm text-text placeholder-text-light focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors disabled:opacity-50'
+  'w-full px-3 py-2 border border-border-color rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition-colors disabled:opacity-50'
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -12,7 +12,7 @@ export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, className = '', id, type, ...props }, ref) => {
+  ({ label, error, className = '', id, type, style, ...props }, ref) => {
     const [showPassword, setShowPassword] = useState(false)
     const isPassword = type === 'password'
     const inputType = isPassword ? (showPassword ? 'text' : 'password') : type
@@ -29,6 +29,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={id}
             type={inputType}
+            style={{
+              backgroundColor: '#ffffff',
+              color: '#0f172a',
+              WebkitTextFillColor: '#0f172a',
+              colorScheme: 'light',
+              ...style,
+            }}
             className={`${baseClasses} ${isPassword ? 'pr-10' : ''} ${
               error ? 'border-red-500 focus:ring-red-500' : ''
             } ${className}`}
@@ -59,7 +66,7 @@ export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElemen
 }
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  ({ label, error, className = '', id, ...props }, ref) => (
+  ({ label, error, className = '', id, style, ...props }, ref) => (
     <div className="space-y-1">
       {label && (
         <label htmlFor={id} className="block text-xs font-semibold text-text-secondary">
@@ -69,6 +76,13 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
       <textarea
         ref={ref}
         id={id}
+        style={{
+          backgroundColor: '#ffffff',
+          color: '#0f172a',
+          WebkitTextFillColor: '#0f172a',
+          colorScheme: 'light',
+          ...style,
+        }}
         className={`${baseClasses} resize-y ${error ? 'border-red-500 focus:ring-red-500' : ''} ${className}`}
         {...props}
       />
