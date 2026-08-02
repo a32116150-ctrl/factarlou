@@ -4,6 +4,24 @@ Ce fichier sert de point de contrôle : chaque correction appliquée au projet e
 
 ---
 
+## 2026-08-02 — PDF export web : facture écrasée/décalée et police de substitution (fixed)
+
+**Contexte / bug :**
+Les PDF téléchargés depuis l'app web (factures, attestations de retenue) n'étaient pas centrés : le contenu était tassé sur la gauche, rétréci et rogné à droite. Cause racine dans `app/src/lib/pdfDownloader.ts` : `inlineComputedStyles` copie les styles calculés du DOM **live**, y compris les marges `auto` du conteneur racine (`mx-auto`) déjà résolues en pixels par rapport au layout de la page (ex. `margin-left: 75px`). Dans l'iframe d'impression (800px), ce décalage rétrécissait le clone (650px au lieu de 794px) et le poussait hors du cadre (scrollWidth 837 > 800 → bord droit rogné). Deuxième problème : l'iframe ne chargeait pas la police de l'app (Inter via `next/font`), donc le texte du PDF tombait en police système de substitution.
+
+**Correctifs apportés** (`app/src/lib/pdfDownloader.ts`) :
+- **Marges racine remises à zéro + `width:100%`** après le flatten : les marges/la largeur héritées du conteneur live sont supprimées, et `#pdf-root` est passé en `display:flex; justify-content:center` pour recentrer proprement le document (validé en Electron : `cloneOffW` 794px, plus aucun overflow).
+- **`overflow:hidden` sur le body de l'iframe** : évite que la barre de défilement verticale rétrécisse le body et rogne les 210mm sur la droite.
+- **Injection des `@font-face` dans l'iframe** (nouvelle fonction `copyFontFaces`) + attente de `fonts.ready` (avec garde-fou 2s) pour que html2canvas rende la vraie police.
+
+**Vérifications :** `tsc --noEmit` OK · `eslint src/lib/pdfDownloader.ts` OK · `next build` OK · comportement validé dans le harness Electron (dimensions avant/après).
+
+**Fichiers modifiés :**
+- `app/src/lib/pdfDownloader.ts`
+- `FIXES_LOG.md` (ce fichier)
+
+---
+
 ## 2026-08-02 — Import TEJ : rejet des PDF/fichiers binaires + bouton Actualiser + suppression par ligne
 
 **Contexte / bug :**

@@ -237,6 +237,35 @@ function resolveModernColors(value: string): string {
 }
 
 /**
+ * Copy every @font-face rule from the host document into the print document.
+ * The inlined clone carries the app's font family (e.g. next/font's hashed
+ * Inter face); without the @font-face rules the iframe falls back to a system
+ * font and the PDF text no longer matches the screen. Same-origin stylesheets
+ * (next/font assets) are readable; cross-origin sheets are skipped safely.
+ */
+function copyFontFaces(targetDoc: Document): number {
+  const faces: string[] = []
+  for (const sheet of Array.from(document.styleSheets)) {
+    let rules: CSSRuleList | null = null
+    try {
+      rules = sheet.cssRules
+    } catch {
+      continue
+    }
+    if (!rules) continue
+    for (const rule of Array.from(rules)) {
+      if (rule.cssText && rule.cssText.startsWith('@font-face')) faces.push(rule.cssText)
+    }
+  }
+  if (faces.length) {
+    const style = targetDoc.createElement('style')
+    style.textContent = faces.join('\n')
+    targetDoc.head.appendChild(style)
+  }
+  return faces.length
+}
+
+/**
  * Deep-walk a live source element and its detached clone in parallel, copying
  * every computed style onto the clone as inline styles. This preserves the exact
  * on-screen layout WITHOUT needing the Tailwind stylesheet inside the print
@@ -282,6 +311,16 @@ export async function downloadElementAsPDF(element: HTMLElement, filename: strin
   const clone = element.cloneNode(true) as HTMLElement
   inlineComputedStyles(element, clone)
 
+  // 1b. The root's auto margins (mx-auto) and width were computed against the
+  // LIVE page container. Those stale pixel values would squish and shift the
+  // clone inside the isolated print document (e.g. 650px instead of 794px with
+  // 37px clipped on the right). Drop them and let the print container recenter.
+  clone.style.marginTop = '0px'
+  clone.style.marginRight = '0px'
+  clone.style.marginBottom = '0px'
+  clone.style.marginLeft = '0px'
+  clone.style.width = '100%'
+
   // 2. Pre-convert all images in the CLONE to Base64 (live DOM untouched)
   const imgs = Array.from(clone.querySelectorAll('img'))
   await Promise.all(
@@ -323,7 +362,9 @@ export async function downloadElementAsPDF(element: HTMLElement, filename: strin
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #ffffff;
             color: #0f172a;
+            overflow: hidden;
           }
+          #pdf-root { display: flex; justify-content: center; }
           table { border-collapse: collapse; }
           img { max-width: 100%; height: auto; }
         </style>
@@ -337,8 +378,22 @@ export async function downloadElementAsPDF(element: HTMLElement, filename: strin
   `)
   iframeDoc.close()
 
+  // Load the app's fonts into the print document so html2canvas renders text
+  // with the real typeface instead of a fallback.
+  const fontsInjected = copyFontFaces(iframeDoc)
+
   try {
     await new Promise((resolve) => setTimeout(resolve, 100))
+    if (fontsInjected && iframeDoc.fonts) {
+      try {
+        await Promise.race([
+          iframeDoc.fonts.ready,
+          new Promise((resolve) => setTimeout(resolve, 2000)),
+        ])
+      } catch {
+        // fonts.ready never settling should not block the export
+      }
+    }
 
     const pdfRoot = iframeDoc.getElementById('pdf-root') || iframeDoc.body
 
