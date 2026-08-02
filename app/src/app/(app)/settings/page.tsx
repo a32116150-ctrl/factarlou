@@ -5,12 +5,8 @@ import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { Select } from '@/components/ui/Select'
 import { useToast } from '@/components/ui/Toast'
-import type { UserSettings } from '@/types'
-import {
-  DocumentThemeEditor,
-  DocumentDesignSettings,
-  DEFAULT_DOCUMENT_DESIGN,
-} from '@/components/settings/DocumentThemeEditor'
+import type { UserSettings, DocumentDesign } from '@/types'
+import { DocumentThemeEditor, DEFAULT_DOCUMENT_DESIGN } from '@/components/settings/DocumentThemeEditor'
 
 const PREFIX_FIELDS: Array<{ key: keyof UserSettings; label: string }> = [
   { key: 'prefix_facture', label: 'Factures' },
@@ -26,7 +22,7 @@ const PREFIX_FIELDS: Array<{ key: keyof UserSettings; label: string }> = [
   { key: 'prefix_ticket', label: 'Tickets' },
 ]
 
-function parseDesignTheme(rawTheme?: string | null): DocumentDesignSettings {
+function parseDesignTheme(rawTheme?: string | null): DocumentDesign {
   if (!rawTheme) return DEFAULT_DOCUMENT_DESIGN
   try {
     const parsed = JSON.parse(rawTheme)
@@ -47,7 +43,7 @@ export default function DocumentSettingsPage() {
   const [settings, setSettings] = useState<UserSettings | null>(null)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
-  const [designSettings, setDesignSettings] = useState<DocumentDesignSettings>(DEFAULT_DOCUMENT_DESIGN)
+  const [designSettings, setDesignSettings] = useState<DocumentDesign>(DEFAULT_DOCUMENT_DESIGN)
 
   const load = useCallback(async () => {
     const res = await fetch('/app/api/settings')
@@ -71,7 +67,7 @@ export default function DocumentSettingsPage() {
     setSettings((prev) => (prev ? { ...prev, ...patch } : prev))
   }
 
-  const handleDesignChange = (updated: DocumentDesignSettings) => {
+  const handleDesignChange = (updated: DocumentDesign) => {
     setDesignSettings(updated)
     update({ document_theme: JSON.stringify(updated) })
   }
@@ -112,7 +108,7 @@ export default function DocumentSettingsPage() {
           </p>
         </div>
 
-        <DocumentThemeEditor value={designSettings} onChange={handleDesignChange} />
+        <DocumentThemeEditor design={designSettings} onChange={handleDesignChange} />
       </div>
 
       {/* Prefix numbering section */}

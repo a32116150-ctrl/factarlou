@@ -1,14 +1,14 @@
 'use client'
 
 import { Plus, Trash2 } from 'lucide-react'
-import type { LineItem, TVARate } from '@/types'
+import type { InvoiceItem, TVARate } from '@/lib/math-utils'
 import { Button } from '@/components/ui/Button'
 import { formatNumber } from '@/lib/formatters'
 
 interface LineItemsProps {
-  items: LineItem[]
+  items: InvoiceItem[]
   forfaitaire?: boolean
-  onChange: (items: LineItem[]) => void
+  onChange: (items: InvoiceItem[]) => void
 }
 
 const UNITS = ['unité', 'heure', 'jour', 'mois', 'forfait', 'kg', 'mètres', 'service', 'lot']
@@ -16,7 +16,7 @@ const UNITS = ['unité', 'heure', 'jour', 'mois', 'forfait', 'kg', 'mètres', 's
 const defaultStyle = { backgroundColor: '#ffffff', color: '#0f172a', WebkitTextFillColor: '#0f172a', colorScheme: 'light' as const }
 
 export function LineItems({ items, forfaitaire = false, onChange }: LineItemsProps) {
-  const update = (index: number, partial: Partial<LineItem>) => {
+  const update = (index: number, partial: Partial<InvoiceItem>) => {
     const next = [...items]
     next[index] = { ...next[index], ...partial }
     onChange(next)

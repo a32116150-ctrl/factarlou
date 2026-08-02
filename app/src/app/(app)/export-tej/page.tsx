@@ -499,6 +499,7 @@ export default function ExportTEJPage() {
         montant_brut: r.montant_brut,
         taux_retenue: r.taux_retenue,
         montant_retenue: r.montant_retenue,
+        status: 'emis',
         created_at: new Date().toISOString(),
       }))
 

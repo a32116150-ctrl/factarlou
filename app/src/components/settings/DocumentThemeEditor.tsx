@@ -4,6 +4,15 @@ import { Palette, Type, LayoutTemplate, FileText, Check } from 'lucide-react'
 import type { DocumentDesign } from '@/types'
 import { Input } from '@/components/ui/Input'
 
+export const DEFAULT_DOCUMENT_DESIGN: DocumentDesign = {
+  primaryColor: '#4f46e5',
+  fontFamily: 'inter',
+  templateStyle: 'classic',
+  customFooterText: 'Document édité avec Factarlou. Merci de votre confiance.',
+  showBankDetails: true,
+  showSignatureBox: true,
+}
+
 interface DocumentThemeEditorProps {
   design: DocumentDesign
   onChange: (updated: DocumentDesign) => void

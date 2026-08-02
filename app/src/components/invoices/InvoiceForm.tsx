@@ -3,7 +3,8 @@
 import { useState } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import type { Client, Document } from '@/types'
-import { LineItems, type LineItemDraft } from './LineItems'
+import { LineItems } from './LineItems'
+import type { InvoiceItem } from '@/lib/math-utils'
 import { TotalsPanel } from './TotalsPanel'
 import { ClientSelector } from './ClientSelector'
 import { Input, Textarea } from '@/components/ui/Input'
@@ -48,7 +49,7 @@ export default function InvoiceForm({ initialData }: InvoiceFormProps = {}) {
       : null
   )
 
-  let parsedItems: LineItemDraft[] = []
+  let parsedItems: InvoiceItem[] = []
   if (initialData?.items_json) {
     try {
       parsedItems = typeof initialData.items_json === 'string'
@@ -57,7 +58,7 @@ export default function InvoiceForm({ initialData }: InvoiceFormProps = {}) {
     } catch {}
   }
 
-  const [items, setItems] = useState<LineItemDraft[]>(
+  const [items, setItems] = useState<InvoiceItem[]>(
     parsedItems.length > 0
       ? parsedItems
       : [{ description: '', quantity: 1, price: 0, tva: 19, unit: 'unité' }]

@@ -55,6 +55,15 @@ export interface UserSettings {
   smtp_secure: boolean;
 }
 
+export interface DocumentDesign {
+  primaryColor: string;
+  fontFamily: 'inter' | 'roboto' | 'playfair' | 'mono';
+  templateStyle: 'classic' | 'modern' | 'minimalist';
+  customFooterText: string;
+  showBankDetails: boolean;
+  showSignatureBox: boolean;
+}
+
 export interface Client {
   id: string;
   user_id: string;
