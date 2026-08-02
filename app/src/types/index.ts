@@ -195,6 +195,9 @@ export interface Retenue {
   beneficiaire_address?: string | null;
   beneficiaire_rib?: string | null;
   beneficiaire_cin?: string | null;
+  beneficiaire_email?: string | null;
+  beneficiaire_phone?: string | null;
+  beneficiaire_birthdate?: string | null;
   beneficiaire_code_tva?: string | null;
   beneficiaire_code_cat?: string | null;
   beneficiaire_n_etab?: string | null;
@@ -205,6 +208,7 @@ export interface Retenue {
   taux_retenue: number;
   montant_retenue: number;
   nature_revenu: string;
+  dgi_code?: string | null;
   base_legale: string;
   logo_image?: string | null;
   stamp_image?: string | null;
