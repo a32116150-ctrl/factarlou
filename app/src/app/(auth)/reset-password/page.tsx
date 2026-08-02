@@ -107,7 +107,7 @@ export default function ResetPasswordPage() {
     return (
       <AuthCard>
         <div className="text-center space-y-4 py-2">
-          <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center">
             <CheckCircle2 className="h-6 w-6" />
           </div>
           <h2 className="text-lg font-bold text-text">Mot de passe réinitialisé !</h2>
@@ -138,7 +138,7 @@ export default function ResetPasswordPage() {
   return (
     <AuthCard>
       <div className="flex items-center gap-2 mb-2">
-        <div className="p-2 rounded-lg bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400">
+        <div className="p-2 rounded-lg bg-indigo-50 text-indigo-600">
           <KeyRound className="h-5 w-5" />
         </div>
         <div>
@@ -148,7 +148,7 @@ export default function ResetPasswordPage() {
       </div>
 
       {validSession === false && (
-        <div className="mb-4 p-3 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 text-xs text-amber-900 dark:text-amber-200 flex items-start gap-2">
+        <div className="mb-4 p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 flex items-start gap-2">
           <AlertCircle className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
           <div>
             <strong>Information :</strong> Votre lien a peut-être expiré ou est invalide. Vous pouvez{' '}

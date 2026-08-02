@@ -72,7 +72,7 @@ export function RetenuePDF({ retenue }: RetenuePDFProps) {
   }
 
   return (
-    <div className="bg-slate-100 dark:bg-slate-900 p-2 sm:p-6 rounded-xl space-y-4">
+    <div className="bg-slate-100 p-2 sm:p-6 rounded-xl space-y-4">
       <div className="flex justify-end gap-2">
         <Button variant="secondary" size="sm" onClick={downloadPDF} loading={downloading}>
           <Download className="h-4 w-4 mr-1" /> Télécharger PDF

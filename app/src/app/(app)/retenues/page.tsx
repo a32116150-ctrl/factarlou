@@ -59,7 +59,7 @@ export default function RetenuesPage() {
       ) : (
         <div className="space-y-3">
           {/* Mobile swipe helper */}
-          <div className="flex items-center justify-between text-xs text-slate-500 bg-slate-100 dark:bg-slate-800/60 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700/60 md:hidden">
+          <div className="flex items-center justify-between text-xs text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg border border-slate-200 md:hidden">
             <span className="flex items-center gap-1.5">
               <ArrowLeftRight className="h-3.5 w-3.5 text-indigo-600" />
               Glissez horizontalement pour faire défiler le tableau
@@ -100,7 +100,7 @@ export default function RetenuesPage() {
                       <td className="px-3 py-3 text-text-secondary">{r.beneficiaire_name}</td>
                       <td className="px-3 py-3 text-right font-medium text-text-secondary">{r.taux_retenue}%</td>
                       <td className="px-3 py-3 text-right text-text-secondary">{formatNumber(r.montant_brut)} TND</td>
-                      <td className="px-3 py-3 text-right font-bold text-blue-900 dark:text-blue-400">{formatNumber(r.montant_retenue)} TND</td>
+                      <td className="px-3 py-3 text-right font-bold text-blue-900">{formatNumber(r.montant_retenue)} TND</td>
                       <td className="px-4 py-3">
                         <div className="flex justify-end items-center gap-1">
                           <Link

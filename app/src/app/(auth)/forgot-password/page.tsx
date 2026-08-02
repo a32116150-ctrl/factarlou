@@ -49,7 +49,7 @@ export default function ForgotPasswordPage() {
     return (
       <AuthCard>
         <div className="text-center space-y-4 py-2">
-          <div className="w-12 h-12 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 mx-auto flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 mx-auto flex items-center justify-center">
             <Mail className="h-6 w-6" />
           </div>
           <h2 className="text-lg font-bold text-text">Vérifiez vos emails</h2>
