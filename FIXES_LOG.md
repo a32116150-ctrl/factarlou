@@ -45,3 +45,24 @@ Les emails de confirmation d'inscription et de réinitialisation de mot de passe
 - `app/src/lib/email-templates/newsletter-template.html` (nouveau)
 - `app/src/lib/email-templates.ts`
 - `FIXES_LOG.md` (ce fichier)
+
+---
+
+## 2026-08-02 — PDF export web : fichiers corrompus / mal mis en page (fixed)
+
+**Contexte / bug :**
+Les PDF téléchargés depuis l'app web (factures, attestations de retenue) arrivaient corrompus et mal mis en page. Deux causes dans `app/src/lib/pdfDownloader.ts` :
+
+1. **Mini-CSS incomplet :** le téléchargement copiait le `innerHTML` de la facture dans un iframe stylé par une mini-CSS manuscrite (~63 classes). Les composants utilisent ~140+ classes Tailwind (dont des valeurs arbitraires comme `p-2.5`, `max-w-[210mm]`, `text-[10px]`) absentes de cette mini-CSS, et certaines clés étaient même erronées (`.p-2-5`/`.pt-3-5` au lieu de `.p-2.5`/`.pt-3.5`). Résultat : mise en page cassée (pas de bordures, pas d'espacements, images en pleine taille, tableaux non collés).
+2. **Écrasement sur une page :** `pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, Math.min(imgHeight, pageHeight))` compressait tout le contenu sur une seule page A4 — toute facture dépassant la page était écrasée ou tronquée (fichier "endommagé").
+
+**Correctif apporté** (`app/src/lib/pdfDownloader.ts`) :
+- **Flatten des styles réels :** clonage de l'élément + copie de tous les styles calculés (`getComputedStyle`) en styles inline, avec conversion des couleurs `oklch/oklab/lab/hsl` → `rgb` (via round-trip canvas) pour que html2canvas ne lève plus d'erreur. Le rendu reflète exactement l'écran, sans dépendre d'une mini-CSS.
+- **Pagination multipage :** le canvas est étalé sur plusieurs pages A4 (décalage vertical par page) au lieu d'être écrasé — les longues factures sont désormais découpées proprement.
+- Les images sont converties en base64 sur le **clone** (le DOM live n'est plus muté).
+
+**Vérifications :** `tsc --noEmit` OK · `next build` OK. Test visuel à faire côté navigateur (télécharger une facture + une attestation, vérifier rendu et multi-pages).
+
+**Fichiers modifiés :**
+- `app/src/lib/pdfDownloader.ts`
+- `FIXES_LOG.md` (ce fichier)

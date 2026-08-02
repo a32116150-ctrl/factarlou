@@ -19,29 +19,97 @@ async function toDataURL(url: string): Promise<string> {
 }
 
 /**
+ * Resolve a single color (e.g. oklch(0.5 0.1 100), hsl(...)) to an rgb() string
+ * the browser understands, using the canvas color round-trip. Returns the input
+ * unchanged when it is already a safe color or cannot be resolved.
+ */
+function colorToRgb(value: string): string {
+  try {
+    const ctx = document.createElement('canvas').getContext('2d')
+    if (!ctx) return value
+    ctx.fillStyle = '#000000'
+    ctx.fillStyle = value
+    const resolved = ctx.fillStyle
+    // Canvas serializes sRGB-gamut colors as rgb()/rgba() — that is what
+    // html2canvas parses. Anything else ("color(srgb ...)", "oklch(...)")
+    // is not safely parseable, so keep the original rather than risk a throw.
+    return /^rgba?\(/i.test(resolved) ? resolved : value
+  } catch {
+    return value
+  }
+}
+
+/**
+ * Replace any modern color function (oklch, oklab, lab, hsl, hwb) found inside
+ * a computed style value with a browser-resolved rgb() equivalent. html2canvas
+ * throws on these color spaces, which is what corrupted earlier PDF exports.
+ */
+function resolveModernColors(value: string): string {
+  if (!value || !/oklch|oklab|\blab\(|\bhsl\(|\bhwb\(|color-mix/i.test(value)) return value
+  return value.replace(
+    /(oklch|oklab|lab|hsl|hsla|hwb|color)\([^)]*\)/gi,
+    (match) => colorToRgb(match),
+  )
+}
+
+/**
+ * Deep-walk a live source element and its detached clone in parallel, copying
+ * every computed style onto the clone as inline styles. This preserves the exact
+ * on-screen layout WITHOUT needing the Tailwind stylesheet inside the print
+ * document, and converts lab()/oklch() colors to rgb so html2canvas can render.
+ */
+function inlineComputedStyles(source: HTMLElement, target: HTMLElement): void {
+  const sourceQueue: HTMLElement[] = [source]
+  const targetQueue: HTMLElement[] = [target]
+
+  while (sourceQueue.length) {
+    const src = sourceQueue.shift() as HTMLElement
+    const tgt = targetQueue.shift() as HTMLElement
+    if (!src || !tgt) continue
+
+    const cs = window.getComputedStyle(src)
+    for (let i = 0; i < cs.length; i++) {
+      const prop = cs[i]
+      let value = cs.getPropertyValue(prop)
+      const priority = cs.getPropertyPriority(prop)
+      if (value) value = resolveModernColors(value)
+      tgt.style.setProperty(prop, value, priority)
+    }
+
+    const srcChildren = Array.from(src.children) as HTMLElement[]
+    const tgtChildren = Array.from(tgt.children) as HTMLElement[]
+    for (let i = 0; i < srcChildren.length; i++) {
+      sourceQueue.push(srcChildren[i])
+      targetQueue.push(tgtChildren[i])
+    }
+  }
+}
+
+/**
  * Direct PDF Downloader for Invoice & Document elements.
- * Uses an isolated hidden iframe with clean CSS rules to guarantee zero lab()/oklch() errors.
+ * - Clones the element (never mutates the live DOM).
+ * - Inlines all computed styles as rgb() so html2canvas sees zero lab()/oklch().
+ * - Converts <img> sources to base64 to avoid CORS tainting.
+ * - Renders inside an isolated iframe with only a minimal reset stylesheet.
+ * - Splits the canvas across multiple A4 pages instead of squashing it.
  */
 export async function downloadElementAsPDF(element: HTMLElement, filename: string): Promise<void> {
-  // Dynamically import html2canvas
-  const html2canvasModule = await import('html2canvas')
-  const html2canvas = html2canvasModule.default || html2canvasModule
+  // 1. Clone and flatten computed styles before touching images
+  const clone = element.cloneNode(true) as HTMLElement
+  inlineComputedStyles(element, clone)
 
-  // 1. Pre-convert all images in element to Base64
-  const imgs = Array.from(element.querySelectorAll('img'))
-  const originalSrcs: string[] = []
-
+  // 2. Pre-convert all images in the CLONE to Base64 (live DOM untouched)
+  const imgs = Array.from(clone.querySelectorAll('img'))
   await Promise.all(
-    imgs.map(async (img, idx) => {
-      originalSrcs[idx] = img.src
+    imgs.map(async (img) => {
       if (img.src && !img.src.startsWith('data:')) {
         const base64 = await toDataURL(img.src)
-        img.src = base64
+        if (base64.startsWith('data:')) img.src = base64
       }
     })
   )
 
-  // 2. Create an isolated hidden iframe with NO Tailwind v4 lab() stylesheets
+  // 3. Create an isolated hidden iframe — no Tailwind stylesheet, so no lab()
   const iframe = document.createElement('iframe')
   iframe.style.position = 'fixed'
   iframe.style.left = '-9999px'
@@ -58,7 +126,7 @@ export async function downloadElementAsPDF(element: HTMLElement, filename: strin
     throw new Error("Impossible de créer le document d'impression")
   }
 
-  // Write clean, standalone HEX/RGB styles inside the iframe
+  // Write a minimal reset + the fully-inlined clone (styles are all inline now)
   iframeDoc.open()
   iframeDoc.write(`
     <!DOCTYPE html>
@@ -71,80 +139,14 @@ export async function downloadElementAsPDF(element: HTMLElement, filename: strin
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #ffffff;
             color: #0f172a;
-            padding: 20px;
-            width: 760px;
           }
-          .flex { display: flex; }
-          .flex-row { flex-direction: row; }
-          .flex-col { flex-direction: column; }
-          .justify-between { justify-content: space-between; }
-          .justify-end { justify-content: flex-end; }
-          .items-start { align-items: flex-start; }
-          .items-center { align-items: center; }
-          .items-end { align-items: flex-end; }
-          .flex-1 { flex: 1; }
-          .grid { display: grid; }
-          .grid-cols-2 { grid-template-columns: 1fr 1fr; gap: 16px; }
-          .gap-2 { gap: 8px; }
-          .gap-4 { gap: 16px; }
-          .gap-6 { gap: 24px; }
-          .w-full { width: 100%; }
-          .text-right { text-align: right; }
-          .text-center { text-align: center; }
-          .text-left { text-align: left; }
-          .font-bold { font-weight: 700; }
-          .font-extrabold { font-weight: 800; }
-          .font-medium { font-weight: 500; }
-          .text-xs { font-size: 12px; }
-          .text-sm { font-size: 14px; }
-          .text-base { font-size: 16px; }
-          .text-lg { font-size: 18px; }
-          .text-xl { font-size: 20px; }
-          .text-2xl { font-size: 24px; }
-          .bg-white { background-color: #ffffff; }
-          .bg-slate-50 { background-color: #f8fafc; }
-          .bg-slate-100 { background-color: #f1f5f9; }
-          .bg-amber-50 { background-color: #fffbeb; }
-          .text-slate-900 { color: #0f172a; }
-          .text-slate-700 { color: #334155; }
-          .text-slate-600 { color: #475569; }
-          .text-slate-500 { color: #64748b; }
-          .text-blue-900 { color: #1e3a8a; }
-          .border { border: 1px solid #e2e8f0; }
-          .border-b-2 { border-bottom: 2px solid #0f172a; }
-          .border-t { border-top: 1px solid #e2e8f0; }
-          .border-t-2 { border-top: 2px solid #cbd5e1; }
-          .border-slate-200 { border-color: #e2e8f0; }
-          .border-slate-300 { border-color: #cbd5e1; }
-          .rounded-xl { border-radius: 12px; }
-          .rounded-lg { border-radius: 8px; }
-          .rounded-full { border-radius: 9999px; }
-          .p-2 { padding: 8px; }
-          .p-2-5 { padding: 10px; }
-          .p-3 { padding: 12px; }
-          .p-4 { padding: 16px; }
-          .p-8 { padding: 32px; }
-          .mb-1 { margin-bottom: 4px; }
-          .mb-2 { margin-bottom: 8px; }
-          .mb-3 { margin-bottom: 12px; }
-          .mb-4 { margin-bottom: 16px; }
-          .mb-6 { margin-bottom: 24px; }
-          .mb-7 { margin-bottom: 28px; }
-          .mt-1 { margin-top: 4px; }
-          .mt-2 { margin-top: 8px; }
-          .mt-6 { margin-top: 24px; }
-          .pb-4 { padding-bottom: 16px; }
-          .pb-5 { padding-bottom: 20px; }
-          .pt-3-5 { padding-top: 14px; }
-          .pt-5 { padding-top: 20px; }
-          table { width: 100%; border-collapse: collapse; }
-          th, td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; }
+          table { border-collapse: collapse; }
           img { max-width: 100%; height: auto; }
         </style>
       </head>
       <body>
         <div id="pdf-root">
-          ${element.innerHTML}
+          ${clone.outerHTML}
         </div>
       </body>
     </html>
@@ -152,12 +154,14 @@ export async function downloadElementAsPDF(element: HTMLElement, filename: strin
   iframeDoc.close()
 
   try {
-    // Wait a frame for layout rendering in iframe
     await new Promise((resolve) => setTimeout(resolve, 100))
 
     const pdfRoot = iframeDoc.getElementById('pdf-root') || iframeDoc.body
 
-    // Render iframe content to canvas (Zero lab() colors exist inside this iframe!)
+    // Dynamically import html2canvas
+    const html2canvasModule = await import('html2canvas')
+    const html2canvas = html2canvasModule.default || html2canvasModule
+
     const canvas = await html2canvas(pdfRoot, {
       scale: 2,
       useCORS: true,
@@ -173,19 +177,25 @@ export async function downloadElementAsPDF(element: HTMLElement, filename: strin
       format: 'a4',
     })
 
-    const imgWidth = 210
+    const pageWidth = 210
     const pageHeight = 297
-    const imgHeight = (canvas.height * imgWidth) / canvas.width
+    const imgHeight = (canvas.height * pageWidth) / canvas.width
 
-    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, Math.min(imgHeight, pageHeight))
+    // Multi-page slicing: place the full image once, then shift it up page by
+    // page so tall invoices are split across A4 pages instead of being squashed.
+    let heightLeft = imgHeight
+    let position = 0
+    pdf.addImage(imgData, 'PNG', 0, position, pageWidth, imgHeight)
+    heightLeft -= pageHeight
+    while (heightLeft > 0) {
+      position -= pageHeight
+      pdf.addPage()
+      pdf.addImage(imgData, 'PNG', 0, position, pageWidth, imgHeight)
+      heightLeft -= pageHeight
+    }
+
     pdf.save(filename.endsWith('.pdf') ? filename : `${filename}.pdf`)
   } finally {
-    // Cleanup iframe & restore original image srcs
     document.body.removeChild(iframe)
-    imgs.forEach((img, idx) => {
-      if (originalSrcs[idx]) {
-        img.src = originalSrcs[idx]
-      }
-    })
   }
 }
