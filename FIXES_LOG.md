@@ -66,3 +66,5 @@ Les PDF téléchargés depuis l'app web (factures, attestations de retenue) arri
 **Fichiers modifiés :**
 - `app/src/lib/pdfDownloader.ts`
 - `FIXES_LOG.md` (ce fichier)
+
+> **Addendum (même jour) :** le test navigateur a révélé une erreur au clic « Télécharger » : `Attempting to parse an unsupported color function "lab"`. La conversion précédente rejetait la sérialisation `color(srgb ...)` renvoyée par le canvas pour les espaces modernes (`lab`/`oklch`), donc la couleur d'origine restait dans le style inline et html2canvas levait une exception. Correctif : le résolveur parse désormais `color(srgb r g b / a)` **et** ajoute une conversion manuelle CSS Color 4 de secours (`lab`/`lch`/`oklch`/`oklab`/`hsl`/`hwb` → sRGB, matrices D50→D65 + D65→sRGB), avec un scan à parenthèses équilibrées pour gérer couleurs imbriquées (dégradés, ombres, `color-mix`). Sortie toujours en syntaxe legacy `rgb()`/`rgba()` que html2canvas sait parser. `tsc --noEmit` OK · `next build` OK · logique de conversion validée en Node (hsl/hwb/lab/oklch + couleurs Tailwind connues).
