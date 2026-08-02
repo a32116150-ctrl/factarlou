@@ -7,70 +7,78 @@ export function getResetPasswordEmailHtml(resetUrl: string, email?: string): str
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Réinitialisation de votre mot de passe - Factarlou</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b;">
-  <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #f4f6f9; padding: 40px 10px;">
+<body style="margin: 0; padding: 0; background-color: #eef1f7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b;">
+  <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #eef1f7; padding: 40px 10px;">
     <tr>
       <td align="center">
-        <table role="presentation" width="100%" max-width="600" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
-          
-          <!-- Header Banner -->
+        <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 560px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 32px rgba(15,23,42,0.08); border: 1px solid #e2e8f0;">
+
+          <!-- Header indigo -->
           <tr>
-            <td style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 32px 40px; text-align: center;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 26px; font-weight: 800; tracking-tight: -0.5px;">
-                Factarlou
+            <td style="background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%); padding: 34px 40px 30px; text-align: center;">
+              <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="center">
+                    <div style="display: inline-block; background: #ffffff; border-radius: 12px; padding: 10px 16px; margin-bottom: 12px;">
+                      <span style="font-weight: 800; font-size: 18px; color: #4338ca;">F</span>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.3px;">
+                Réinitialisation de votre mot de passe
               </h1>
-              <p style="color: #d1fae5; margin: 6px 0 0 0; font-size: 13px; font-weight: 500;">
-                Facturation & Retenue à la Source en Tunisie
+              <p style="color: #c7d2fe; margin: 6px 0 0 0; font-size: 13px; font-weight: 500;">
+                Facturation &amp; Retenue à la Source en Tunisie
               </p>
             </td>
           </tr>
 
-          <!-- Body Content -->
+          <!-- Corps -->
           <tr>
-            <td style="padding: 40px; text-align: left;">
-              <h2 style="font-size: 20px; font-weight: 700; color: #0f172a; margin-top: 0; margin-bottom: 16px;">
+            <td style="padding: 36px 40px; text-align: left;">
+              <h2 style="font-size: 19px; font-weight: 700; color: #0f172a; margin: 0 0 12px 0;">
                 Réinitialisation de votre mot de passe
               </h2>
-              
-              <p style="font-size: 15px; line-height: 1.6; color: #475569; margin-bottom: 24px;">
-                Bonjour${email ? ` <strong style="color: #0f172a;">${email}</strong>` : ''},
-              </p>
-              
-              <p style="font-size: 15px; line-height: 1.6; color: #475569; margin-bottom: 28px;">
-                Vous avez demandé la réinitialisation de votre mot de passe pour votre compte Factarlou. Cliquez sur le bouton sécurisé ci-dessous pour créer un nouveau mot de passe :
+
+              <p style="font-size: 14px; line-height: 1.7; color: #475569; margin: 0 0 24px 0;">
+                ${email ? `Bonjour <strong style="color: #0f172a;">${email}</strong>,<br><br>` : ''}Vous avez demandé la réinitialisation de votre mot de passe pour votre compte <strong style="color: #0f172a;">Factarlou</strong>. Cliquez sur le bouton ci-dessous pour créer un nouveau mot de passe :
               </p>
 
-              <!-- CTA Button -->
-              <table role="presentation" border="0" cellspacing="0" cellpadding="0" style="margin: 0 auto 32px auto;">
+              <!-- CTA -->
+              <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td align="center" style="border-radius: 12px; background-color: #059669;">
-                    <a href="${resetUrl}" target="_blank" style="display: inline-block; padding: 14px 32px; font-size: 15px; font-weight: 700; color: #ffffff; text-decoration: none; border-radius: 12px; background-color: #059669; border: 1px solid #047857;">
+                  <td align="center">
+                    <a href="${resetUrl}" target="_blank" style="display: inline-block; background-color: #4f46e5; color: #ffffff; font-weight: 700; font-size: 14px; text-decoration: none; padding: 14px 34px; border-radius: 10px; border: 1px solid #4338ca;">
                       Réinitialiser mon mot de passe
                     </a>
                   </td>
                 </tr>
               </table>
 
-              <!-- Link Fallback -->
-              <p style="font-size: 12px; color: #64748b; margin-bottom: 24px; word-break: break-all; background-color: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
-                Si le bouton ne fonctionne pas, copiez-collez ce lien dans votre navigateur :<br>
-                <a href="${resetUrl}" style="color: #059669; text-decoration: underline;">${resetUrl}</a>
-              </p>
-
-              <div style="border-top: 1px solid #f1f5f9; padding-top: 20px; margin-top: 28px;">
-                <p style="font-size: 13px; color: #94a3b8; margin: 0; line-height: 1.5;">
-                  🔒 <strong>Sécurité :</strong> Ce lien est valide temporairement. Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet email en toute sécurité. Votre mot de passe restera inchangé.
+              <!-- Note sécurité -->
+              <div style="border-top: 1px solid #f1f5f9; padding-top: 18px; margin-top: 26px;">
+                <p style="font-size: 12px; color: #94a3b8; line-height: 1.6; margin: 0;">
+                  &#128274; Si vous n'êtes pas à l'origine de cette demande, vous pouvez ignorer cet email en toute sécurité. Votre mot de passe restera inchangé.
                 </p>
               </div>
+
+              <!-- Lien fallback -->
+              <p style="font-size: 12px; color: #94a3b8; margin: 22px 0 0 0; word-break: break-all; background-color: #f8fafc; padding: 12px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :<br>
+                <a href="${resetUrl}" style="color: #4f46e5; text-decoration: underline;">${resetUrl}</a>
+              </p>
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td style="background-color: #f8fafc; padding: 24px 40px; text-align: center; border-top: 1px solid #f1f5f9;">
-              <p style="font-size: 12px; color: #94a3b8; margin: 0;">
-                © 2026 Factarlou. Tous droits réservés.<br>
-                <a href="https://factarlou.online" style="color: #059669; text-decoration: none;">factarlou.online</a>
+            <td style="background-color: #f8fafc; padding: 22px 40px; text-align: center; border-top: 1px solid #f1f5f9;">
+              <p style="font-size: 11px; color: #94a3b8; margin: 0 0 4px 0;">
+                © 2026 Factarlou. Tous droits réservés.
+              </p>
+              <p style="font-size: 11px; margin: 0;">
+                <a href="https://factarlou.online" style="color: #4f46e5; text-decoration: none;">factarlou.online</a>
               </p>
             </td>
           </tr>
@@ -93,77 +101,95 @@ export function getConfirmAccountEmailHtml(confirmUrl: string, email?: string): 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bienvenue sur Factarlou - Confirmez votre email</title>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b;">
-  <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #f4f6f9; padding: 40px 10px;">
+<body style="margin: 0; padding: 0; background-color: #eef1f7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #1e293b;">
+  <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #eef1f7; padding: 40px 10px;">
     <tr>
       <td align="center">
-        <table role="presentation" width="100%" max-width="600" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
-          
-          <!-- Header Banner -->
+        <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 560px; background-color: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 12px 32px rgba(15,23,42,0.08); border: 1px solid #e2e8f0;">
+
+          <!-- Header indigo -->
           <tr>
-            <td style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 36px 40px; text-align: center;">
-              <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: 800; tracking-tight: -0.5px;">
-                Bienvenue sur Factarlou 🎉
+            <td style="background: linear-gradient(135deg, #6366f1 0%, #4338ca 100%); padding: 34px 40px 30px; text-align: center;">
+              <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td align="center">
+                    <div style="display: inline-block; background: #ffffff; border-radius: 12px; padding: 10px 16px; margin-bottom: 12px;">
+                      <span style="font-weight: 800; font-size: 18px; color: #4338ca;">F</span>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+              <h1 style="color: #ffffff; margin: 0; font-size: 22px; font-weight: 800; letter-spacing: -0.3px;">
+                Bienvenue sur Factarlou
               </h1>
-              <p style="color: #d1fae5; margin: 6px 0 0 0; font-size: 14px; font-weight: 500;">
-                Votre plateforme professionnelle de facturation en Tunisie
+              <p style="color: #c7d2fe; margin: 6px 0 0 0; font-size: 13px; font-weight: 500;">
+                Facturation &amp; Retenue à la Source en Tunisie
               </p>
             </td>
           </tr>
 
-          <!-- Body Content -->
+          <!-- Corps -->
           <tr>
-            <td style="padding: 40px; text-align: left;">
-              <h2 style="font-size: 20px; font-weight: 700; color: #0f172a; margin-top: 0; margin-bottom: 16px;">
-                Plus qu'une étape pour activer votre compte !
+            <td style="padding: 36px 40px; text-align: left;">
+              <h2 style="font-size: 19px; font-weight: 700; color: #0f172a; margin: 0 0 12px 0;">
+                Votre compte est presque prêt
               </h2>
-              
-              <p style="font-size: 15px; line-height: 1.6; color: #475569; margin-bottom: 24px;">
-                Bonjour${email ? ` <strong style="color: #0f172a;">${email}</strong>` : ''},
-              </p>
-              
-              <p style="font-size: 15px; line-height: 1.6; color: #475569; margin-bottom: 28px;">
-                Merci de vous être inscrit sur <strong>Factarlou</strong>. Pour valider votre adresse email et accéder à votre espace de facturation, devis et attestations de retenues, veuillez cliquer ci-dessous :
+
+              <p style="font-size: 14px; line-height: 1.7; color: #475569; margin: 0 0 8px 0;">
+                ${email ? `Bonjour <strong style="color: #0f172a;">${email}</strong>, et bienvenue&nbsp;!` : 'Bonjour, et bienvenue&nbsp;!'}
               </p>
 
-              <!-- CTA Button -->
-              <table role="presentation" border="0" cellspacing="0" cellpadding="0" style="margin: 0 auto 32px auto;">
+              <p style="font-size: 14px; line-height: 1.7; color: #475569; margin: 0 0 24px 0;">
+                Merci de vous être inscrit sur <strong style="color: #0f172a;">Factarlou</strong>. Pour activer votre espace de facturation, devis et attestations de retenue, cliquez sur le bouton ci-dessous :
+              </p>
+
+              <!-- CTA -->
+              <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
                 <tr>
-                  <td align="center" style="border-radius: 12px; background-color: #059669;">
-                    <a href="${confirmUrl}" target="_blank" style="display: inline-block; padding: 14px 36px; font-size: 15px; font-weight: 700; color: #ffffff; text-decoration: none; border-radius: 12px; background-color: #059669; border: 1px solid #047857;">
-                      Confirmer mon inscription
+                  <td align="center">
+                    <a href="${confirmUrl}" target="_blank" style="display: inline-block; background-color: #4f46e5; color: #ffffff; font-weight: 700; font-size: 14px; text-decoration: none; padding: 14px 34px; border-radius: 10px; border: 1px solid #4338ca;">
+                      Activer mon compte
                     </a>
                   </td>
                 </tr>
               </table>
 
-              <!-- Features Box -->
-              <div style="background-color: #f8fafc; border-radius: 12px; p-4; padding: 20px; border: 1px solid #e2e8f0; margin-bottom: 28px;">
-                <h3 style="font-size: 14px; font-weight: 700; color: #0f172a; margin-top: 0; margin-bottom: 10px;">
-                  Ce que vous pouvez faire avec Factarlou :
-                </h3>
-                <ul style="margin: 0; padding-left: 20px; font-size: 13px; color: #475569; line-height: 1.8;">
-                  <li>📄 Créer des factures, devis, avoirs et bons de commande personnalisés</li>
-                  <li>🇹🇳 Calcul automatique du Droit de Timbre et Retenues à la source (TND)</li>
-                  <li>🎨 Personnalisation complète des couleurs, logos et cachets sur vos PDF</li>
-                  <li>📱 Application 100% adaptée pour smartphone et ordinateur</li>
-                </ul>
+              <!-- Boîte features -->
+              <div style="background-color: #f5f3ff; border-radius: 10px; padding: 16px 18px; margin: 28px 0 0 0; border: 1px solid #ede9fe;">
+                <div style="font-size: 13px; font-weight: 700; color: #4338ca; margin: 0 0 8px 0;">
+                  Ce que vous pouvez faire :
+                </div>
+                <div style="font-size: 12.5px; color: #475569; line-height: 1.9;">
+                  &#10003;&nbsp; Factures, devis, avoirs et bons de commande personnalisés<br>
+                  &#10003;&nbsp; Calcul auto du timbre fiscal &amp; retenues à la source (TND)<br>
+                  &#10003;&nbsp; Export XML TEJ prêt pour la DGI<br>
+                  &#10003;&nbsp; Applications mobile &amp; ordinateur
+                </div>
               </div>
 
-              <!-- Link Fallback -->
-              <p style="font-size: 12px; color: #64748b; margin-bottom: 24px; word-break: break-all; background-color: #f8fafc; padding: 12px; border-radius: 8px; border: 1px solid #e2e8f0;">
+              <!-- Note sécurité -->
+              <div style="border-top: 1px solid #f1f5f9; padding-top: 18px; margin-top: 26px;">
+                <p style="font-size: 12px; color: #94a3b8; line-height: 1.6; margin: 0;">
+                  &#128274; <strong>Lien sécurisé :</strong> ce lien est valide temporairement et à usage unique. Si vous n'êtes pas à l'origine de cette inscription, vous pouvez ignorer cet email en toute sécurité.
+                </p>
+              </div>
+
+              <!-- Lien fallback -->
+              <p style="font-size: 12px; color: #94a3b8; margin: 22px 0 0 0; word-break: break-all; background-color: #f8fafc; padding: 12px 14px; border-radius: 8px; border: 1px solid #e2e8f0;">
                 Si le bouton ne fonctionne pas, copiez ce lien dans votre navigateur :<br>
-                <a href="${confirmUrl}" style="color: #059669; text-decoration: underline;">${confirmUrl}</a>
+                <a href="${confirmUrl}" style="color: #4f46e5; text-decoration: underline;">${confirmUrl}</a>
               </p>
             </td>
           </tr>
 
           <!-- Footer -->
           <tr>
-            <td style="background-color: #f8fafc; padding: 24px 40px; text-align: center; border-top: 1px solid #f1f5f9;">
-              <p style="font-size: 12px; color: #94a3b8; margin: 0;">
-                © 2026 Factarlou. Tous droits réservés.<br>
-                <a href="https://factarlou.online" style="color: #059669; text-decoration: none;">factarlou.online</a>
+            <td style="background-color: #f8fafc; padding: 22px 40px; text-align: center; border-top: 1px solid #f1f5f9;">
+              <p style="font-size: 11px; color: #94a3b8; margin: 0 0 4px 0;">
+                © 2026 Factarlou. Tous droits réservés.
+              </p>
+              <p style="font-size: 11px; margin: 0;">
+                <a href="https://factarlou.online" style="color: #4f46e5; text-decoration: none;">factarlou.online</a>
               </p>
             </td>
           </tr>

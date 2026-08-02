@@ -22,3 +22,26 @@ Un PDF (ou tout fichier non textuel) déposé dans l'outil "Convertir / Saisir d
 **Fichiers modifiés :**
 - `app/src/app/(app)/export-tej/page.tsx`
 - `FIXES_LOG.md` (ce fichier)
+
+---
+
+## 2026-08-02 — Emails transactionnels : templates modernes indigo (confirm, reset, newsletter)
+
+**Contexte :**
+Les emails de confirmation d'inscription et de réinitialisation de mot de passe partaient avec le template par défaut de Supabase Auth (délivré via Resend en SMTP). Les anciens templates dans `app/src/lib/email-templates.ts` n'étaient jamais utilisés et utilisaient une couleur verte (#10b981) qui ne correspondait pas à l'identité réelle de l'app (indigo #4f46e5). Pas de template newsletter.
+
+**Correctifs apportés :**
+- **Design system commun indigo** : gradient `#6366f1 → #4338ca`, logo « F », carte blanche 560px, footer standard — 100% tables + styles inline (compatible Gmail/Outlook/Apple Mail).
+- **`confirm-account-template.html`** (nouveau) : à coller dans Supabase → Auth → Email Templates → Confirm signup. CTA indigo « Activer mon compte » sur `{{ .ConfirmationURL }}`, boîte features lavande, note sécurité, lien fallback.
+- **`reset-password-template.html`** (nouveau) : à coller dans Supabase → Auth → Email Templates → Reset Password. CTA « Réinitialiser mon mot de passe » sur `{{ .ConfirmationURL }}`.
+- **`newsletter-template.html`** (nouveau) : à utiliser dans Resend (Broadcast). Bloc éditorial + liste d'articles + CTA vers `factarlou.online/blog` + ligne désinscription.
+- **`app/src/lib/email-templates.ts`** : `getConfirmAccountEmailHtml` et `getResetPasswordEmailHtml` mis à jour avec les nouveaux designs (signatures inchangées).
+
+**Vérifications :** `tsc --noEmit` OK · `next build` OK · rendu HTML vérifié.
+
+**Fichiers modifiés :**
+- `app/src/lib/email-templates/confirm-account-template.html` (nouveau)
+- `app/src/lib/email-templates/reset-password-template.html` (nouveau)
+- `app/src/lib/email-templates/newsletter-template.html` (nouveau)
+- `app/src/lib/email-templates.ts`
+- `FIXES_LOG.md` (ce fichier)
